@@ -1,0 +1,143 @@
+import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
+
+const containerVariants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { staggerChildren: 0.2, duration: 0.8, ease: "easeOut" },
+  },
+};
+
+const childVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0 },
+};
+
+const AboutUs = () => {
+  const navigate = useNavigate();
+
+  return (
+    <motion.div
+      className="max-w-5xl mx-auto px-4 py-16 space-y-12"
+      initial="hidden"
+      animate="visible"
+      variants={containerVariants}
+    >
+      {/* Heading */}
+      <motion.h1
+        className="text-4xl md:text-5xl font-bold text-center text-pink-400"
+        variants={childVariants}
+      >
+        About Us
+      </motion.h1>
+
+      {/* Intro */}
+      <motion.p
+        className="text-lg text-center max-w-2xl mx-auto text-gray-600"
+        variants={childVariants}
+      >
+        Welcome to{" "}
+        <span
+          onClick={() => navigate("/")}
+          className="font-semibold text-pink-500 cursor-pointer hover:underline"
+        >
+          ShopVerse
+        </span>{" "}
+        — your destination for the latest trends in bags, shoes, and clothing.
+        Only store for premium fashion essentials for every style and occasion.
+      </motion.p>
+
+      {/* Sections */}
+      <div className="space-y-10">
+        <motion.div
+          className="bg-white rounded-xl shadow-md p-6 border border-gray-100"
+          variants={childVariants}
+        >
+          <h2 className="text-2xl font-semibold mb-2 text-pink-500">
+            Our Story
+          </h2>
+          <p className="text-gray-500 text-lg">
+            ShopVerse started in 2025 with one goal — to make trendy fashion
+            easy and affordable for everyone. We choose stylish bags, shoes, and
+            jewelry that help you feel confident and express your style.
+          </p>
+        </motion.div>
+
+        <motion.div
+          className="bg-white rounded-xl shadow-md p-6 border border-gray-100"
+          variants={childVariants}
+        >
+          <h2 className="text-2xl font-semibold mb-2 text-pink-500">
+            Our Mission
+          </h2>
+          <p className="text-gray-500 text-lg">
+            We aim to empower individuals through fashion by offering carefully
+            selected items that blend comfort, quality, and style — all while
+            supporting sustainable brands and artisans.
+          </p>
+        </motion.div>
+
+        <motion.div
+          className="bg-white rounded-xl shadow-md p-6 border border-gray-100"
+          variants={childVariants}
+        >
+          <h2 className="text-2xl font-semibold mb-2 text-pink-500">
+            Our Values
+          </h2>
+          <ul className="list-disc list-inside text-gray-500 text-lg space-y-1">
+            <li>You always come first</li>
+            <li>Style with care for the planet</li>
+            <li>We choose quality, not quantity</li>
+            <li>We welcome all styles, backgrounds, and people</li>
+          </ul>
+        </motion.div>
+      </div>
+
+      {/* Categories */}
+      <motion.div
+        className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12"
+        variants={childVariants}
+      >
+        {["Bags", "Shoes", "Clothes"].map((item) => {
+          const icon = item === "Bags" ? "👜" : item === "Shoes" ? "👠" : "👗";
+          return (
+            <motion.div
+              onClick={() => navigate("/products")}
+              key={item}
+              whileHover={{ scale: 1.05 }}
+              className="bg-pink-50 rounded-xl shadow hover:shadow-lg transition cursor-pointer flex flex-col items-center p-6"
+            >
+              <div className="text-4xl mb-2" aria-label={item} title={item}>
+                {icon}
+              </div>
+              <h3 className="text-xl font-semibold text-pink-600">{item}</h3>
+              <p className="text-gray-500 text-sm text-center mt-1">
+                Explore our collection of {item.toLowerCase()} for every
+                occasion.
+              </p>
+            </motion.div>
+          );
+        })}
+      </motion.div>
+
+      {/* CTA Button */}
+      <motion.div
+        onClick={() => navigate("/products")}
+        className="text-center mt-12"
+        variants={childVariants}
+      >
+        <motion.button
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.95 }}
+          className="bg-pink-400 text-white px-8 py-3 w-1/5 cursor-pointer rounded-md font-medium shadow hover:bg-pink-500 transition"
+        >
+          Shop Now
+        </motion.button>
+      </motion.div>
+    </motion.div>
+  );
+};
+
+export default AboutUs;
