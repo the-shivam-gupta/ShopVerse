@@ -6,12 +6,34 @@ import { useCart } from "../context/CartContext";
 import ProductQuickView from "./ProductQuickView";
 
 const categoryStructure = {
-  SHIRTS: ["SHIRT", "OVERSIZE SHIRT"],
-  ACCESSORIES: ["WATCH", "BRACELET"],
-  ELECTRONICS: ["HEADPHONE"],
-  BOTTOMS: ["SKIRT"],
-  OUTERWEAR: ["JACKET"],
-  FOOTWEAR: ["SHOES"],
+  SHIRTS: [
+    "SHIRT",
+    "OVERSIZE SHIRT",
+    "CASUAL SHIRT",
+    "FORMAL SHIRT",
+    "DENIM SHIRT",
+    "PRINTED SHIRT",
+  ],
+  ACCESSORIES: [
+    "WATCH",
+    "BRACELET",
+    "NECKLACE",
+    "RINGS",
+    "SUNGLASSES",
+    "WALLET",
+  ],
+  ELECTRONICS: [
+    "HEADPHONE",
+    "SMARTPHONE",
+    "TABLET",
+    "LAPTOP",
+    "POWER BANK",
+  ],
+  BOTTOMS: ["SKIRT", "JEANS", "TROUSERS", "SHORTS", "JOGGERS", "CULOTTES"],
+  OUTERWEAR: ["JACKET", "BLAZER", "COAT", "HOODIE", "CARDIGAN", "VEST"],
+  FOOTWEAR: ["SHOES", "SNEAKERS", "SANDALS", "BOOTS", "FLIP FLOPS", "LOAFERS"],
+  BAGS: ["BACKPACK", "HANDBAG", "TOTE BAG", "MESSENGER BAG", "DUFFEL BAG"],
+  BEAUTY: ["SKINCARE", "MAKEUP", "PERFUME", "HAIRCARE", "GROOMING KIT"],
 };
 
 const ProductListingPage = ({
@@ -23,13 +45,11 @@ const ProductListingPage = ({
 }) => {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [selectedProduct, setSelectedProduct] = useState(null);
-  const [priceRange, setPriceRange] = useState([0, 100]);
+  const [priceRange, setPriceRange] = useState([0, 2000]);
   const [sortType, setSortType] = useState("default");
   const [expandedCategory, setExpandedCategory] = useState(null); //tracks which parent’s subcategories are visible
   const { addToCart } = useCart();
   const { t } = useTranslation();
-
-  const categories = ["All", ...new Set(allProducts.map((p) => p.category))];
 
   const filterAndSortProducts = () => {
     let filtered = allProducts.filter((p) => {
@@ -139,7 +159,7 @@ const ProductListingPage = ({
                             : "hover:bg-gray-50"
                         }`}
                       >
-                        {sub}
+                        - {sub}
                       </button>
                     ))}
                   </motion.div>
@@ -162,7 +182,7 @@ const ProductListingPage = ({
           <input
             type="range"
             min="0"
-            max="100"
+            max="2000"
             value={priceRange[1]}
             onChange={(e) => setPriceRange([0, Number(e.target.value)])}
             className="w-full cursor-pointer accent-pink-400"
