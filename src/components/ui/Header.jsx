@@ -90,7 +90,9 @@ const Header = ({ currency, setCurrency }) => {
             <span className="font-semibold text-gray-600">
               {t("header.freeShipping")}
             </span>
-            {t("header.Order Over - $40")}
+            {currency === "USD"
+              ? t("header.Order Over - $40")
+              : t("header.Order Over - ₹3320")}
           </div>
 
           <div className="flex space-x-2 text-gray-500">
@@ -421,31 +423,31 @@ const Header = ({ currency, setCurrency }) => {
                   <div className="relative text-left">
                     <ul className="space-y-2 text-gray-500 text-lg font-medium">
                       <li className="flex gap-2">
-                      <p>📿</p>
+                        <p>📿</p>
                         <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out">
                           {t("dropdown.necklace")}
                         </a>
                       </li>
                       <li className="flex gap-2">
-                      <p>👝</p>
+                        <p>👝</p>
                         <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out">
                           {t("dropdown.bags")}
                         </a>
                       </li>
                       <li className="flex gap-2">
-                      <p>👗</p>
+                        <p>👗</p>
                         <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out">
                           {t("dropdown.dressAndFrock")}
                         </a>
                       </li>
                       <li className="flex gap-2">
-                      <p>✨</p>
+                        <p>✨</p>
                         <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out">
                           {t("dropdown.bracelet")}
                         </a>
                       </li>
                       <li className="flex gap-2">
-                      <p>👠</p>
+                        <p>👠</p>
                         <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out">
                           {t("dropdown.heals")}
                         </a>
@@ -468,25 +470,25 @@ const Header = ({ currency, setCurrency }) => {
                   <div className="relative text-left">
                     <ul className="space-y-2 text-gray-500 text-lg font-medium">
                       <li className="flex gap-2">
-                      <p>📿</p>
+                        <p>📿</p>
                         <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out">
                           {t("dropdown.necklace")}
                         </a>
                       </li>
                       <li className="flex gap-2">
-                      <p>💫</p>
+                        <p>💫</p>
                         <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out">
                           {t("dropdown.earings")}
                         </a>
                       </li>
                       <li className="flex gap-2">
-                      <p>✨</p>
+                        <p>✨</p>
                         <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out">
                           {t("dropdown.bracelet")}
                         </a>
                       </li>
                       <li className="flex gap-2">
-                      <p>💍</p>
+                        <p>💍</p>
                         <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out">
                           {t("dropdown.rings")}
                         </a>
@@ -509,25 +511,25 @@ const Header = ({ currency, setCurrency }) => {
                   <div className="relative text-left">
                     <ul className="space-y-2 text-gray-500 text-lg font-medium">
                       <li className="flex gap-2">
-                      <p>🌸</p>
+                        <p>🌸</p>
                         <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out">
                           {t("dropdown.deodrant")}
                         </a>
                       </li>
                       <li className="flex gap-2">
-                      <p>💮</p>
+                        <p>💮</p>
                         <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out">
                           {t("dropdown.airFreshner")}
                         </a>
                       </li>
                       <li className="flex gap-2">
-                      <p>🪷</p>
+                        <p>🪷</p>
                         <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out">
                           {t("dropdown.bodyPerfume")}
                         </a>
                       </li>
                       <li className="flex gap-2">
-                      <p>🌺</p>
+                        <p>🌺</p>
                         <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out">
                           {t("dropdown.clothesPerfume")}
                         </a>

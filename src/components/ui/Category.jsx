@@ -31,7 +31,7 @@ export default function CategorySection() {
         controls
           .start({
             countValue: count,
-            transition: { duration: 1.5, ease: "easeOut" }, // SLOWER animation
+            transition: { duration: 1.5, ease: "easeOut" },
           })
           .then(() => {
             onAnimated(); // Mark animation as completed
@@ -171,8 +171,8 @@ export default function CategorySection() {
   ];
 
   return (
-    <div>
-      <div className="w-70 h-fit p-4 rounded-lg shadow-md border border-gray-200 bg-linear-to-tr from-white to-pink-50">
+    <div className="sticky top-4 h-fit">
+      <div className="w-70 h-fit p-4 rounded-lg shadow-md border border-gray-200 bg-gradient-to-tr from-white to-pink-50">
         <h2 className="text-lg font-bold mb-4">{t("category.category")}</h2>
 
         {categories.map((cat) => (

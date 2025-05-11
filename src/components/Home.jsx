@@ -46,11 +46,12 @@ const categories = [
 
 export default function Home({ currency }) {
   const { t } = useTranslation();
+  const { addToCart } = useCart();
+  const navigate = useNavigate();
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [compareList, setCompareList] = useState([]);
   const [isCompareOpen, setIsCompareOpen] = useState(false);
-  const { addToCart } = useCart();
-  const navigate = useNavigate();
+  const [shuffledProducts, setShuffledProducts] = useState([]);
 
   const handleAddToCompare = (product) => {
     setCompareList((prev) => {
@@ -79,6 +80,16 @@ export default function Home({ currency }) {
     });
   }, [controls]);
 
+  // creates a new array with items in random order.
+  const shuffleArray = (array) => {
+    return [...array].sort(() => Math.random() - 0.5);
+  };
+
+  useEffect(() => {
+    const randomOrder = shuffleArray(products);
+    setShuffledProducts(randomOrder);
+  }, []);
+
   return (
     <div className="min-h-screen bg-gray-50">
       <section className="flex flex-col-reverse md:flex-row bg-pink-50 p-8 items-center justify-evenly gap-12">
@@ -98,7 +109,7 @@ export default function Home({ currency }) {
             </span>
           </p>
           <Button
-            onClick={() => navigate('/products')}
+            onClick={() => navigate("/products")}
             className="bg-pink-500 hover:bg-pink-400 cursor-pointer rounded-sm px-4 py-2"
           >
             {t("home.shopNow")}
@@ -107,7 +118,7 @@ export default function Home({ currency }) {
         <div className="relative w-[250px] md:w-[320px] h-[180px] md:h-[220px]">
           <img
             src="./src/assets/image.png"
-            alt="Model 1" 
+            alt="Model 1"
             className="absolute -left-10 bottom-2 w-[150px] md:w-[250px] rounded-full border-4 border-pink-100 z-10"
           />
           <img
@@ -146,7 +157,10 @@ export default function Home({ currency }) {
               <div className="text-lg font-bold text-gray-800 drop-shadow-sm">
                 {t(item.title)}
               </div>
-              <button onClick={() => navigate('/products')} className="mt-3 text-pink-500 text-sm rounded-full bg-pink-100 hover:bg-pink-200 px-4 py-1 transition-all cursor-pointer">
+              <button
+                onClick={() => navigate("/products")}
+                className="mt-3 text-pink-500 text-sm rounded-full bg-pink-100 hover:bg-pink-200 px-4 py-1 transition-all cursor-pointer"
+              >
                 {t("home.showAll")}
               </button>
             </motion.div>
