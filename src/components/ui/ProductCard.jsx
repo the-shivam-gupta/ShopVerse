@@ -16,9 +16,9 @@ const products = [
     originalPrice: 48.0,
     badge: "15% off",
     mainImage:
-      "https://unstd.in/cdn/shop/files/SAGE-GREEN-2.jpg?v=1734507963&width=1200",
+      "https://res.cloudinary.com/djgykvahm/image/upload/v1746936945/SAGE-GREEN-2-Photoroom_by0rqf.png",
     hoverImage:
-      "https://unstd.in/cdn/shop/files/BLACK_7df11807-93c3-49d9-8347-614a9160f3d7.jpg?v=1729851686&width=1200",
+      "https://res.cloudinary.com/djgykvahm/image/upload/v1746943109/BLACK_7df11807-93c3-49d9-8347-614a9160f3d7_adgvoe.webp",
   },
   {
     name: "card.poloShirt",
@@ -28,9 +28,9 @@ const products = [
     originalPrice: 56.0,
     badge: "SALE",
     mainImage:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQv7S4S_cU6eeigDnRXLCtaN-awIcyF9uyexJsasi6obJz16Tl5U7UWclUqGiokAISA6Qw&usqp=CAU",
+      "https://res.cloudinary.com/djgykvahm/image/upload/c_crop,w_1000,h_1000,e_improve,e_sharpen/v1746939670/images-Photoroom_qumjbl.png",
     hoverImage:
-      "https://assets.ajio.com/medias/sys_master/root/20240215/x4q0/65ce361205ac7d77bb5c302c/-473Wx593H-410478807-1515-MODEL.jpg",
+      "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/b_rgb:FFFFFF/c_crop,w_1000,h_1000,f_png/v1746940244/-473Wx593H-410478807-1515-MODEL_vjo1tk_044d16.avif",
   },
   {
     name: "card.mencasualShirt",
@@ -40,9 +40,9 @@ const products = [
     originalPrice: 45.0,
     badge: "NEW",
     mainImage:
-      "https://image.hm.com/assets/hm/01/1a/011a2cad5a22200d6085a7fccef76bf1cad8ac8a.jpg?imwidth=1260",
+      "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/b_rgb:FFFFFF/c_crop,w_1200,f_png/v1746940586/011a2cad5a22200d6085a7fccef76bf1cad8ac8a_egbdlo.avif",
     hoverImage:
-      "https://image.hm.com/assets/hm/3b/32/3b324e8953a17cf0d84b98cedfec69c9fb4ae304.jpg?imwidth=1260",
+      "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/b_rgb:FFFFFF/c_crop,w_1200,f_png/v1746940952/3b324e8953a17cf0d84b98cedfec69c9fb4ae304_okoyfi.avif",
   },
   {
     name: "card.menformalShirt",
@@ -51,9 +51,9 @@ const products = [
     rating: 5,
     originalPrice: 60.0,
     mainImage:
-      "https://static.zara.net/assets/public/9db4/21c7/c5754c31b06e/85def9cf663b/07545309538-e1/07545309538-e1.jpg?ts=1740133970201&w=750",
+      "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/b_rgb:FFFFFF/c_crop,w_1000,f_png/v1746941155/07545309538-e1_uhxgy4.jpg",
     hoverImage:
-      "https://static.zara.net/assets/public/fdb5/2ec7/ed0144759f94/32665b36d948/01063309403-e1/01063309403-e1.jpg?ts=1736779492300&w=750",
+      "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/b_rgb:FFFFFF/c_crop,w_1000,f_png/v1746941322/01063309403-e1_ueh3ky.jpg",
   },
   {
     name: "card.mendenimShirt",
@@ -63,9 +63,9 @@ const products = [
     originalPrice: 65.0,
     badge: "HOT",
     mainImage:
-      "https://static.zara.net/assets/public/f97d/21f4/3c6b43b6a39a/dad35c87289b/04470424407-e1/04470424407-e1.jpg?ts=1736354285257&w=750",
+      "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/b_rgb:FFFFFF/c_crop,w_1200,h_1800,f_png/v1746941427/04470424407-e1_pwahdl.jpg",
     hoverImage:
-      "https://static.zara.net/assets/public/9f2e/dec1/fede471c84f1/6956996e6c24/04470424407-e2/04470424407-e2.jpg?ts=1736354285347&w=750",
+      "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/b_rgb:FFFFFF/c_crop,w_1200,f_png/v1746941663/04470424407-e2_zw6rby.jpg",
   },
   {
     name: "card.menprintedShirt",
@@ -74,9 +74,9 @@ const products = [
     rating: 4,
     originalPrice: 55.0,
     mainImage:
-      "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcTGS8tlwB340uIOXf6IAqy0Tc__ygaoLIbshgF1FUthX4xNl52oIypzHTlPupujQP86vVh7nwXIEtXpBfOMCKcUThyJ6nDMqEUTOunhhWFIavVfd7mfGeOwYSex",
+      "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/b_rgb:FFFFFF/f_png/v1746941816/shopping_rimzm3.webp",
     hoverImage:
-      "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcT9-QW4KLad9wJYGuEemJ0fx5viELPlJ-E4smjRgFNgo6ZIUMQDeY4qBygLjlQWDLtZFilByRM3zTyBVwUo35OKWR_X8RxmCFrOrNNk27v3xGIviq96aU7uZXc",
+      "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/b_rgb:FFFFFF/f_png/v1746941926/shopping_zydzpc.webp",
   },
 
   // ELECRONICS
@@ -86,8 +86,8 @@ const products = [
     price: 59.0,
     rating: 5,
     originalPrice: 67.0,
-    mainImage: "https://m.media-amazon.com/images/I/81AmHv7jKsL._SX679_.jpg",
-    hoverImage: "https://m.media-amazon.com/images/I/71F07y-AdAL._SX679_.jpg",
+    mainImage: "https://res.cloudinary.com/djgykvahm/image/upload/v1746943210/81AmHv7jKsL._SX679__d9avyi.jpg",
+    hoverImage: "https://res.cloudinary.com/djgykvahm/image/upload/v1746943248/71F07y-AdAL._SX679__fwcv6h.jpg",
   },
 
   {
@@ -96,8 +96,8 @@ const products = [
     price: 40.0,
     rating: 4,
     originalPrice: 55.0,
-    mainImage: "https://m.media-amazon.com/images/I/51UBVW9enzL._SL1200_.jpg",
-    hoverImage: "https://m.media-amazon.com/images/I/41jR+301vvL._SL1200_.jpg",
+    mainImage: "https://res.cloudinary.com/djgykvahm/image/upload/v1746968435/51UBVW9enzL._SL1200__dbht3c.jpg",
+    hoverImage: "https://res.cloudinary.com/djgykvahm/image/upload/v1746968463/41jR_301vvL._SL1200__vddqsr.jpg",
   },
   {
     name: "card.phone",
@@ -107,8 +107,8 @@ const products = [
     originalPrice: 1099.0,
     badge: "NEW",
     mainImage:
-      "https://www.designinfo.in/wp-content/uploads/2023/10/samsung-s23-ultra-5g-1-11-485x485-optimized.webp",
-    hoverImage: "https://arnavtelecom.com/wp-content/uploads/2023/02/samg7.png",
+      "https://res.cloudinary.com/djgykvahm/image/upload/v1746968524/samsung-s23-ultra-5g-1-11-485x485-optimized_vqrw8b.webp",
+    hoverImage: "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/b_rgb:FFFFFF/f_png/v1746968553/samg7_launtp.png",
   },
   {
     name: "card.tab",
@@ -117,9 +117,9 @@ const products = [
     rating: 4,
     originalPrice: 179.99,
     mainImage:
-      "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcQZKY_HpNVkwM3aF0xO3KKnlGvQkqohHkC-twP5YJM9xOyfhEK_BnwxNUxvWuKuYp0KLO68vKyW1j5mJ4ZNY_KrzGZaWyMH1VpL6X0rZo6w",
+      "https://res.cloudinary.com/djgykvahm/image/upload/v1746968626/shopping_rnti4f.webp",
     hoverImage:
-      "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcRJ9vmhkS9BaNLA5xjjFKFemUng47Cc_rv7wgNsgVnc_gRRGDh1fqkL5KEpMGAlfNtVCzwJS_FZiP5Tns3Tf0JpEpzcnwHL8Ew65WxlQIc",
+      "https://res.cloudinary.com/djgykvahm/image/upload/v1746968643/shopping_hfcza3.webp",
   },
   {
     name: "card.DellLaptop",
@@ -129,9 +129,9 @@ const products = [
     originalPrice: 899.99,
     badge: "SALE",
     mainImage:
-      "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcQSIg1dKlyn52G4HstIWTcJXarjt2RPEYidixHpr1UewuGDro2EgXXQKJjzUyT_6nNYF_V9noI-VWrnGjsjkIKSW_Hd_iVIYnzCJUlWFpXXc8GQuD1QFIHqYw",
+      "https://res.cloudinary.com/djgykvahm/image/upload/v1746968702/shopping_c8kn76.webp",
     hoverImage:
-      "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcRyC6EuE-RIhKV0lvZN18H91nfjHvRmfx-ND7cxOIuPV9uPwJlwlG-FWEKvH7pw4ZA5Ln_n8hepehtRS-4FYhuX9xTZ7AxWGqnr5zJfq6pWfIGtz3gxVu0V3w",
+      "https://res.cloudinary.com/djgykvahm/image/upload/v1746968705/shopping_gkauct.webp",
   },
   {
     name: "card.smartwatch",
@@ -140,9 +140,9 @@ const products = [
     rating: 4,
     originalPrice: 149.0,
     mainImage:
-      "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcQItb996RoCSf7Jm2cGa0c7eIrHIEddKUB_D0vzREQca8UCsn_GNatDeVy9Lp5nmSQ5sg1vJAkmVIG02pGLc2GGOaspHPo2PBO7A1CxPg1KHtBqHVOhx69d",
+      "https://res.cloudinary.com/djgykvahm/image/upload/v1746968769/shopping_dkhn68.webp",
     hoverImage:
-      "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcS8BMUXfK3BsvwgvRZKLf2k4n55PS-rwNfxPFuM_E1HHxOnQaDAYE1YSsjyFIj38wLa6IodcIXcJNE1iEMUFE9jRVoNbX-6nqvm_tozjGXDBOsuBiwe23ay",
+      "https://res.cloudinary.com/djgykvahm/image/upload/v1746968771/shopping_pr8j5k.webp",
   },
   {
     name: "card.wiredPowerBank",
@@ -151,9 +151,9 @@ const products = [
     rating: 4,
     originalPrice: 89.99,
     mainImage:
-      "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcRRjLssnkjyYRgeYmzQNWj12x7uM9ZEING-h3ZwBTPQ6YWvR2OoQ50tGJspJjc2ebPLXhB0VkrTz8VEIpLZJsJItYR74DfeeSub1_e-PmbF5XPP8ExNL4MyDA",
+      "https://res.cloudinary.com/djgykvahm/image/upload/v1746968822/shopping_ykpho1.webp",
     hoverImage:
-      "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcSHmw6NVFOT7dB9Lz8AXlFo_95t-JMX252wfkYCZUMXJpvMMsAni6U3m5IDgPxCutNY-rjyQEssiyU0UVeR4OoOqXsa1uvWeJg5-CDLcbZSeOYVngzY-3uN",
+      "https://res.cloudinary.com/djgykvahm/image/upload/v1746968825/shopping_yfm0tn.webp",
   },
 
   // BOTTOM
@@ -165,9 +165,9 @@ const products = [
     originalPrice: 35.0,
     badge: "NEW",
     mainImage:
-      "https://static.zara.net/assets/public/e667/4234/b16a4d7e96f6/ca4ead1f2a2d/04758010800-e1/04758010800-e1.jpg?ts=1740589030990&w=1126",
+      "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/b_rgb:FFFFFF/f_png/v1746942111/04758010800-e1_eeizat.jpg",
     hoverImage:
-      "https://static.zara.net/assets/public/1bcd/bbbf/05904442b484/ddecba6c34c8/04758010800-e2/04758010800-e2.jpg?ts=1740589031074&w=750",
+      "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/b_rgb:FFFFFF/f_png/v1746943018/04758010800-e2_fgyqp4.jpg",
   },
   {
     name: "card.menjeans",
@@ -177,9 +177,9 @@ const products = [
     originalPrice: 79.9,
     badge: "TRENDING",
     mainImage:
-      "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcSQtRUeUFuO6LyGGUyDyhmkWpoFfI1eNFCybrYdD_KhHFk7oMiBSRnjTxX0RvZnpnpv_jISSVPeicbgu9B6zuyny9-NTNLlWBfZBq_XgLG3A6_XeF0GxxVaEuk",
+      "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/b_rgb:FFFFFF/f_png/v1746968891/shopping_bances.webp",
     hoverImage:
-      "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcRU02agbGYk-r9l-jZDJ_l2qorTKDgLgg68QIgqrwh2G2RfI9GXvJvBgj7Oa6DhBAx6VYXUv_ExQQfnT5Pk7tEYGKAbmaIIeTVdfeucbQLnNFTqhgsF1POiwSc",
+      "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/b_rgb:FFFFFF/f_png/v1746968940/shopping_or61a1.webp",
   },
   {
     name: "card.mentrousers",
@@ -188,9 +188,9 @@ const products = [
     rating: 4,
     originalPrice: 59.9,
     mainImage:
-      "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcRC72bTHM6-PKg5NBqU-hmDv_gnS1tJgYLtOrFleGG6xM15yO0jobi_C8ruyHyM2EiBLkPuEckPwI74ZOfcvc7JfUy64lp0-kk1yjRVe5sBGLhfMMEyoASRyA",
+      "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/b_rgb:FFFFFF/f_png/v1746969042/shopping_nnszq6.webp",
     hoverImage:
-      "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcS5mBgAf9CgdAzST37_n62lChSL2kng6tJ8jmiLCQcYWtU9pCU8sbGxAlvmgKefRSMmnjUuCc0WCiTKS4LlF9YcLPKB8DWyGMK7_K-LErs97sSGAd3NmipRKdg",
+      "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/b_rgb:FFFFFF/f_png/v1746969047/shopping_yjhrd9.webp",
   },
   {
     name: "card.menshorts",
@@ -199,9 +199,9 @@ const products = [
     rating: 4,
     originalPrice: 59.9,
     mainImage:
-      "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcTsI4gWJAM2GsHwi8gMA3bM69q-FD9_lBu8jlCkZh2O1rFPjiwySm57uMixHETsliZdRHjZm2TNkTfO6fIOz_dCOh5zTwLEVbgw61MAEn5WwOjHEMp_GhOFjac",
+      "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/b_rgb:FFFFFF/f_png/v1746969152/shopping_ln3rcp.webp",
     hoverImage:
-      "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcTf2-RxtfTgm3KryidtW6Sr275ZxRFYzqqnSfnQWXiWcEKpmWOBLAGZYApqX6yG1EA4qUil9h9s620e8SjbAxUJKat2UYSl-TwmAej5wfHUpPlZaETxZkGFJak",
+      "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/b_rgb:FFFFFF/f_png/v1746969156/shopping_s0hwm3.webp",
   },
 
   // ACCESSORIES
@@ -213,9 +213,9 @@ const products = [
     originalPrice: 42.0,
     badge: "PERMIUM",
     mainImage:
-      "https://in.danielwellington.com/cdn/shop/files/qs55z9vln2zkthusyjp3.png?v=1717669152",
+      "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/b_rgb:FFFFFF/f_png/v1746969252/qs55z9vln2zkthusyjp3_kkvxjv.webp",
     hoverImage:
-      "https://in.danielwellington.com/cdn/shop/files/t2kdcsyps4da4bd99nps.png?v=1717669157",
+      "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/b_rgb:FFFFFF/f_png/v1746969259/t2kdcsyps4da4bd99nps_ix0dcp.webp",
   },
   {
     name: "card.womenNecklace",
@@ -225,9 +225,9 @@ const products = [
     originalPrice: 99.0,
     badge: "TRENDING",
     mainImage:
-      "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcSSzjF4ta_LiQuFXqDqUKNTpHroVqadmDayHTfR-qAeOGQtCeFvglvoEZzqXJ0UqCIfcfxNLKkRENZYO-jG43YdgmIKgFDQfHHLzzNibiE9",
+      "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/b_rgb:FFFFFF/f_png/v1746969388/shopping_b8kvbg.webp",
     hoverImage:
-      "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcThSnYB30M1hC98ROfDHRuiFyfzFnosfDT_Xrg1SMYHf6CO9lDozk1U7KPuhFogPLNzrDCc2A1yzpgqNVqLoQi-TMvEDmJi-X_tPjea6-NILH3WCD4n4W95",
+      "https://res.cloudinary.com/djgykvahm/image/upload/v1746969395/shopping_cvnzjd.webp",
   },
   {
     name: "card.womenRings",
@@ -236,9 +236,9 @@ const products = [
     rating: 5,
     originalPrice: 59.0,
     mainImage:
-      "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcSpGfEcUdJgNHd0ibraRpBJ2DCo2l5jZQnWdhD0qd5nuBOQ--Lqky-_H1eReMUn45caIWEIXEe2-joBHoImdGD1iG2OsnYV34AWIA14SJNvCxgU_-dF_h3z",
+      "https://res.cloudinary.com/djgykvahm/image/upload/v1746969539/shopping_npwdfg.webp",
     hoverImage:
-      "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcR5rUHMDSdk-ST7_tUNhW5IKFla-T3WhqyLeJjBu9zLwzWxQUH6q63LxLEUBXh7nzX7y1Cx4KVwbYk7lpnErqlX0itpW7tqFATugnw0GMuDE7RI5gLA-Ueo",
+      "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/b_rgb:FFFFFF/a_hflip/f_png/v1746969545/shopping_rzdl8n.webp",
   },
   {
     name: "card.menSunglasses",
@@ -248,9 +248,9 @@ const products = [
     originalPrice: 129.0,
     badge: "NEW",
     mainImage:
-      "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcTd-w4pz_225iiFm8R26gdb4RaBRa7mQ4rv4jykeRjgwXqiz4ZiBzHBtasoDT4aCsRhP4s9dFGWNvh_jtm2BslvCSRbxa1ZKvhZ9lpwldiZ9f7QWjypkkIl6g",
+      "https://res.cloudinary.com/djgykvahm/image/upload/v1746969718/shopping_p5zqky.webp",
     hoverImage:
-      "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcQswm-OPHyr71uHAjy0WFnoRlItfcfiB97NaSr0IwVzSa9nXVYinbh9-Wwd1kxCaX5Zm7x4TpVY8wKrvZbzz5Ze6_FJAzFnQdTlIUcx5ABwb_mDHiTLwQRst3U",
+      "https://res.cloudinary.com/djgykvahm/image/upload/v1746969729/shopping_eogcmz.webp",
   },
   {
     name: "card.menWallet",
@@ -259,9 +259,9 @@ const products = [
     rating: 4,
     originalPrice: 25.0,
     mainImage:
-      "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcSNojsfVLb9ELnGXkgh6TQHPBcrHlA_TfLTZrfhO07OttfFDOJOv9ctRi7WmWHiorFdhDTSzvyJ7eM_lAA4DohToFvOnm1RT9HOwnpNGoSIkUEC4zadrl0yvZOY",
+      "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/b_rgb:FFFFFF/f_png/v1746969796/shopping_qijinu.webp",
     hoverImage:
-      "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcQ7bg5vt58p55I4xnaYvEgXfqmkfZlCI-sZIE9sdnRWeoiy1Qh30BswFihRxI0xsS9_1CHK6J1hUM-tBeG8HMyt1ESpRjEEkPKEmEnYlO8IJGSoaFDqGKvGhY0",
+      "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/b_rgb:FFFFFF/f_png/v1746969801/shopping_o3ulge.webp",
   },
 
   // OUTWEAR
@@ -272,9 +272,9 @@ const products = [
     rating: 4,
     originalPrice: 65.0,
     mainImage:
-      "https://static.zara.net/assets/public/f63e/cc27/af5849489e53/130a2d871651/03833399064-e1/03833399064-e1.jpg?ts=1734948309189&w=750",
+      "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/b_rgb:FFFFFF/f_png/v1746969892/03833399064-e1_lf3whl.jpg",
     hoverImage:
-      "https://static.zara.net/assets/public/9759/2066/3aad42ec99d2/6ccd24893888/03833399064-e2/03833399064-e2.jpg?ts=1734946680820&w=750",
+      "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/b_rgb:FFFFFF/f_png/v1746969897/03833399064-e2_fnp8qq.jpg",
   },
   {
     name: "card.menBlazer",
@@ -283,9 +283,10 @@ const products = [
     rating: 5,
     originalPrice: 90.0,
     badge: "NEW",
-    mainImage: "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcTGNx7JPc94y5ugGyxZIW8bNgofBohMvdgWf-5q21tHQNdrwspKM8JaIU7kNFCGg_-JcYrtyqZDh2SFBs8W_50JriHq3DN7EH7Y_D9imZtNPZnqYERvbzPa",
+    mainImage:
+      "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/b_rgb:FFFFFF/f_png/v1746970008/shopping_csdi1y.webp",
     hoverImage:
-      "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcQYUhTtz3nnn2j1EErElxqWkWUoHpyF8Mff0uGTXiQzP3NFGDt3XdfEhRkORJ9CJsQvOy_-tZ4pNdSY0PYwZsVXqrLGIDa0AC1Gipn0Q8M1fMxqSysEzMuX",
+      "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/b_rgb:FFFFFF/f_png/v1746970017/shopping_ddy7jl.webp",
   },
   {
     name: "card.longCoat",
@@ -294,9 +295,9 @@ const products = [
     rating: 5,
     originalPrice: 110.0,
     badge: "WINTER",
-    mainImage: "https://m.media-amazon.com/images/I/41+PfFffWsL._AC_SX522_.jpg",
+    mainImage: "https://res.cloudinary.com/djgykvahm/image/upload/v1746970105/41_PfFffWsL._AC_SX522__a7ymdz.jpg",
     hoverImage:
-      "https://m.media-amazon.com/images/I/41QOYsRIyzL._AC_SX522_.jpg",
+      "https://res.cloudinary.com/djgykvahm/image/upload/v1746970112/41QOYsRIyzL._AC_SX522__l8fy70.jpg",
   },
   {
     name: "card.blackHoodie",
@@ -305,9 +306,9 @@ const products = [
     rating: 4,
     originalPrice: 40.0,
     mainImage:
-      "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcSONW9eZabq9lpmRW-o4MtvaciwAgundX8GzkYcMZBm4eOHp2RN1VvVLIzmUgdyHDW51iIf329jHJtdd27uug6pMMoeW_6mwRnpWT7ktFTb5XAOKv8Ne7PqKSlF",
+      "https://res.cloudinary.com/djgykvahm/image/upload/v1746970174/shopping_xs26lw.webp",
     hoverImage:
-      "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcR_iQ7GX04_98ea162jYDqk2N0H-CIb8-U3GsbUiqD95jbVULm9-F5P3mxELASgWQKQODlGQbJR0uAburgd7usB0tTS7Sbh9iDr_eeSCNdaU6NgyLOj2XQjfPEH",
+      "https://res.cloudinary.com/djgykvahm/image/upload/v1746970181/shopping_vnpggq.webp",
   },
   {
     name: "card.greyCardigan",
@@ -316,9 +317,9 @@ const products = [
     rating: 4,
     originalPrice: 56.0,
     mainImage:
-      "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcSjjO-s-ZIZLt4IqNNukivffmEp8WnmOZ4GlgNBPuf2pUzz8BmSaJfyAhDbMxpZM1av4BpXIVvci3EIfOThkiuJrxtmfoLrev0-BXMzuaBSmK1tApaZHUqld74",
+      "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/b_rgb:FFFFFF/f_png/v1746970245/shopping_t7vtlu.webp",
     hoverImage:
-      "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcQNytXhBmaafTarKLth62XdVNQQwUupL11Y0pFdkbYyJyvFsVwLtKD-A09Vn0DI7pitise-gSX-mHu5i7rUivdmjTfkPA23zdtrY8_RDfSYlbPNEp7AF5-pJQ",
+      "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/b_rgb:FFFFFF/f_png/v1746970255/shopping_pgygkk.webp",
   },
   {
     name: "card.denimVest",
@@ -327,9 +328,9 @@ const products = [
     rating: 3,
     originalPrice: 34.0,
     mainImage:
-      "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcSo2hVKD0-DnIQPBVdzuJjkdkBjZp8pLm49qznRwjc2XVIfkuz1U5cSuA5tH__DfOfdV_-S9YfT0jSDotJdT8bYpJXu_y-Nz-iPXqdP8SRyS5RZyFZ7ALujPwU",
+      "https://res.cloudinary.com/djgykvahm/image/upload/v1746970361/shopping_jq3pqk.webp",
     hoverImage:
-      "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcRQ7GI4tbLmHXV9H_IuSGncDTo3iOnzzXn79iuxb1qK6H9c5iaqEwplY3qwNhq63DsXaw1yOf-A9VnPMWY1FKIH4LZ4Dz6xVmYEHouMrqKx",
+      "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/b_rgb:FFFFFF/c_fill,ar_3:4,f_png/v1746970368/shopping_cgotmj.webp",
   },
 
   // SHOES
@@ -339,8 +340,8 @@ const products = [
     price: 50.0,
     rating: 4,
     originalPrice: 56.0,
-    mainImage: "https://m.media-amazon.com/images/I/61kliJGTrML._SY625_.jpg",
-    hoverImage: "https://m.media-amazon.com/images/I/71XCHR8wBiL._SY625_.jpg",
+    mainImage: "https://res.cloudinary.com/djgykvahm/image/upload/v1746970478/61kliJGTrML._SY625__nteiu5.jpg",
+    hoverImage: "https://res.cloudinary.com/djgykvahm/image/upload/v1746970484/71XCHR8wBiL._SY625__pzjpje.jpg",
   },
   {
     name: "card.whiteSneakers",
@@ -350,9 +351,9 @@ const products = [
     originalPrice: 65.0,
     badge: "TRENDING",
     mainImage:
-      "https://www.bbassets.com/media/uploads/p/l/40341087_1-puma-by-cliq-mens-smash-pop-white-casual-sneakers.jpg",
+      "https://res.cloudinary.com/djgykvahm/image/upload/v1746970532/40341087_1-puma-by-cliq-mens-smash-pop-white-casual-sneakers_k220ml.webp",
     hoverImage:
-      "https://www.bbassets.com/media/uploads/p/l/40341087-3_1-puma-by-cliq-mens-smash-pop-white-casual-sneakers.jpg",
+      "https://res.cloudinary.com/djgykvahm/image/upload/v1746970541/40341087-3_1-puma-by-cliq-mens-smash-pop-white-casual-sneakers_lbluy4.webp",
   },
   {
     name: "card.leatherSandals",
@@ -361,9 +362,9 @@ const products = [
     rating: 3,
     originalPrice: 38.0,
     mainImage:
-      "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcQQI5UD39xZBn0TTR4l_pCX-tvG-iCpwC4AfJe2oHGXsQT9XGpsZD-5JCBFese1XxURHEZ0UTAOfrm2b1_lImowdjTXX8k-DL0tprD-dV8Mw7GsEzikgrcwmCk",
+      "https://res.cloudinary.com/djgykvahm/image/upload/v1746970586/shopping_eyemra.webp",
     hoverImage:
-      "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcQNx376bgFacKz9de7uAKU8EE8dPzhCbqnT_gLzj5V3UJvCww0SHiNQzwBp8dqqxfxpqivLcO2mREpRwvJhACleC7JykK9jC17tRTZ527HaIp7V9HkfNKYobw",
+      "https://res.cloudinary.com/djgykvahm/image/upload/v1746970595/shopping_l3l3cv.webp",
   },
   {
     name: "card.ankleBoots",
@@ -372,9 +373,9 @@ const products = [
     rating: 5,
     originalPrice: 79.0,
     mainImage:
-      "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcRTZSeRtfRPxrJK7gtl2HRflkQgIAO9IhnCR0kd-AzZTu-1p037M1jP-BqaOfARMY22Uu8p84V5pWGklT_QK6Tsh2xmUSKo1bJ6NtTCv8rk1RhDzpx86rhbgCNZ",
+      "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/b_rgb:FFFFFF/f_png/v1746970650/shopping_d57b3i.webp",
     hoverImage:
-      "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcQ6dmgTIoW5oPLJZo32ZqfWq-Tjgz2XfWARat0YsTVUbexvTvPHfiETYT3K-oSj5KiHNQdVoik3XGfe50CsVBnz5KXBst5ftRmWb9kdtjUJ0szAmHNEGL0ODh4",
+      "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/b_rgb:FFFFFF/f_png/v1746970661/shopping_tredvn.webp",
   },
   {
     name: "card.beachFlipFlops",
@@ -383,9 +384,9 @@ const products = [
     rating: 4,
     originalPrice: 16.0,
     mainImage:
-      "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcSTVou2drjuwOQWYnbzYe_RxrhvBQIIeHQ3vhxDm6BYN2ZYdak7v6XYpVWlO5EKCZmbks1slLP-61R0Cb3woAhw5fkRw0WLA6L6ZmkXdKEH7hFTL53qVgA5dw",
+      "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/b_rgb:FFFFFF/f_png/v1746970740/shopping_fgh6ty.webp",
     hoverImage:
-      "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcS569j5HD2yMPCmwBQft7CGQbHVzvyuoUQGENyD2jEjtNBAOlVNuftu8DDgmODNYUj0qixRqMZXpI0zGAtU0eBrxq9ov_p9kU6Aa4_YM6j3oJ_DDZqto2X-Vx0",
+      "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/b_rgb:FFFFFF/f_png/v1746970750/shopping_ehpyoo.webp",
   },
   {
     name: "card.casualLoafers",
@@ -394,9 +395,9 @@ const products = [
     rating: 4,
     originalPrice: 52.0,
     mainImage:
-      "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcQXEJVPVxcH2eebOm7d3T6219ALgXi2pWHOZUnD-zBa4QfnNe7_46de_P2bPUhFTR_exbcO1AKy6KOedR_tUayIHtgk30CTryUY23uGuurgVuRXIOanxqF_zQ",
+      "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/b_rgb:FFFFFF/f_png/v1746970863/shopping_oj6enk.webp",
     hoverImage:
-      "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcSx5CgN2P-OT4SzfnbU65GaH6C-OdQBa0W36E8QZe2Vm1LEg5xQl6X9Cceq-yKEIg1rxdiCWYTbclvpTZL3wG89G17y4jR_FIE8TckEQcv5IxfgjC6mnPVr",
+      "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/b_rgb:FFFFFF/f_png/v1746970872/shopping_xree37.webp",
   },
 
   // BAGS
@@ -407,9 +408,9 @@ const products = [
     rating: 4,
     originalPrice: 45.0,
     mainImage:
-      "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcQF3Tt53w88pzHOvzIWHsr-3ZCDP9lhkiXjYNl0m5EcnV4yorNru0o87Y0eEew_4uXXnZfAPuGFV1bngZb8ceH8D8K7utxneqp9w8V10lE5efHqO5oKRg58",
+      "https://res.cloudinary.com/djgykvahm/image/upload/v1746970953/shopping_qmysmp.webp",
     hoverImage:
-      "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcTtvPebReF_y9IAVnZRcCzP-wu9GzLcaEg0zzoKt0-cNpfW-x2V4sTKwv9ETNL3_Y6Skxs2kZhKiv4dPwqrN3rWWUcMA7r2wthCGw4s_Nm1aBFFkxUm4MGG6Q",
+      "https://res.cloudinary.com/djgykvahm/image/upload/v1746970960/shopping_esmb0z.webp",
   },
   {
     name: "card.luxuryHandbag",
@@ -419,9 +420,9 @@ const products = [
     originalPrice: 98.0,
     badge: "PREMIUM",
     mainImage:
-      "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcSBMn9ZlA42rSpJJttNnz8GoC-5xyLE8wE7w7ayBTIDQHOsK8cu_KNxYnjKCyfxUTWL4u5hCbozRgXbGiGpnWFSSfLcgXYcW4W3PA6Npm_da7ZizUjCgQ7pQA",
+      "https://res.cloudinary.com/djgykvahm/image/upload/v1746971033/shopping_ou38ur.webp",
     hoverImage:
-      "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcSS5r753eTeNUWuipIoHAXNf5S-4I762RLOcov8Gc_gnpSfF-lnAFrp5lImoKYdKLnX_jr-whQA4dYmW_nkA_rX8a6_KXUdCgKLj0Mfj86YgDoRef8nK0I3sw",
+      "https://res.cloudinary.com/djgykvahm/image/upload/v1746971039/shopping_idtpuf.webp",
   },
   {
     name: "card.simpleToteBag",
@@ -430,9 +431,9 @@ const products = [
     rating: 4,
     originalPrice: 32.0,
     mainImage:
-      "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcSMYSRVYBgjON4kuL8BYjUu6OTQ01hnz9EyUoexRrFz5YNrSUU_ys2NILZBlvcO0WscypLUrO2U2VtbqqlwprsyQAnVUgV1LhuAVi9JT0a_DQS-MeFuOrUI_g",
+      "https://res.cloudinary.com/djgykvahm/image/upload/v1746971103/shopping_nvhrs5.webp",
     hoverImage:
-      "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcTxIbQewQFZr6MRevJ0lcEnEZzec342g89w2-H3D77B6xfdeP1C2NkAqCuNzU6TVix8sj6HPAqY-qaLDY-c0zzNkVsE6gPC1SALmZJL8XGJ9OdHgBgtVB1iOQ",
+      "https://res.cloudinary.com/djgykvahm/image/upload/c_crop,w_462/v1746971110/shopping_g2l3oh.webp",
   },
   {
     name: "card.menMessengerBag",
@@ -441,9 +442,9 @@ const products = [
     rating: 4,
     originalPrice: 53.0,
     mainImage:
-      "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcTu3ZKezrdsuEz3Pr2xU_H4T5uCe29MwfppTTfHw0dkJR3LvNpX6pGRvR1m5EbAhwwUqmmNJNELTV20oeawvbqxlk7h7MBX-mbW5fV7qZK_vt71tLIbcNvH",
+      "https://res.cloudinary.com/djgykvahm/image/upload/v1746971225/shopping_y4uwno.webp",
     hoverImage:
-      "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcSN9j08DBrpnLVAPoRL7IgouS7gbVTaqrldr9TM_U6ki62y0i2YDEvFMjjTOIQd5GRrGcHUKk2s79rb9tIDX_cr_d3J9wEbeNofmelcNfTF",
+      "https://res.cloudinary.com/djgykvahm/image/upload/v1746971233/shopping_oxtca8.webp",
   },
   {
     name: "card.sportDuffelBag",
@@ -452,9 +453,9 @@ const products = [
     rating: 4,
     originalPrice: 50.0,
     mainImage:
-      "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcQVV-IjyHaC9pW37R4MbXsExbjYlDcPNgZ7NJDFoEJzVA07VXh2YA7maNSqQGOQcP6saCnAci85mdg99kK2626nkVpeY5nJf3Po5o6m3BGvaOKFDtFAnHZb",
+      "https://res.cloudinary.com/djgykvahm/image/upload/v1746971281/shopping_bjkvyv.webp",
     hoverImage:
-      "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcQhZoJ5ia35BPSJoyamBza_Yo7CwoQS7gzTw3X7Fy4Rd5FL3_Ux-HLYCZVbk7Ey-MEDvbdI_15BxF9h-d1KRemb1vMKRUVHMJQ7zsP89A75Yo9CjHkCI9W-mA",
+      "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/b_rgb:FFFFFF/f_png/v1746971290/shopping_h7vtjs.webp",
   },
 
   // BEAUTY
@@ -466,9 +467,9 @@ const products = [
     originalPrice: 45.0,
     badge: "SELF-CARE",
     mainImage:
-      "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcQwG0U4--v8Dt7_IzUSBcoFskvMN2rZD7UCmQPuU2bw7_Eqhac0Cv-_cShiZliCkmJlVwh3lIuzshody3UStAvJvXiXVtwM-IbUw4LEIM1h03jy67mBsmT-QA",
+      "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/b_rgb:FFFFFF/f_png/v1746971370/shopping_y6qpgy.webp",
     hoverImage:
-      "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcT7ScyuTzTqCHuH26j-vxGrNn_FWfesSdmi63VPVHofxlGarYV0PKqu2o_XOjOix_tkl3ZyscK5aaxY7RU4sRudbFnLjdcpEhyL_DMwobc8taBGA27ekcsz",
+      "https://res.cloudinary.com/djgykvahm/image/upload/v1746971379/shopping_ixijyg.webp",
   },
   {
     name: "card.matteMakeupKit",
@@ -477,9 +478,9 @@ const products = [
     rating: 4,
     originalPrice: 53.0,
     mainImage:
-      "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcSzdWgGwBRgi7tOdiYILYQzJU-riLJbkzc893Gy_MD33r7V9FcIq6xuhHdAuv3crKQsCYORMnWd7yunWhessqhpRT2NIzJehUuVB2oNQAuFyu7riRG5qDOoLQ",
+      "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/b_rgb:FFFFFF/f_png/v1746971492/shopping_i7xqyy.webp",
     hoverImage:
-      "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcR54Ye70rypEvS-wKOKNBRks4-jVe9ZSua-hFGLHHET6LNSZqLUHB2gOGMNApIDoK3hgxTFtlBMKTxv40zxVdB1LuA5ZPtd45Pa4pL-2MXqPZkucSw1mUgB",
+      "https://res.cloudinary.com/djgykvahm/image/upload/v1746971507/shopping_grli7g.webp",
   },
   {
     name: "card.perfumeSet",
@@ -489,9 +490,9 @@ const products = [
     originalPrice: 72.0,
     badge: "BESTSELLER",
     mainImage:
-      "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcST3wRrR8VU0PbDZN6Yy4m59S1HJPa9rWaRpfJ0inDMM8PS0vS6EnkwYA889-VbUQz_ZYtzTH8P4Htc31Aq0ZBWDntrraH8m3wEdRvHJQ2M8oLuXNIW73yo",
+      "https://res.cloudinary.com/djgykvahm/image/upload/v1746971585/shopping_gp0ljb.webp",
     hoverImage:
-      "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcQmO3X9Q9dkir6oskKQc9O8qha60ob9Jp1njFoP9BfLUjUkXReLqqfHpfo0hoqeKCcqWq-l8PKsj3BrMRx21YNNM7vpYozcnMg2ZYkIn2orQ64P-MNC-NWykA",
+      "https://res.cloudinary.com/djgykvahm/image/upload/v1746971593/shopping_xub5a8.webp",
   },
   {
     name: "card.haircareEssentials",
@@ -500,9 +501,9 @@ const products = [
     rating: 4,
     originalPrice: 38.0,
     mainImage:
-      "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcShous-hSVMB4_U5OoV4KZP3acCcWMmo1KOsR8I_mivnKD7vSbU0493bTP8udG0R_4VSi00nU_SoMVP4YWXFuSfZ5idLGm-3Rg45z1Ody4gjXLRC6svrT1M",
+      "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/b_rgb:FFFFFF/f_png/v1746971641/shopping_zhc2n4.webp",
     hoverImage:
-      "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcTcsdV47bxxBofsnsouZ-Xn4B3WuAhaF_LXS0vgq6msgVETgL4vee3WpGulVUtIWeBqG0wdRd-JzJrlQ5KczSBk37Dx1PsOyN-brn4m4Bk",
+      "https://res.cloudinary.com/djgykvahm/image/upload/v1746971648/shopping_vfcuon.webp",
   },
   {
     name: "card.groomingKitMen",
@@ -511,9 +512,9 @@ const products = [
     rating: 5,
     originalPrice: 58.0,
     mainImage:
-      "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcQJmsO0MlAfuPSb7SeSTyTp8Xjh8JJBzngPK3_C-VeYQSc74R9trgOOwPtzOuvWv4VKG02L_naIWVr3E25UB50BMeBmGbXV-L8Uqoj31CRngUw9Fj44xZ_hzg",
+      "https://res.cloudinary.com/djgykvahm/image/upload/v1746971786/shopping_odnmtx.webp",
     hoverImage:
-      "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcSieZNiLyaRVNnCTGgP2PaDX6Grk-aTK8YDZ26Nk9mJGaJ0TJd2k4POmtd6aLvdT3qT_KQ_jP6dFoJPE2gFfz1tkxhYwgJZn2oBdrP7VY4dbvG_tCechD1REQ",
+      "https://res.cloudinary.com/djgykvahm/image/upload/v1746971800/shopping_e5jvsr.webp",
   },
 ];
 

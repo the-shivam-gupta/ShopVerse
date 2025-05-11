@@ -175,7 +175,7 @@ export default function Home({ currency }) {
         {/* Product Grids */}
         <div className="min-h-screen bg-gray-100 p-10">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-            {products.map((product, index) => (
+            {shuffledProducts.map((product, index) => (
               <ProductCard
                 key={product.name}
                 product={product}

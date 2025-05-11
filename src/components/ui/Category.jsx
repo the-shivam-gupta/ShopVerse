@@ -171,7 +171,7 @@ export default function CategorySection() {
   ];
 
   return (
-    <div className="sticky top-4 h-fit">
+    <div className="lg:sticky lg:top-4 h-fit">
       <div className="w-70 h-fit p-4 rounded-lg shadow-md border border-gray-200 bg-gradient-to-tr from-white to-pink-50">
         <h2 className="text-lg font-bold mb-4">{t("category.category")}</h2>
 
