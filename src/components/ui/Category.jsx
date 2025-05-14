@@ -11,14 +11,12 @@ export default function CategorySection() {
   const { t } = useTranslation();
 
   const toggleCategory = (category) => {
-    setOpenCategories((prev) => ({
-      ...prev,
-      [category]: !prev[category],
-    }));
-    setAnimatedCategories((prev) => ({
-      ...prev,
-      [category]: prev[category] || false, // false = not yet animated
-    }));
+    setOpenCategories((prev) => {
+      const isOpen = prev[category];
+      return {
+        [category]: !isOpen, // toggle clicked one
+      };
+    });
   };
 
   // Animate numbers
@@ -177,7 +175,9 @@ export default function CategorySection() {
 
         {categories.map((cat) => (
           <div key={cat.id}>
-            <div
+            <motion.div
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
               className="flex justify-between items-center cursor-pointer py-2"
               onClick={() => toggleCategory(cat.id)}
             >
@@ -188,7 +188,7 @@ export default function CategorySection() {
                 </span>
               </div>
               {openCategories[cat.id] ? <FaMinus /> : <FaPlus />}
-            </div>
+            </motion.div>
 
             <AnimatePresence initial={false}>
               {openCategories[cat.id] && (
