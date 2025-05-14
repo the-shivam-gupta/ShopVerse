@@ -100,7 +100,7 @@ const ContactUs = () => {
             onChange={(e) => setName(e.target.value)}
             onFocus={() => setFocus({ ...focus, name: true })}
             onBlur={() => setFocus({ ...focus, name: false })}
-            className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-pink-400"
+            className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-pink-400 caret-pink-400"
           />
         </div>
 
@@ -127,7 +127,7 @@ const ContactUs = () => {
             onChange={(e) => setEmail(e.target.value)}
             onFocus={() => setFocus({ ...focus, email: true })}
             onBlur={() => setFocus({ ...focus, email: false })}
-            className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-pink-400"
+            className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-pink-400 caret-pink-400"
           />
         </div>
 
@@ -154,7 +154,7 @@ const ContactUs = () => {
             onChange={(e) => setMessage(e.target.value)}
             onFocus={() => setFocus({ ...focus, message: true })}
             onBlur={() => setFocus({ ...focus, message: false })}
-            className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-pink-400"
+            className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-pink-400 caret-pink-400"
           />
         </div>
 
