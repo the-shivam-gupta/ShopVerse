@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ProductCard, products as allProducts } from "./ProductCard";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import { useCart } from "../context/CartContext";
 import ProductQuickView from "./ProductQuickView";
+import { useNavigate, useParams } from "react-router-dom";
 
 const categoryStructure = {
   SHIRTS: [
@@ -22,13 +23,7 @@ const categoryStructure = {
     "SUNGLASSES",
     "WALLET",
   ],
-  ELECTRONICS: [
-    "HEADPHONE",
-    "SMARTPHONE",
-    "TABLET",
-    "LAPTOP",
-    "POWER BANK",
-  ],
+  ELECTRONICS: ["HEADPHONE", "SMARTPHONE", "TABLET", "LAPTOP", "POWER BANK"],
   BOTTOMS: ["SKIRT", "JEANS", "TROUSERS", "SHORTS", "JOGGERS", "CULOTTES"],
   OUTERWEAR: ["JACKET", "BLAZER", "COAT", "HOODIE", "CARDIGAN", "VEST"],
   FOOTWEAR: ["SHOES", "SNEAKERS", "SANDALS", "BOOTS", "FLIP FLOPS", "LOAFERS"],
@@ -43,13 +38,25 @@ const ProductListingPage = ({
   isCompareOpen,
   handleCloseCompare,
 }) => {
-  const [selectedCategory, setSelectedCategory] = useState("All");
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [priceRange, setPriceRange] = useState([0, 2000]);
   const [sortType, setSortType] = useState("default");
   const [expandedCategory, setExpandedCategory] = useState(null); //tracks which parent’s subcategories are visible
   const { addToCart } = useCart();
   const { t } = useTranslation();
+  const navigate = useNavigate();
+  const { categoryName } = useParams();
+  const [selectedCategory, setSelectedCategory] = useState(
+    categoryName || "All"
+  );
+
+  useEffect(() => {
+    if (categoryName) {
+      setSelectedCategory(categoryName);
+    } else {
+      setSelectedCategory("All");
+    }
+  }, [categoryName]);
 
   const filterAndSortProducts = () => {
     let filtered = allProducts.filter((p) => {
@@ -112,6 +119,7 @@ const ProductListingPage = ({
             onClick={() => {
               setExpandedCategory(null);
               setSelectedCategory("All");
+              navigate("/products");
             }}
             className={`block w-full text-left px-3 py-1 rounded cursor-pointer ${
               selectedCategory === "All"
@@ -152,7 +160,10 @@ const ProductListingPage = ({
                     {subcategories.map((sub) => (
                       <button
                         key={sub}
-                        onClick={() => setSelectedCategory(sub)}
+                        onClick={() => {
+                          setSelectedCategory(sub);
+                          navigate(`/products/category/${sub.toUpperCase()}`);
+                        }}
                         className={`block w-full text-left px-3 py-1 rounded cursor-pointer ${
                           selectedCategory === sub
                             ? "bg-pink-100 text-pink-600 font-semibold"
