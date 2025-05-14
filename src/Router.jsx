@@ -63,6 +63,10 @@ const AppRouter = ({ currency, setCurrency }) => {
             path="/products"
             element={<ProductListingPage currency={currency} />}
           />
+          <Route
+            path="/products/category/:categoryName"
+            element={<ProductListingPage currency={currency} />}
+          />
           <Route path="/contact" element={<ContactUs />} />
           <Route path="/about" element={<AboutUs />} />
         </Routes>
