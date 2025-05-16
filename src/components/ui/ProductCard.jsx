@@ -560,7 +560,7 @@ const ProductCard = ({ product, currency, onQuickView, onAddToCompare }) => {
 
   return (
     <div
-      className="overflow-visible relative bg-white rounded-xl shadow hover:shadow-xl transition-all p-4 hover:translate-px"
+      className="overflow-visible relative bg-white dark:bg-gradient-to-tr dark:from-gray-200 dark:to-gray-100 rounded-xl shadow hover:shadow-xl dark:hover:shadow-md dark:shadow-gray-300 transition-all p-4 hover:translate-px"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
@@ -570,6 +570,7 @@ const ProductCard = ({ product, currency, onQuickView, onAddToCompare }) => {
           src={hovered ? product.hoverImage : product.mainImage}
           alt={product.name}
           className="w-full h-64 object-contain transition-all duration-300 bg-transparent ease-linear"
+          style={{ mixBlendMode: 'multiply' }}
         />
 
         {/* Icons */}
@@ -653,7 +654,7 @@ const ProductCard = ({ product, currency, onQuickView, onAddToCompare }) => {
         <p className="text-pink-400 font-semibold text-md text-left ml-2 cursor-pointer">
           {t(product.category)}
         </p>
-        <h3 className="text-gray-500 text-[1em] mt-1 text-left text-xl tracking-wider ml-2 cursor-pointer hover:text-gray-600 duration-200">
+        <h3 className="text-gray-500 dark:text-gray-700 text-[1em] mt-1 text-left text-xl tracking-wider ml-2 cursor-pointer hover:text-gray-600 dark:hover:text-gray-600 duration-200">
           {t(product.name)}
         </h3>
         <div className="flex justify-start items-start text-yellow-400 mt-2 ml-2">
@@ -662,12 +663,13 @@ const ProductCard = ({ product, currency, onQuickView, onAddToCompare }) => {
               key={index}
               fill={index < stars.filled ? "orange" : "none"}
               strokeWidth={1}
+              className="border border-yellow-200 dark:border-yellow-400"
             />
           ))}
         </div>
         <div className="mt-2 text-left space-x-4 ml-2">
-          <span className="text-lg font-bold text-gray-800">{price}</span>
-          <span className="text-gray-400 line-through text-md">
+          <span className="text-lg font-bold text-gray-800 dark:text-gray-700">{price}</span>
+          <span className="text-gray-400 dark:text-gray-500 line-through text-md">
             {originalPrice}
           </span>
         </div>

@@ -54,7 +54,7 @@ const ProductQuickView = ({ product, isOpen, onClose, currency }) => {
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.9 }}
               transition={{ duration: 0.4 }}
-              className="border border-white w-[90%] max-w-2xl rounded-xl shadow-2xl p-6 relative"
+              className="border border-white dark:border-gray-200 w-[90%] max-w-2xl rounded-xl shadow-2xl p-6 relative bg-white"
             >
               <button
                 onClick={onClose}

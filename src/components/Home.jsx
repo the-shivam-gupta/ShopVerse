@@ -91,10 +91,10 @@ export default function Home({ currency }) {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <section className="flex flex-col-reverse md:flex-row bg-pink-50 p-8 items-center justify-evenly gap-12">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-800">
+      <section className="flex flex-col-reverse md:flex-row bg-pink-50 dark:bg-gray-800 p-8 items-center justify-evenly gap-12">
         <div className="space-y-4 text-center md:text-left max-w-md">
-          <h2 className="text-2xl md:text-3xl font-bold text-gray-800">
+          <h2 className="text-2xl md:text-3xl font-bold text-gray-800 dark:text-gray-50">
             {t("home.trendingAccessories")}
           </h2>
           <h1 className="text-4xl md:text-5xl font-bold text-pink-400 leading-tight">
@@ -102,7 +102,7 @@ export default function Home({ currency }) {
               MODERN <br /> SUNGLASSES
             </Trans>
           </h1>
-          <p>
+          <p className="dark:text-gray-100">
             {t("home.startingAt")}
             <span className="font-bold">
               $ <span className="text-lg font-extrabold">15</span>.00
@@ -119,12 +119,12 @@ export default function Home({ currency }) {
           <img
             src="./src/assets/image.png"
             alt="Model 1"
-            className="absolute -left-10 bottom-2 w-[150px] md:w-[250px] rounded-full border-4 border-pink-100 z-10"
+            className="absolute -left-10 bottom-2 w-[150px] md:w-[250px] rounded-full border-4 border-pink-100 dark:border-gray-300 z-10"
           />
           <img
             src="./src/assets/womenGlasses.png"
             alt="Model 2"
-            className="absolute left-20 md:left-28 top-6 w-[150px] md:w-[250px] rounded-full border-4 border-pink-100 z-20"
+            className="absolute left-20 md:left-28 top-6 w-[150px] md:w-[250px] rounded-full border-4 border-pink-100 dark:border-gray-300 z-20"
           />
         </div>
       </section>
@@ -145,7 +145,7 @@ export default function Home({ currency }) {
             <motion.div
               whileHover={{ scale: 1.05 }}
               key={id}
-              className="backdrop-blur-lg bg-white/30 border border-pink-200 p-5 rounded-xl shadow-xl w-45 text-center hover:shadow-2xl hover:bg-white/40 cursor-pointer"
+              className="backdrop-blur-lg dark:bg-gray-700 border border-pink-200 dark:border-gray-400 p-5 rounded-xl shadow-xl dark:shadow-gray-300 dark:shadow-sm w-45 text-center hover:shadow-2xl hover:bg-white dark:hover:bg-gray-500 cursor-pointer"
             >
               <div className="relative">
                 <img
@@ -154,7 +154,7 @@ export default function Home({ currency }) {
                   alt="category"
                 />
               </div>
-              <div className="text-lg font-bold text-gray-800 drop-shadow-sm">
+              <div className="text-lg font-bold text-gray-800 dark:text-gray-100 drop-shadow-sm">
                 {t(item.title)}
               </div>
               <button
@@ -173,7 +173,7 @@ export default function Home({ currency }) {
         <CategorySection />
 
         {/* Product Grids */}
-        <div className="min-h-screen bg-gray-100 p-10">
+        <div className="min-h-screen bg-gray-100 dark:bg-gray-700 p-10">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
             {shuffledProducts.map((product, index) => (
               <ProductCard
@@ -206,13 +206,13 @@ export default function Home({ currency }) {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 50, scale: 0.9 }}
               transition={{ duration: 0.3 }}
-              className="fixed bottom-6 right-6 bg-white p-6 shadow-2xl rounded-2xl w-80 z-50"
+              className="fixed bottom-6 right-6 bg-white dark:bg-gray-200 p-6 shadow-2xl rounded-2xl w-80 z-50"
             >
-              <h4 className="font-bold mb-4 text-lg text-gray-700">
+              <h4 className="font-bold mb-4 text-lg text-gray-700 dark:text-gray-800">
                 {t("compare.compareItems")}
               </h4>
               {compareList.map((item) => (
-                <p key={item.name} className="text-md text-gray-600">
+                <p key={item.name} className="text-md text-gray-600 dark:text-gray-700">
                   {t(item.name)}
                 </p>
               ))}

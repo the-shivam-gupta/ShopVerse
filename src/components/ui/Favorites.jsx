@@ -19,16 +19,24 @@ const FavoritesPage = ({
 
   if (favorites.length === 0) {
     return (
-      <div className="container mx-auto py-8">
-        <h1 className="text-2xl font-bold mb-4">{t("favorite.favorites")}</h1>
-        <p className="text-gray-700">{t("favorite.noFavItem")}</p>
+      <div className="dark:bg-gray-800 w-full h-[100dvh]">
+        <div className="container mx-auto py-8">
+          <h1 className="text-2xl font-bold mb-4 dark:text-gray-100">
+            {t("favorite.favorites")}
+          </h1>
+          <p className="text-gray-700 dark:text-gray-300">
+            {t("favorite.noFavItem")}
+          </p>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 p-10">
-      <h1 className="text-2xl font-bold mb-4 text-gray-700">Your Favorites</h1>
+    <div className="min-h-screen bg-gray-100 dark:bg-gray-800 p-10">
+      <h1 className="text-2xl font-bold mb-4 text-gray-700 dark:text-gray-100">
+        Your Favorites
+      </h1>
       <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-8 w-full">
         {favorites.map((product) => (
           <ProductCard

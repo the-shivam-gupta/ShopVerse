@@ -170,8 +170,8 @@ export default function CategorySection() {
 
   return (
     <div className="lg:sticky lg:top-4 h-fit">
-      <div className="w-70 h-fit p-4 rounded-lg shadow-md border border-gray-200 bg-gradient-to-tr from-white to-pink-50">
-        <h2 className="text-lg font-bold mb-4">{t("category.category")}</h2>
+      <div className="w-70 h-fit p-4 rounded-lg shadow-md border border-gray-200 dark:border-gray-400 bg-gradient-to-tr from-white to-pink-50 dark:bg-gradient-to-tr dark:from-gray-500 dark:to-gray-600">
+        <h2 className="text-lg font-bold mb-4 dark:text-gray-200">{t("category.category")}</h2>
 
         {categories.map((cat) => (
           <div key={cat.id}>
@@ -183,11 +183,14 @@ export default function CategorySection() {
             >
               <div className="flex items-center gap-2">
                 <span className="text-2xl">{cat.icon}</span>
-                <span className="font-bold text-lg text-gray-800">
+                <span className="font-bold text-lg text-gray-800  dark:text-gray-50">
                   {t(cat.name)}
                 </span>
               </div>
+              <span className="dark:text-gray-200">
+
               {openCategories[cat.id] ? <FaMinus /> : <FaPlus />}
+              </span>
             </motion.div>
 
             <AnimatePresence initial={false}>
@@ -198,7 +201,7 @@ export default function CategorySection() {
                   animate={{ opacity: 1, height: "auto" }}
                   exit={{ opacity: 0, height: 0 }}
                   transition={{ duration: 0.3 }}
-                  className="ml-8 mt-1 space-y-1 text-gray-500 font-semibold overflow-hidden"
+                  className="ml-8 mt-1 space-y-1 text-gray-500 dark:text-gray-200 font-semibold overflow-hidden"
                 >
                   {cat.items.map((item) => (
                     <AnimatedCountRow
@@ -222,8 +225,8 @@ export default function CategorySection() {
       </div>
 
       {/* Rotating Reviews BELOW */}
-      <div className="w-70 mt-4 p-4 rounded-lg shadow-md border border-gray-200 bg-pink-50">
-        <h3 className="text-lg font-bold mb-2 text-gray-600">
+      <div className="w-70 mt-4 p-4 rounded-lg shadow-md border border-gray-200 dark:border-gray-400 bg-pink-50 dark:bg-gradient-to-tr dark:from-gray-500 dark:to-gray-600">
+        <h3 className="text-lg font-bold mb-2 text-gray-600 dark:text-gray-200">
           {t("testimonial.testimonial")} 💬
         </h3>
         <AnimatePresence mode="wait">
@@ -233,10 +236,10 @@ export default function CategorySection() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.6 }}
-            className="text-sm text-gray-700"
+            className="text-sm text-gray-700 dark:text-gray-300"
           >
             <p className="mb-2">“{reviews[currentReview].text}”</p>
-            <p className="text-xs text-gray-500">
+            <p className="text-xs text-gray-500 dark:text-gray-300">
               ~ {reviews[currentReview].name} || {reviews[currentReview].stars}
             </p>
           </motion.div>
