@@ -103,16 +103,16 @@ const ProductListingPage = ({
   };
 
   return (
-    <div className="flex flex-col md:flex-row p-4 gap-6">
+    <div className="flex flex-col md:flex-row p-4 gap-6 dark:bg-gray-800">
       {/* Sidebar Filters */}
       <motion.aside
         initial={{ x: -50, opacity: 0 }}
         animate={{ x: 0, opacity: 1 }}
         transition={{ duration: 0.5 }}
-        className="lg:sticky lg:top-6 w-full md:w-1/5 space-y-4 flex flex-col px-5 py-6 shadow-xl h-fit rounded-xl bg-linear-to-tr from-white to-pink-50 border border-gray-200"
+        className="lg:sticky lg:top-6 w-full md:w-1/5 space-y-4 flex flex-col px-5 py-6 shadow-xl h-fit rounded-xl bg-linear-to-tr from-white to-pink-50 dark:bg-gradient-to-tr dark:from-gray-500 dark:to-gray-600 border border-gray-200 dark:border-gray-400"
       >
-        <div className="border p-3 border-pink-100 rounded-xl">
-          <h2 className="text-xl font-semibold mb-2 text-gray-600">
+        <div className="border p-3 border-pink-100 dark:border-gray-400 rounded-xl">
+          <h2 className="text-xl font-semibold mb-2 text-gray-600 dark:text-gray-100">
             {t("filter.category")}
           </h2>
           <button
@@ -121,10 +121,10 @@ const ProductListingPage = ({
               setSelectedCategory("All");
               navigate("/products");
             }}
-            className={`block w-full text-left px-3 py-1 rounded cursor-pointer ${
+            className={`block w-full text-left px-3 py-1 rounded cursor-pointer dark:text-gray-100 ${
               selectedCategory === "All"
-                ? "bg-pink-200 font-semibold"
-                : "hover:bg-gray-100"
+                ? "bg-pink-500 font-semibold"
+                : "hover:bg-gray-100 dark:hover:bg-gray-500"
             }`}
           >
             All
@@ -138,10 +138,10 @@ const ProductListingPage = ({
                   );
                   setSelectedCategory(parent);
                 }}
-                className={`block w-full text-left px-3 py-1 rounded cursor-pointer ${
+                className={`block w-full text-left px-3 py-1 rounded cursor-pointer dark:text-gray-100 ${
                   selectedCategory === parent
-                    ? "bg-pink-200 font-semibold"
-                    : "hover:bg-gray-100"
+                    ? "bg-pink-500 font-semibold"
+                    : "hover:bg-gray-100 dark:hover:bg-gray-500"
                 }`}
               >
                 {parent}
@@ -164,13 +164,13 @@ const ProductListingPage = ({
                           setSelectedCategory(sub);
                           navigate(`/products/category/${sub.toUpperCase()}`);
                         }}
-                        className={`block w-full text-left px-3 py-1 rounded cursor-pointer ${
+                        className={`block w-full text-left px-3 py-1 rounded cursor-pointer dark:text-gray-200 ${
                           selectedCategory === sub
-                            ? "bg-pink-100 text-pink-600 font-semibold"
-                            : "hover:bg-gray-50"
+                            ? "bg-pink-100 dark:bg-pink-400 text-pink-400 dark:text-white font-semibold"
+                            : "hover:bg-gray-50 dark:hover:bg-gray-500"
                         }`}
                       >
-                        - {sub}
+                        ~ {sub}
                       </button>
                     ))}
                   </motion.div>
@@ -180,11 +180,11 @@ const ProductListingPage = ({
           ))}
         </div>
 
-        <div className="border p-2 rounded-xl border-pink-100">
-          <h2 className="text-xl font-semibold text-gray-700">
+        <div className="border p-2 rounded-xl border-pink-100 dark:border-gray-400">
+          <h2 className="text-xl font-semibold text-gray-700 dark:text-gray-100">
             {t("filter.priceRange")}
           </h2>
-          <div className="text-sm mt-2">
+          <div className="text-sm mt-2 dark:text-gray-200">
             {t("filter.upTo")}{" "}
             {currency === "USD"
               ? `$${priceRange[1]}`
@@ -201,13 +201,13 @@ const ProductListingPage = ({
         </div>
 
         <div className="p-2">
-          <h2 className="text-xl font-semibold mb-2 text-gray-700">
+          <h2 className="text-xl font-semibold mb-2 text-gray-700 dark:text-gray-100">
             {t("filter.sortBy")}
           </h2>
           <select
             value={sortType}
             onChange={(e) => setSortType(e.target.value)}
-            className="w-full p-2 rounded border cursor-pointer"
+            className="w-full p-2 rounded border cursor-pointer dark:text-gray-100 dark:bg-gray-500"
           >
             <option value="default">{t("filter.default")}</option>
             <option value="priceLowHigh">{t("filter.priceLowToHigh")}</option>
@@ -219,7 +219,7 @@ const ProductListingPage = ({
 
       {/* Products Section */}
       <motion.section
-        className="w-1/2 md:w-4/5 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 bg-gray-100 p-10"
+        className="w-1/2 md:w-4/5 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 bg-gray-100 dark:bg-gray-700 p-10"
         variants={containerVariants}
         initial="hidden"
         animate="visible"

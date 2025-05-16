@@ -46,10 +46,10 @@ const AuthModal = ({ isOpen, onClose }) => {
     <Dialog open={isOpen} onClose={onClose} className="relative z-50">
       <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
       <div className="fixed inset-0 flex items-center justify-center p-4">
-        <Dialog.Panel className="bg-white p-6 rounded-xl max-w-sm w-full relative">
+        <Dialog.Panel className="bg-white dark:bg-gray-800 border dark:border-gray-500 p-6 rounded-xl max-w-sm w-full relative">
           <button
             onClick={onClose}
-            className="absolute top-3 right-3 cursor-pointer"
+            className="absolute top-3 right-3 cursor-pointer dark:text-gray-300"
           >
             <X />
           </button>
@@ -73,7 +73,7 @@ const AuthModal = ({ isOpen, onClose }) => {
             </button>
           </div>
 
-          <Dialog.Title className="text-xl font-bold mb-4 text-center">
+          <Dialog.Title className="text-xl font-bold mb-4 text-center dark:text-gray-300">
             {isLogin ? "Login" : "Create an Account"}
           </Dialog.Title>
 
@@ -83,7 +83,7 @@ const AuthModal = ({ isOpen, onClose }) => {
               placeholder="Email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full p-2 border rounded"
+              className="w-full p-2 border rounded dark:text-gray-200 dark:border-gray-500"
               required
             />
             <input
@@ -91,7 +91,7 @@ const AuthModal = ({ isOpen, onClose }) => {
               placeholder="Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full p-2 border rounded"
+              className="w-full p-2 border rounded dark:text-gray-200 dark:border-gray-500"
               required
             />
             {error && <p className="text-red-500 text-sm">{error}</p>}
@@ -104,7 +104,7 @@ const AuthModal = ({ isOpen, onClose }) => {
             <button
               onClick={handleGoogleSignIn}
               type="button"
-              className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600 mt-2 cursor-pointer"
+              className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600 cursor-pointer"
             >
               Continue with Google
             </button>

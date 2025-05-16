@@ -16,14 +16,17 @@ import {
   Menu,
   Home,
   Grid,
+  X
 } from "lucide-react";
 import AuthModal from "../Auth/AuthModal";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "/src/firebase.js";
+import DarkModeToggle from "./DarkModeToggle";
 
 const Header = ({ currency, setCurrency }) => {
   const [isAuthOpen, setAuthOpen] = useState(false);
   const [user, setUser] = useState(null);
+  const [searchText, setSearchText] = useState("");
   const navigate = useNavigate();
   const { t, i18n } = useTranslation();
   const { favorites } = useFavorites();
@@ -54,7 +57,7 @@ const Header = ({ currency, setCurrency }) => {
   return (
     <header>
       {/* Header Top */}
-      <div className="bg-gray-100 py-2">
+      <div className="bg-gray-100 py-2 dark:bg-gray-800">
         <div className="container mx-auto px-4 flex flex-wrap items-center sm:justify-between justify-center">
           <ul className="flex items-center justify-center space-x-2">
             <li className="p-2 border border-gray-400 bg-gray-200 rounded-lg">
@@ -91,8 +94,8 @@ const Header = ({ currency, setCurrency }) => {
             </li>
           </ul>
 
-          <div className="text-sm text-gray-700 uppercase text-center sm:text-left mt-2">
-            <span className="font-semibold text-gray-600">
+          <div className="text-sm text-gray-700 dark:text-gray-300 uppercase text-center sm:text-left mt-2">
+            <span className="font-semibold text-gray-600 dark:text-gray-200">
               {t("header.freeShipping")}
             </span>
             {currency === "USD"
@@ -100,30 +103,41 @@ const Header = ({ currency, setCurrency }) => {
               : t("header.Order Over - ₹3320")}
           </div>
 
-          <div className="flex space-x-2 text-gray-500">
+          <div className="flex space-x-2 text-gray-500 dark:text-gray-200">
             <select
               className="px-2 py-1 text-lg cursor-pointer"
               value={currency}
               onChange={(e) => setCurrency(e.target.value)}
             >
-              <option value="USD">USD $</option>
-              <option value="INR">INR ₹</option>
+              <option className="dark:text-gray-500" value="USD">
+                USD $
+              </option>
+              <option className="dark:text-gray-500" value="INR">
+                INR ₹
+              </option>
             </select>
 
             <select
               onChange={handleLanguageChange}
               className="px-2 py-1 text-lg uppercase cursor-pointer"
             >
-              <option value="en">English</option>
-              <option value="hi">Hindi</option>
-              <option value="es">Spanish</option>
+              <option className="dark:text-gray-500" value="en">
+                English
+              </option>
+              <option className="dark:text-gray-500" value="hi">
+                Hindi
+              </option>
+              <option className="dark:text-gray-500" value="es">
+                Spanish
+              </option>
             </select>
+            <DarkModeToggle />
           </div>
         </div>
       </div>
 
       {/* Header Main */}
-      <div className="py-4 border-b border-gray-200">
+      <div className="py-4 border-t border-b border-gray-200 dark:border-gray-500 dark:bg-gray-800">
         <div className="container mx-auto flex flex-wrap items-center justify-evenly gap-4 px-4 sm:px-6">
           <Link to="/">
             <img
@@ -137,10 +151,22 @@ const Header = ({ currency, setCurrency }) => {
           <div className="relative w-full max-w-md sm:max-w-sm">
             <input
               ref={inputRef}
+              value={searchText}
+              onChange={(e) => setSearchText(e.target.value)}
               type="search"
               placeholder={t("header.searchPlaceholder")}
-              className="w-full border border-gray-300 rounded-full px-4 pr-10 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-pink-500 caret-pink-500"
+              className="w-full border border-gray-300 dark:border-pink-500 dark:text-gray-50 bg-transparent rounded-full px-4 pr-16 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-pink-500 caret-pink-500
+                   [&::-webkit-search-cancel-button]:appearance-none" // hides the default X
             />
+            {/* Clear (X) Icon */}
+            {searchText && (
+              <button
+                onClick={() => setSearchText("")}
+                className="absolute right-10 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-pink-400 cursor-pointer"
+              >
+                <X size={18} />
+              </button>
+            )}
             <button
               type="submit"
               onClick={handleFocus}
@@ -175,14 +201,14 @@ const Header = ({ currency, setCurrency }) => {
             ) : (
               <button
                 onClick={() => setAuthOpen(true)}
-                className="relative text-gray-600 cursor-pointer"
+                className="relative text-gray-600 dark:text-gray-300 cursor-pointer"
               >
                 <CircleUser size={35} />
               </button>
             )}
             <button
               onClick={() => navigate("/favorites")}
-              className="relative text-gray-600 cursor-pointer"
+              className="relative text-gray-600 dark:text-gray-300 cursor-pointer"
             >
               <Heart size={35} />
               <span className="absolute -top-1 -right-2 text-xs bg-pink-500 text-white rounded-full px-1 font-bold">
@@ -191,7 +217,7 @@ const Header = ({ currency, setCurrency }) => {
             </button>
             <button
               onClick={() => navigate("/cart")}
-              className="relative text-gray-600 cursor-pointer"
+              className="relative text-gray-600 dark:text-gray-300 cursor-pointer"
             >
               <ShoppingCart size={35} />
               <span className="absolute -top-1 -right-2 text-xs bg-pink-500 text-white rounded-full px-1 font-bold">
@@ -206,9 +232,9 @@ const Header = ({ currency, setCurrency }) => {
       <AuthModal isOpen={isAuthOpen} onClose={() => setAuthOpen(false)} />
 
       {/* Desktop Navigation */}
-      <nav className="hidden md:block border-b border-gray-200">
+      <nav className="hidden md:block border-b border-gray-200 dark:border-gray-500 dark:bg-gray-800">
         <div className="flex items-center justify-center container mx-auto">
-          <ul className="flex space-x-8 py-4 text-lg font-bold text-gray-600">
+          <ul className="flex space-x-8 py-4 text-lg font-bold text-gray-600 dark:text-gray-300">
             <li className="relative group">
               <a
                 onClick={() => navigate("/")}
@@ -223,19 +249,20 @@ const Header = ({ currency, setCurrency }) => {
                 {t("header.categories")}
                 <span className="absolute left-0 -bottom-1 w-0 h-[3px] bg-pink-500 transition-all group-hover:w-full"></span>
               </a>
-              <div className="absolute left-1/2 transform -translate-x-1/4 w-fit h-[17em] bg-white shadow-lg mt-2 opacity-0 pointer-events-none group-hover:pointer-events-auto group-hover:opacity-100 transition-opacity duration-300 z-50 rounded-xl border border-gray-200 py-2">
+              <div className="absolute left-1/2 transform -translate-x-1/4 w-fit h-[17em] bg-white dark:bg-gray-800 shadow-lg mt-2 opacity-0 pointer-events-none group-hover:pointer-events-auto group-hover:opacity-100 transition-opacity duration-300 z-50 rounded-xl border border-gray-200 dark:border-gray-500 py-2">
                 <div className="flex items-center justify-evenly gap-20 p-4 px-12 rounded-2xl mt-1">
                   <div className="relative">
                     <h3 className="font-bold mb-4">{t("dropdown.gadgets")}</h3>
-                    <span className="absolute left-0 top-9 w-30 h-[1px] bg-gray-200"></span>
+                    <span className="absolute left-0 top-9 w-30 h-[1px] bg-gray-200 dark:bg-gray-400"></span>
                     <ul className="mt-6 space-y-3 text-gray-500 text-lg font-medium">
                       <li className="flex gap-3 group/item items-center">
                         <img
                           src="/src/icons/pc.png"
                           width={26}
-                          className="transform rotate-12 transition-transform duration-300 group-hover/item:rotate-0"
+                          color="white"
+                          className="transform rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
                         />
-                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out">
+                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out dark:text-gray-300">
                           {t("dropdown.desktop")}
                         </a>
                       </li>
@@ -243,9 +270,9 @@ const Header = ({ currency, setCurrency }) => {
                         <img
                           src="/src/icons/laptop-screen.png"
                           width={26}
-                          className="transform -rotate-12 transition-transform duration-300 group-hover/item:rotate-0"
+                          className="transform -rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
                         />
-                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out">
+                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out dark:text-gray-300">
                           {t("dropdown.laptop")}
                         </a>
                       </li>
@@ -253,9 +280,9 @@ const Header = ({ currency, setCurrency }) => {
                         <img
                           src="/src/icons/dslr-camera.png"
                           width={26}
-                          className="transform rotate-12 transition-transform duration-300 group-hover/item:rotate-0"
+                          className="transform rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
                         />
-                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out">
+                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out dark:text-gray-300">
                           {t("dropdown.camera")}
                         </a>
                       </li>
@@ -263,9 +290,9 @@ const Header = ({ currency, setCurrency }) => {
                         <img
                           src="/src/icons/tablet.png"
                           width={26}
-                          className="transform -rotate-12 transition-transform duration-300 group-hover/item:rotate-0"
+                          className="transform -rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
                         />
-                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out">
+                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out dark:text-gray-300">
                           {t("dropdown.tablet")}
                         </a>
                       </li>
@@ -273,9 +300,9 @@ const Header = ({ currency, setCurrency }) => {
                         <img
                           src="/src/icons/headphones.png"
                           width={26}
-                          className="transform rotate-12 transition-transform duration-300 group-hover/item:rotate-0"
+                          className="transform rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
                         />
-                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out">
+                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out dark:text-gray-300">
                           {t("dropdown.headphone")}
                         </a>
                       </li>
@@ -283,15 +310,15 @@ const Header = ({ currency, setCurrency }) => {
                   </div>
                   <div className="relative">
                     <h3 className="font-bold mb-2">{t("dropdown.mens")}</h3>
-                    <span className="absolute left-0 top-9 w-30 h-[1px] bg-gray-200"></span>
+                    <span className="absolute left-0 top-9 w-30 h-[1px] bg-gray-200 dark:bg-gray-400"></span>
                     <ul className="mt-6 space-y-3 text-gray-500 text-lg font-medium">
                       <li className="flex gap-3 group/item items-center">
                         <img
                           src="/src/icons/blazer.png"
                           width={26}
-                          className="transform rotate-12 transition-transform duration-300 group-hover/item:rotate-0"
+                          className="transform rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
                         />
-                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out">
+                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out dark:text-gray-300">
                           {t("dropdown.formal")}
                         </a>
                       </li>
@@ -299,9 +326,9 @@ const Header = ({ currency, setCurrency }) => {
                         <img
                           src="/src/icons/jeans.png"
                           width={26}
-                          className="transform -rotate-12 transition-transform duration-300 group-hover/item:rotate-0"
+                          className="transform -rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
                         />
-                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out">
+                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out dark:text-gray-300">
                           {t("dropdown.casual")}
                         </a>
                       </li>
@@ -309,9 +336,9 @@ const Header = ({ currency, setCurrency }) => {
                         <img
                           src="/src/icons/sports.png"
                           width={26}
-                          className="transform rotate-12 transition-transform duration-300 group-hover/item:rotate-0"
+                          className="transform rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
                         />
-                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out">
+                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out dark:text-gray-300">
                           {t("dropdown.sports")}
                         </a>
                       </li>
@@ -319,9 +346,9 @@ const Header = ({ currency, setCurrency }) => {
                         <img
                           src="/src/icons/jacket.png"
                           width={26}
-                          className="transform -rotate-12 transition-transform duration-300 group-hover/item:rotate-0"
+                          className="transform -rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
                         />
-                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out">
+                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out dark:text-gray-300">
                           {t("dropdown.jacket")}
                         </a>
                       </li>
@@ -329,9 +356,9 @@ const Header = ({ currency, setCurrency }) => {
                         <img
                           src="/src/icons/sunglasses.png"
                           width={26}
-                          className="transform rotate-12 transition-transform duration-300 group-hover/item:rotate-0"
+                          className="transform rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
                         />
-                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out">
+                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out dark:text-gray-300">
                           {t("dropdown.sunglasses")}
                         </a>
                       </li>
@@ -339,15 +366,15 @@ const Header = ({ currency, setCurrency }) => {
                   </div>
                   <div className="relative">
                     <h3 className="font-bold mb-2">{t("dropdown.women")}</h3>
-                    <span className="absolute left-0 top-9 w-30 h-[1px] bg-gray-200"></span>
+                    <span className="absolute left-0 top-9 w-30 h-[1px] bg-gray-200 dark:bg-gray-400"></span>
                     <ul className="mt-6 space-y-3 text-gray-500 text-lg font-medium">
                       <li className="flex gap-3 group/item items-center">
                         <img
                           src="/src/icons/dress.png"
                           width={26}
-                          className="transform rotate-12 transition-transform duration-300 group-hover/item:rotate-0"
+                          className="transform rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
                         />
-                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out">
+                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out dark:text-gray-300">
                           {t("dropdown.dressAndFrock")}
                         </a>
                       </li>
@@ -355,9 +382,9 @@ const Header = ({ currency, setCurrency }) => {
                         <img
                           src="/src/icons/necklace.png"
                           width={26}
-                          className="transform -rotate-12 transition-transform duration-300 group-hover/item:rotate-0"
+                          className="transform -rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
                         />
-                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out">
+                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out dark:text-gray-300">
                           {t("dropdown.necklace")}
                         </a>
                       </li>
@@ -365,9 +392,9 @@ const Header = ({ currency, setCurrency }) => {
                         <img
                           src="/src/icons/perfume.png"
                           width={26}
-                          className="transform rotate-12 transition-transform duration-300 group-hover/item:rotate-0"
+                          className="transform rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
                         />
-                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out">
+                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out dark:text-gray-300">
                           {t("dropdown.perfume")}
                         </a>
                       </li>
@@ -375,9 +402,9 @@ const Header = ({ currency, setCurrency }) => {
                         <img
                           src="/src/icons/cosmetics.png"
                           width={26}
-                          className="transform -rotate-12 transition-transform duration-300 group-hover/item:rotate-0"
+                          className="transform -rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
                         />
-                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out">
+                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out dark:text-gray-300">
                           {t("dropdown.cosmetics")}
                         </a>
                       </li>
@@ -385,9 +412,9 @@ const Header = ({ currency, setCurrency }) => {
                         <img
                           src="/src/icons/handbag.png"
                           width={26}
-                          className="transform rotate-12 transition-transform duration-300 group-hover/item:rotate-0"
+                          className="transform rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
                         />
-                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out">
+                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out dark:text-gray-300">
                           {t("dropdown.bags")}
                         </a>
                       </li>
@@ -397,15 +424,15 @@ const Header = ({ currency, setCurrency }) => {
                     <h3 className="font-bold mb-2">
                       {t("dropdown.electronics")}
                     </h3>
-                    <span className="absolute left-0 top-9 w-30 h-[1px] bg-gray-200"></span>
+                    <span className="absolute left-0 top-9 w-30 h-[1px] bg-gray-200 dark:bg-gray-400"></span>
                     <ul className="mt-6 space-y-3 text-gray-500 text-lg font-medium">
                       <li className="flex gap-3 group/item items-center">
                         <img
                           src="/src/icons/smartwatch.png"
                           width={26}
-                          className="transform rotate-12 transition-transform duration-300 group-hover/item:rotate-0"
+                          className="transform rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
                         />
-                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out">
+                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out dark:text-gray-300">
                           {t("dropdown.smartWatch")}
                         </a>
                       </li>
@@ -413,9 +440,9 @@ const Header = ({ currency, setCurrency }) => {
                         <img
                           src="/src/icons/smart-tv.png"
                           width={26}
-                          className="transform -rotate-12 transition-transform duration-300 group-hover/item:rotate-0"
+                          className="transform -rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
                         />
-                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out">
+                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out dark:text-gray-300">
                           {t("dropdown.smartTV")}
                         </a>
                       </li>
@@ -423,9 +450,9 @@ const Header = ({ currency, setCurrency }) => {
                         <img
                           src="/src/icons/computer-keyboard.png"
                           width={26}
-                          className="transform rotate-12 transition-transform duration-300 group-hover/item:rotate-0"
+                          className="transform rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
                         />
-                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out">
+                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out dark:text-gray-300">
                           {t("dropdown.keyboard")}
                         </a>
                       </li>
@@ -433,9 +460,9 @@ const Header = ({ currency, setCurrency }) => {
                         <img
                           src="/src/icons/computer-mouse.png"
                           width={26}
-                          className="transform -rotate-12 transition-transform duration-300 group-hover/item:rotate-0"
+                          className="transform -rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
                         />
-                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out">
+                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out dark:text-gray-300">
                           {t("dropdown.mouse")}
                         </a>
                       </li>
@@ -443,9 +470,9 @@ const Header = ({ currency, setCurrency }) => {
                         <img
                           src="/src/icons/microphone.png"
                           width={26}
-                          className="transform rotate-12 transition-transform duration-300 group-hover/item:rotate-0"
+                          className="transform rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
                         />
-                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out">
+                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out dark:text-gray-300">
                           {t("dropdown.microphone")}
                         </a>
                       </li>
@@ -462,7 +489,7 @@ const Header = ({ currency, setCurrency }) => {
                 {t("header.men")}
                 <span className="absolute left-0 -bottom-1 w-0 h-[3px] bg-pink-500 transition-all group-hover:w-full"></span>
               </a>
-              <div className="absolute left-1/2 transform -translate-x-1/6 w-[12em] h-[12em] bg-white shadow-lg mt-2 opacity-0 pointer-events-none group-hover:pointer-events-auto group-hover:opacity-100 transition-opacity duration-300 z-50 rounded-xl border border-gray-200 p-4">
+              <div className="absolute left-1/2 transform -translate-x-1/6 w-[12em] h-[12em] bg-white dark:bg-gray-800 shadow-lg mt-2 opacity-0 pointer-events-none group-hover:pointer-events-auto group-hover:opacity-100 transition-opacity duration-300 z-50 rounded-xl border border-gray-200 dark:border-gray-400 p-4">
                 <div className="rounded-2xl">
                   <div className="relative text-left">
                     <ul className="space-y-3 text-gray-500 text-lg font-medium">
@@ -470,9 +497,9 @@ const Header = ({ currency, setCurrency }) => {
                         <img
                           src="/src/icons/smartwatch.png"
                           width={26}
-                          className="transform rotate-12 transition-transform duration-300 group-hover/item:rotate-0"
+                          className="transform rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
                         />
-                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out">
+                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out dark:text-gray-300">
                           {t("dropdown.watch")}
                         </a>
                       </li>
@@ -480,9 +507,9 @@ const Header = ({ currency, setCurrency }) => {
                         <img
                           src="/src/icons/cap.png"
                           width={26}
-                          className="transform -rotate-12 transition-transform duration-300 group-hover/item:rotate-0"
+                          className="transform -rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
                         />
-                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out">
+                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out dark:text-gray-300">
                           {t("dropdown.caps")}
                         </a>
                       </li>
@@ -490,9 +517,9 @@ const Header = ({ currency, setCurrency }) => {
                         <img
                           src="/src/icons/cotton-polo-shirt.png"
                           width={26}
-                          className="transform rotate-12 transition-transform duration-300 group-hover/item:rotate-0"
+                          className="transform rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
                         />
-                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out">
+                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out dark:text-gray-300">
                           {t("dropdown.shirtAndTshirt")}
                         </a>
                       </li>
@@ -500,9 +527,9 @@ const Header = ({ currency, setCurrency }) => {
                         <img
                           src="/src/icons/sneakers.png"
                           width={26}
-                          className="transform -rotate-12 transition-transform duration-300 group-hover/item:rotate-0"
+                          className="transform -rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
                         />
-                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out">
+                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out dark:text-gray-300">
                           {t("dropdown.shoes")}
                         </a>
                       </li>
@@ -510,9 +537,9 @@ const Header = ({ currency, setCurrency }) => {
                         <img
                           src="/src/icons/shorts.png"
                           width={26}
-                          className="transform rotate-12 transition-transform duration-300 group-hover/item:rotate-0"
+                          className="transform rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
                         />
-                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out">
+                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out dark:text-gray-300">
                           {t("dropdown.shortAndJeans")}
                         </a>
                       </li>
@@ -529,7 +556,7 @@ const Header = ({ currency, setCurrency }) => {
                 {t("header.women")}
                 <span className="absolute left-0 -bottom-1 w-0 h-[3px] bg-pink-500 transition-all group-hover:w-full"></span>
               </a>
-              <div className="absolute left-1/2 transform -translate-x-1/5 w-[12em] h-[12em] bg-white shadow-lg mt-2 opacity-0 pointer-events-none group-hover:pointer-events-auto group-hover:opacity-100 transition-opacity duration-300 z-50 rounded-xl border border-gray-200 p-4">
+              <div className="absolute left-1/2 transform -translate-x-1/5 w-[12em] h-[12em] bg-white dark:bg-gray-800 shadow-lg mt-2 opacity-0 pointer-events-none group-hover:pointer-events-auto group-hover:opacity-100 transition-opacity duration-300 z-50 rounded-xl border border-gray-200 dark:border-gray-400 p-4">
                 <div className="rounded-2xl">
                   <div className="relative text-left">
                     <ul className="space-y-3 text-gray-500 text-lg font-medium">
@@ -537,9 +564,9 @@ const Header = ({ currency, setCurrency }) => {
                         <img
                           src="/src/icons/necklace.png"
                           width={26}
-                          className="transform rotate-12 transition-transform duration-300 group-hover/item:rotate-0"
+                          className="transform rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
                         />
-                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out">
+                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out dark:text-gray-300">
                           {t("dropdown.necklace")}
                         </a>
                       </li>
@@ -547,9 +574,9 @@ const Header = ({ currency, setCurrency }) => {
                         <img
                           src="/src/icons/handbag.png"
                           width={26}
-                          className="transform -rotate-12 transition-transform duration-300 group-hover/item:rotate-0"
+                          className="transform -rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
                         />
-                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out">
+                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out dark:text-gray-300">
                           {t("dropdown.bags")}
                         </a>
                       </li>
@@ -557,9 +584,9 @@ const Header = ({ currency, setCurrency }) => {
                         <img
                           src="/src/icons/dress.png"
                           width={26}
-                          className="transform rotate-12 transition-transform duration-300 group-hover/item:rotate-0"
+                          className="transform rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
                         />
-                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out">
+                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out dark:text-gray-300">
                           {t("dropdown.dressAndFrock")}
                         </a>
                       </li>
@@ -567,9 +594,9 @@ const Header = ({ currency, setCurrency }) => {
                         <img
                           src="/src/icons/bracelet.png"
                           width={26}
-                          className="transform -rotate-12 transition-transform duration-300 group-hover/item:rotate-0"
+                          className="transform -rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
                         />
-                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out">
+                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out dark:text-gray-300">
                           {t("dropdown.bracelet")}
                         </a>
                       </li>
@@ -577,9 +604,9 @@ const Header = ({ currency, setCurrency }) => {
                         <img
                           src="/src/icons/heals.png"
                           width={26}
-                          className="transform rotate-12 transition-transform duration-300 group-hover/item:rotate-0"
+                          className="transform rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
                         />
-                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out">
+                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out dark:text-gray-300">
                           {t("dropdown.heals")}
                         </a>
                       </li>
@@ -596,7 +623,7 @@ const Header = ({ currency, setCurrency }) => {
                 {t("header.jewelry")}
                 <span className="absolute left-0 -bottom-1 w-0 h-[3px] bg-pink-500 transition-all group-hover:w-full"></span>
               </a>
-              <div className="absolute left-1/2 transform -translate-x-1/5 w-[11em] h-[10em] bg-white shadow-lg mt-2 opacity-0 pointer-events-none group-hover:pointer-events-auto group-hover:opacity-100 transition-opacity duration-300 z-50 rounded-xl border border-gray-200 p-4">
+              <div className="absolute left-1/2 transform -translate-x-1/5 w-[11em] h-[10em] bg-white dark:bg-gray-800 shadow-lg mt-2 opacity-0 pointer-events-none group-hover:pointer-events-auto group-hover:opacity-100 transition-opacity duration-300 z-50 rounded-xl border border-gray-200 dark:border-gray-400 p-4">
                 <div className="rounded-2xl">
                   <div className="relative text-left">
                     <ul className="space-y-3 text-gray-500 text-lg font-medium">
@@ -604,9 +631,9 @@ const Header = ({ currency, setCurrency }) => {
                         <img
                           src="/src/icons/necklace.png"
                           width={26}
-                          className="transform rotate-12 transition-transform duration-300 group-hover/item:rotate-0"
+                          className="transform rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
                         />
-                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out">
+                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out dark:text-gray-300">
                           {t("dropdown.necklace")}
                         </a>
                       </li>
@@ -614,9 +641,9 @@ const Header = ({ currency, setCurrency }) => {
                         <img
                           src="/src/icons/earings.png"
                           width={26}
-                          className="transform -rotate-12 transition-transform duration-300 group-hover/item:rotate-0"
+                          className="transform -rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
                         />
-                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out">
+                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out dark:text-gray-300">
                           {t("dropdown.earings")}
                         </a>
                       </li>
@@ -624,9 +651,9 @@ const Header = ({ currency, setCurrency }) => {
                         <img
                           src="/src/icons/bracelet.png"
                           width={26}
-                          className="transform rotate-12 transition-transform duration-300 group-hover/item:rotate-0"
+                          className="transform rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
                         />
-                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out">
+                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out dark:text-gray-300">
                           {t("dropdown.bracelet")}
                         </a>
                       </li>
@@ -634,9 +661,9 @@ const Header = ({ currency, setCurrency }) => {
                         <img
                           src="/src/icons/ring.png"
                           width={26}
-                          className="transform -rotate-12 transition-transform duration-300 group-hover/item:rotate-0"
+                          className="transform -rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
                         />
-                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out">
+                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out dark:text-gray-300">
                           {t("dropdown.rings")}
                         </a>
                       </li>
@@ -653,7 +680,7 @@ const Header = ({ currency, setCurrency }) => {
                 {t("header.perfume")}
                 <span className="absolute left-0 -bottom-1 w-0 h-[3px] bg-pink-500 transition-all group-hover:w-full"></span>
               </a>
-              <div className="absolute left-1/2 transform -translate-x-1/5 w-[12em] h-[10em] bg-white shadow-lg mt-2 opacity-0 pointer-events-none group-hover:pointer-events-auto group-hover:opacity-100 transition-opacity duration-300 z-50 rounded-xl border border-gray-200 p-4">
+              <div className="absolute left-1/2 transform -translate-x-1/5 w-[12em] h-[10em] bg-white dark:bg-gray-800 shadow-lg mt-2 opacity-0 pointer-events-none group-hover:pointer-events-auto group-hover:opacity-100 transition-opacity duration-300 z-50 rounded-xl border border-gray-200 dark:border-gray-400 p-4">
                 <div className="rounded-2xl">
                   <div className="relative text-left">
                     <ul className="space-y-3 text-gray-500 text-lg font-medium">
@@ -661,9 +688,9 @@ const Header = ({ currency, setCurrency }) => {
                         <img
                           src="/src/icons/deodorant.png"
                           width={26}
-                          className="transform rotate-12 transition-transform duration-300 group-hover/item:rotate-0"
+                          className="transform rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
                         />
-                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out">
+                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out dark:text-gray-300">
                           {t("dropdown.deodrant")}
                         </a>
                       </li>
@@ -671,9 +698,9 @@ const Header = ({ currency, setCurrency }) => {
                         <img
                           src="/src/icons/air-freshner.png"
                           width={26}
-                          className="transform -rotate-12 transition-transform duration-300 group-hover/item:rotate-0"
+                          className="transform -rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
                         />
-                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out">
+                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out dark:text-gray-300">
                           {t("dropdown.airFreshner")}
                         </a>
                       </li>
@@ -681,9 +708,9 @@ const Header = ({ currency, setCurrency }) => {
                         <img
                           src="/src/icons/perfume-bottle.png"
                           width={26}
-                          className="transform rotate-12 transition-transform duration-300 group-hover/item:rotate-0"
+                          className="transform rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
                         />
-                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out">
+                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out dark:text-gray-300">
                           {t("dropdown.bodyPerfume")}
                         </a>
                       </li>
@@ -691,9 +718,9 @@ const Header = ({ currency, setCurrency }) => {
                         <img
                           src="/src/icons/spray.png"
                           width={26}
-                          className="transform -rotate-12 transition-transform duration-300 group-hover/item:rotate-0"
+                          className="transform -rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
                         />
-                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out">
+                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out dark:text-gray-300">
                           {t("dropdown.clothesPerfume")}
                         </a>
                       </li>
