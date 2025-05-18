@@ -9,6 +9,9 @@ import { useEffect } from "react";
 import { useCart } from "./context/CartContext";
 import { useNavigate } from "react-router-dom";
 import CompareModal from "./ui/CompareModal";
+// Images import:
+import model_1 from "../assets/image.png";
+import model_2 from "../assets/womenGlasses.png";
 
 // Categories
 const categories = [
@@ -117,12 +120,12 @@ export default function Home({ currency }) {
         </div>
         <div className="relative w-[250px] md:w-[320px] h-[180px] md:h-[220px]">
           <img
-            src="./src/assets/image.png"
+            src={model_1}
             alt="Model 1"
             className="absolute -left-10 bottom-2 w-[150px] md:w-[250px] rounded-full border-4 border-pink-100 dark:border-gray-300 z-10"
           />
           <img
-            src="./src/assets/womenGlasses.png"
+            src={model_2}
             alt="Model 2"
             className="absolute left-20 md:left-28 top-6 w-[150px] md:w-[250px] rounded-full border-4 border-pink-100 dark:border-gray-300 z-20"
           />
@@ -174,7 +177,7 @@ export default function Home({ currency }) {
 
         {/* Product Grids */}
         <div className="min-h-screen bg-gray-100 dark:bg-gray-700 p-10">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+          <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
             {shuffledProducts.map((product, index) => (
               <ProductCard
                 key={product.name}

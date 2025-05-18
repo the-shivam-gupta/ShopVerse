@@ -2,6 +2,7 @@ import { footer } from "framer-motion/client";
 import { MapPin, Phone, Mail } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { Link, useNavigate } from "react-router-dom";
+import logo from "../../assets/logo.png";
 
 export default function Footer() {
   const { t } = useTranslation();
@@ -14,7 +15,7 @@ export default function Footer() {
         <div className="flex items-center">
           <Link to="/">
             <img
-              src="./src/assets/logo.png"
+              src={logo}
               alt="Logo"
               className="w-42 h-auto rounded-full cursor-pointer"
             />
