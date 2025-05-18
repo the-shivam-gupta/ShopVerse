@@ -16,12 +16,46 @@ import {
   Menu,
   Home,
   Grid,
-  X
+  X,
 } from "lucide-react";
 import AuthModal from "../Auth/AuthModal";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "/src/firebase.js";
 import DarkModeToggle from "./DarkModeToggle";
+import logo from "../../assets/logo.png";
+// Icons imports:
+import pc from "../../icons/pc.png";
+import airFreshner from "../../icons/air-freshner.png";
+import blazer from "../../icons/blazer.png";
+import bracelet from "../../icons/bracelet.png";
+import cap from "../../icons/cap.png";
+import keyboard from "../../icons/computer-keyboard.png";
+import mouse from "../../icons/computer-mouse.png";
+import cosmetics from "../../icons/cosmetics.png";
+import poloShirt from "../../icons/cotton-polo-shirt.png";
+import deodorant from "../../icons/deodorant.png";
+import dress from "../../icons/dress.png";
+import dslr from "../../icons/dslr-camera.png";
+import earings from "../../icons/earings.png";
+import handbag from "../../icons/handbag.png";
+import headphones from "../../icons/headphones.png";
+import heals from "../../icons/heals.png";
+import jacket from "../../icons/jacket.png";
+import jeans from "../../icons/jeans.png";
+import laptop from "../../icons/laptop-screen.png";
+import microphone from "../../icons/microphone.png";
+import necklace from "../../icons/necklace.png";
+import bodyPerfume from "../../icons/perfume-bottle.png";
+import perfume from "../../icons/perfume.png";
+import ring from "../../icons/ring.png";
+import shorts from "../../icons/shorts.png";
+import smartTv from "../../icons/smart-tv.png";
+import smartwatch from "../../icons/smartwatch.png";
+import sneakers from "../../icons/sneakers.png";
+import sports from "../../icons/sports.png";
+import spray from "../../icons/spray.png";
+import sunglasses from "../../icons/sunglasses.png";
+import tablet from "../../icons/tablet.png";
 
 const Header = ({ currency, setCurrency }) => {
   const [isAuthOpen, setAuthOpen] = useState(false);
@@ -141,7 +175,7 @@ const Header = ({ currency, setCurrency }) => {
         <div className="container mx-auto flex flex-wrap items-center justify-evenly gap-4 px-4 sm:px-6">
           <Link to="/">
             <img
-              src="./src/assets/logo.png"
+              src={logo}
               alt="Logo"
               className="w-24 h-auto rounded-full sm:w-20"
             />
@@ -257,9 +291,8 @@ const Header = ({ currency, setCurrency }) => {
                     <ul className="mt-6 space-y-3 text-gray-500 text-lg font-medium">
                       <li className="flex gap-3 group/item items-center">
                         <img
-                          src="/src/icons/pc.png"
+                          src={pc}
                           width={26}
-                          color="white"
                           className="transform rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
                         />
                         <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out dark:text-gray-300">
@@ -268,7 +301,7 @@ const Header = ({ currency, setCurrency }) => {
                       </li>
                       <li className="flex gap-3 group/item items-center">
                         <img
-                          src="/src/icons/laptop-screen.png"
+                          src={laptop}
                           width={26}
                           className="transform -rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
                         />
@@ -278,7 +311,7 @@ const Header = ({ currency, setCurrency }) => {
                       </li>
                       <li className="flex gap-3 group/item items-center">
                         <img
-                          src="/src/icons/dslr-camera.png"
+                          src={dslr}
                           width={26}
                           className="transform rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
                         />
@@ -288,7 +321,7 @@ const Header = ({ currency, setCurrency }) => {
                       </li>
                       <li className="flex gap-3 group/item items-center">
                         <img
-                          src="/src/icons/tablet.png"
+                          src={tablet}
                           width={26}
                           className="transform -rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
                         />
@@ -298,7 +331,7 @@ const Header = ({ currency, setCurrency }) => {
                       </li>
                       <li className="flex gap-3 group/item items-center">
                         <img
-                          src="/src/icons/headphones.png"
+                          src={headphones}
                           width={26}
                           className="transform rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
                         />
@@ -314,7 +347,7 @@ const Header = ({ currency, setCurrency }) => {
                     <ul className="mt-6 space-y-3 text-gray-500 text-lg font-medium">
                       <li className="flex gap-3 group/item items-center">
                         <img
-                          src="/src/icons/blazer.png"
+                          src={blazer}
                           width={26}
                           className="transform rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
                         />
@@ -324,7 +357,7 @@ const Header = ({ currency, setCurrency }) => {
                       </li>
                       <li className="flex gap-3 group/item items-center">
                         <img
-                          src="/src/icons/jeans.png"
+                          src={jeans}
                           width={26}
                           className="transform -rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
                         />
@@ -334,7 +367,7 @@ const Header = ({ currency, setCurrency }) => {
                       </li>
                       <li className="flex gap-3 group/item items-center">
                         <img
-                          src="/src/icons/sports.png"
+                          src={sports}
                           width={26}
                           className="transform rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
                         />
@@ -344,7 +377,7 @@ const Header = ({ currency, setCurrency }) => {
                       </li>
                       <li className="flex gap-3 group/item items-center">
                         <img
-                          src="/src/icons/jacket.png"
+                          src={jacket}
                           width={26}
                           className="transform -rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
                         />
@@ -354,7 +387,7 @@ const Header = ({ currency, setCurrency }) => {
                       </li>
                       <li className="flex gap-3 group/item items-center">
                         <img
-                          src="/src/icons/sunglasses.png"
+                          src={sunglasses}
                           width={26}
                           className="transform rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
                         />
@@ -370,7 +403,7 @@ const Header = ({ currency, setCurrency }) => {
                     <ul className="mt-6 space-y-3 text-gray-500 text-lg font-medium">
                       <li className="flex gap-3 group/item items-center">
                         <img
-                          src="/src/icons/dress.png"
+                          src={dress}
                           width={26}
                           className="transform rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
                         />
@@ -380,7 +413,7 @@ const Header = ({ currency, setCurrency }) => {
                       </li>
                       <li className="flex gap-3 group/item items-center">
                         <img
-                          src="/src/icons/necklace.png"
+                          src={necklace}
                           width={26}
                           className="transform -rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
                         />
@@ -390,7 +423,7 @@ const Header = ({ currency, setCurrency }) => {
                       </li>
                       <li className="flex gap-3 group/item items-center">
                         <img
-                          src="/src/icons/perfume.png"
+                          src={perfume}
                           width={26}
                           className="transform rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
                         />
@@ -400,7 +433,7 @@ const Header = ({ currency, setCurrency }) => {
                       </li>
                       <li className="flex gap-3 group/item items-center">
                         <img
-                          src="/src/icons/cosmetics.png"
+                          src={cosmetics}
                           width={26}
                           className="transform -rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
                         />
@@ -410,7 +443,7 @@ const Header = ({ currency, setCurrency }) => {
                       </li>
                       <li className="flex gap-3 group/item items-center">
                         <img
-                          src="/src/icons/handbag.png"
+                          src={handbag}
                           width={26}
                           className="transform rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
                         />
@@ -428,7 +461,7 @@ const Header = ({ currency, setCurrency }) => {
                     <ul className="mt-6 space-y-3 text-gray-500 text-lg font-medium">
                       <li className="flex gap-3 group/item items-center">
                         <img
-                          src="/src/icons/smartwatch.png"
+                          src={smartwatch}
                           width={26}
                           className="transform rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
                         />
@@ -438,7 +471,7 @@ const Header = ({ currency, setCurrency }) => {
                       </li>
                       <li className="flex gap-3 group/item items-center">
                         <img
-                          src="/src/icons/smart-tv.png"
+                          src={smartTv}
                           width={26}
                           className="transform -rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
                         />
@@ -448,7 +481,7 @@ const Header = ({ currency, setCurrency }) => {
                       </li>
                       <li className="flex gap-3 group/item items-center">
                         <img
-                          src="/src/icons/computer-keyboard.png"
+                          src={keyboard}
                           width={26}
                           className="transform rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
                         />
@@ -458,7 +491,7 @@ const Header = ({ currency, setCurrency }) => {
                       </li>
                       <li className="flex gap-3 group/item items-center">
                         <img
-                          src="/src/icons/computer-mouse.png"
+                          src={mouse}
                           width={26}
                           className="transform -rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
                         />
@@ -468,7 +501,7 @@ const Header = ({ currency, setCurrency }) => {
                       </li>
                       <li className="flex gap-3 group/item items-center">
                         <img
-                          src="/src/icons/microphone.png"
+                          src={microphone}
                           width={26}
                           className="transform rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
                         />
@@ -495,7 +528,7 @@ const Header = ({ currency, setCurrency }) => {
                     <ul className="space-y-3 text-gray-500 text-lg font-medium">
                       <li className="flex gap-3 group/item items-center">
                         <img
-                          src="/src/icons/smartwatch.png"
+                          src={smartwatch}
                           width={26}
                           className="transform rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
                         />
@@ -505,7 +538,7 @@ const Header = ({ currency, setCurrency }) => {
                       </li>
                       <li className="flex gap-3 group/item items-center">
                         <img
-                          src="/src/icons/cap.png"
+                          src={cap}
                           width={26}
                           className="transform -rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
                         />
@@ -515,7 +548,7 @@ const Header = ({ currency, setCurrency }) => {
                       </li>
                       <li className="flex gap-3 group/item items-center">
                         <img
-                          src="/src/icons/cotton-polo-shirt.png"
+                          src={poloShirt}
                           width={26}
                           className="transform rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
                         />
@@ -525,7 +558,7 @@ const Header = ({ currency, setCurrency }) => {
                       </li>
                       <li className="flex gap-3 group/item items-center">
                         <img
-                          src="/src/icons/sneakers.png"
+                          src={sneakers}
                           width={26}
                           className="transform -rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
                         />
@@ -535,7 +568,7 @@ const Header = ({ currency, setCurrency }) => {
                       </li>
                       <li className="flex gap-3 group/item items-center">
                         <img
-                          src="/src/icons/shorts.png"
+                          src={shorts}
                           width={26}
                           className="transform rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
                         />
@@ -562,7 +595,7 @@ const Header = ({ currency, setCurrency }) => {
                     <ul className="space-y-3 text-gray-500 text-lg font-medium">
                       <li className="flex gap-3 group/item items-center">
                         <img
-                          src="/src/icons/necklace.png"
+                          src={necklace}
                           width={26}
                           className="transform rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
                         />
@@ -572,7 +605,7 @@ const Header = ({ currency, setCurrency }) => {
                       </li>
                       <li className="flex gap-3 group/item items-center">
                         <img
-                          src="/src/icons/handbag.png"
+                          src={handbag}
                           width={26}
                           className="transform -rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
                         />
@@ -582,7 +615,7 @@ const Header = ({ currency, setCurrency }) => {
                       </li>
                       <li className="flex gap-3 group/item items-center">
                         <img
-                          src="/src/icons/dress.png"
+                          src={dress}
                           width={26}
                           className="transform rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
                         />
@@ -592,7 +625,7 @@ const Header = ({ currency, setCurrency }) => {
                       </li>
                       <li className="flex gap-3 group/item items-center">
                         <img
-                          src="/src/icons/bracelet.png"
+                          src={bracelet}
                           width={26}
                           className="transform -rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
                         />
@@ -602,7 +635,7 @@ const Header = ({ currency, setCurrency }) => {
                       </li>
                       <li className="flex gap-3 group/item items-center">
                         <img
-                          src="/src/icons/heals.png"
+                          src={heals}
                           width={26}
                           className="transform rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
                         />
@@ -629,7 +662,7 @@ const Header = ({ currency, setCurrency }) => {
                     <ul className="space-y-3 text-gray-500 text-lg font-medium">
                       <li className="flex gap-3 group/item items-center">
                         <img
-                          src="/src/icons/necklace.png"
+                          src={necklace}
                           width={26}
                           className="transform rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
                         />
@@ -639,7 +672,7 @@ const Header = ({ currency, setCurrency }) => {
                       </li>
                       <li className="flex gap-3 group/item items-center">
                         <img
-                          src="/src/icons/earings.png"
+                          src={earings}
                           width={26}
                           className="transform -rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
                         />
@@ -649,7 +682,7 @@ const Header = ({ currency, setCurrency }) => {
                       </li>
                       <li className="flex gap-3 group/item items-center">
                         <img
-                          src="/src/icons/bracelet.png"
+                          src={bracelet}
                           width={26}
                           className="transform rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
                         />
@@ -659,7 +692,7 @@ const Header = ({ currency, setCurrency }) => {
                       </li>
                       <li className="flex gap-3 group/item items-center">
                         <img
-                          src="/src/icons/ring.png"
+                          src={ring}
                           width={26}
                           className="transform -rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
                         />
@@ -686,7 +719,7 @@ const Header = ({ currency, setCurrency }) => {
                     <ul className="space-y-3 text-gray-500 text-lg font-medium">
                       <li className="flex gap-3 group/item items-center">
                         <img
-                          src="/src/icons/deodorant.png"
+                          src={deodorant}
                           width={26}
                           className="transform rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
                         />
@@ -696,7 +729,7 @@ const Header = ({ currency, setCurrency }) => {
                       </li>
                       <li className="flex gap-3 group/item items-center">
                         <img
-                          src="/src/icons/air-freshner.png"
+                          src={airFreshner}
                           width={26}
                           className="transform -rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
                         />
@@ -706,7 +739,7 @@ const Header = ({ currency, setCurrency }) => {
                       </li>
                       <li className="flex gap-3 group/item items-center">
                         <img
-                          src="/src/icons/perfume-bottle.png"
+                          src={bodyPerfume}
                           width={26}
                           className="transform rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
                         />
@@ -716,7 +749,7 @@ const Header = ({ currency, setCurrency }) => {
                       </li>
                       <li className="flex gap-3 group/item items-center">
                         <img
-                          src="/src/icons/spray.png"
+                          src={spray}
                           width={26}
                           className="transform -rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
                         />

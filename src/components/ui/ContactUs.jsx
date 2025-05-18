@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTranslation } from "react-i18next";
+import { db } from "../../firebase";
+import { collection, addDoc, Timestamp } from "firebase/firestore";
 
 const containerVariants = {
   hidden: { opacity: 0, y: 30 },
@@ -42,16 +44,28 @@ const ContactUs = () => {
     message: false,
   });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setSubmitted(true);
 
-    // Reset form after submission
-    setTimeout(() => setSubmitted(false), 3000);
-    setName("");
-    setEmail("");
-    setMessage("");
-    setFocus({ name: false, email: false, message: false });
+    try {
+      await addDoc(collection(db, "contacts"), {
+        name,
+        email,
+        message,
+        createdAt: Timestamp.now(),
+      });
+
+      setSubmitted(true);
+
+      setTimeout(() => setSubmitted(false), 3000);
+      setName("");
+      setEmail("");
+      setMessage("");
+      setFocus({ name: false, email: false, message: false });
+    } catch (error) {
+      console.error("Error saving contact:", error);
+      alert("Failed to send message. Please try again.");
+    }
   };
 
   const floatingStyle = (field) =>

@@ -37,13 +37,15 @@ const CartPage = ({ currency }) => {
   // No Items in cart
   if (cart.length === 0) {
     return (
-      <div className="container mx-auto py-8">
-        <h1 className="text-2xl font-bold mb-4 dark:text-gray-100">
-          {t("cart.cart")}
-        </h1>
-        <p className="text-gray-700 dark:text-gray-300">
-          {t("cart.noCartItem")}
-        </p>
+      <div className="w-full dark:bg-gray-800 h-[100dvh]">
+        <div className="container mx-auto py-8">
+          <h1 className="text-2xl font-bold mb-4 dark:text-gray-100">
+            {t("cart.cart")}
+          </h1>
+          <p className="text-gray-700 dark:text-gray-300">
+            {t("cart.noCartItem")}
+          </p>
+        </div>
       </div>
     );
   }
@@ -109,7 +111,9 @@ const CartPage = ({ currency }) => {
             <span className="font-bold">{total}</span>
           </p>
           <p className="text-green-600 text-sm font-semibold mt-1">
-            <span className="text-gray-600 dark:text-gray-300">{t("cart.youSaved")}:</span>{" "}
+            <span className="text-gray-600 dark:text-gray-300">
+              {t("cart.youSaved")}:
+            </span>{" "}
             {formattedDiscount} ({discountPercentage}%)
           </p>
 
