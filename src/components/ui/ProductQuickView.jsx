@@ -38,7 +38,7 @@ const ProductQuickView = ({ product, isOpen, onClose, currency }) => {
           onClose={onClose}
           className="fixed z-50 inset-0 overflow-y-auto"
         >
-          <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-lg bg-transparent bg-opacity-30 rounded-xl">
+          <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-2xl bg-transparent rounded-xl">
             {/* Backdrop with animation */}
             <motion.div
               className="fixed inset-0 bg-transparent bg-opacity-30 backdrop-blur-sm"
@@ -54,11 +54,11 @@ const ProductQuickView = ({ product, isOpen, onClose, currency }) => {
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.9 }}
               transition={{ duration: 0.4 }}
-              className="border border-white dark:border-gray-200 w-[90%] max-w-2xl rounded-xl shadow-2xl p-6 relative bg-white"
+              className="border border-white dark:border-gray-400 w-[90%] max-w-2xl rounded-xl shadow-2xl dark:shadow-md dark:shadow-gray-400 p-6 relative dark:bg-transparent"
             >
               <button
                 onClick={onClose}
-                className="absolute top-4 right-4 text-gray-800 hover:text-black cursor-pointer"
+                className="absolute top-4 right-4 text-gray-800 hover:text-black dark:text-white dark:hover:text-gray-200 cursor-pointer"
               >
                 <X size={24} />
               </button>
@@ -73,20 +73,22 @@ const ProductQuickView = ({ product, isOpen, onClose, currency }) => {
                 />
 
                 <div className="flex flex-col gap-3 items-start justify-center text-black dark:text-white">
-                  <h2 className="text-2xl font-semibold text-gray-800">
+                  <h2 className="text-2xl font-semibold text-gray-800 dark:text-gray-200">
                     {t(product.name)}
                   </h2>
-                  <p className="text-gray-700">{t(product.category)}</p>
-                  <p className="text-lg text-green-600 font-bold">
+                  <p className="text-gray-700 dark:text-gray-100">{t(product.category)}</p>
+                  <div className="flex items-center justify-center gap-2">
+                    <p className="text-lg text-green-500 font-bold">
                     {currency === "USD"
                       ? `$${product.price}`
                       : `₹${Math.round(product.price * 83)}`}
                   </p>
-                  <p className="text-gray-500 line-through">
+                  <p className="text-gray-500 dark:text-gray-400 line-through">
                     {currency === "USD"
                       ? `$${product.originalPrice}`
                       : `₹${Math.round(product.originalPrice * 83)}`}
                   </p>
+                  </div>
 
                   <motion.button
                     onClick={handleAddToCart}

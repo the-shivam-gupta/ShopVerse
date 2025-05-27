@@ -73,7 +73,7 @@ const ContactUs = () => {
     (field === "name" ? name : field === "email" ? email : message).length > 0;
 
   return (
-    <div className="w-full h-[100dvh] dark:bg-gray-800">
+    <div className="w-full h-[100dvh] dark:bg-black bg-gray-100">
       <motion.div
         className="max-w-3xl mx-auto px-4 py-16"
         initial="hidden"
@@ -89,7 +89,7 @@ const ContactUs = () => {
 
         <motion.form
           onSubmit={handleSubmit}
-          className="bg-white dark:bg-gray-700 shadow-lg border border-gray-200 dark:border-gray-500 rounded-xl p-10 space-y-6"
+          className="bg-white dark:bg-gray-700 shadow-lg border border-gray-200 dark:border-gray-700 rounded-xl p-10 space-y-6"
           variants={childVariants}
         >
           {/* Name Field */}

@@ -91,41 +91,53 @@ const Header = ({ currency, setCurrency }) => {
   return (
     <header>
       {/* Header Top */}
-      <div className="bg-gray-100 py-2 dark:bg-gray-800">
+      <div className="bg-gray-100 py-2 dark:bg-black">
         <div className="container mx-auto px-4 flex flex-wrap items-center sm:justify-between justify-center">
           <ul className="flex items-center justify-center space-x-2">
-            <li className="p-2 border border-gray-400 bg-gray-200 rounded-lg">
-              <a href="#" className="text-gray-600">
-                <Facebook size={20} />
-              </a>
-            </li>
-            <li className="p-2 border border-gray-400 bg-gray-200 rounded-lg">
-              <a
-                href="https://x.com/ShivamGupt97925"
-                target="_blank"
-                className="text-gray-600"
+            {[
+              {
+                href: "#",
+                icon: Facebook,
+                label: "Facebook",
+                hoverColor: "group-hover:text-[#1877F2]",
+              },
+              {
+                href: "https://x.com/ShivamGupt97925",
+                icon: Twitter,
+                label: "Twitter",
+                hoverColor: "group-hover:text-[#1DA1F2]",
+              },
+              {
+                href: "https://www.instagram.com/__shiiivammm__/",
+                icon: Instagram,
+                label: "Instagram",
+                hoverColor: "group-hover:text-[#E1306C]",
+              },
+              {
+                href: "https://www.linkedin.com/in/the-shivam-gupta/",
+                icon: Linkedin,
+                label: "LinkedIn",
+                hoverColor: "group-hover:text-[#0077B5]",
+              },
+            ].map((item, idx) => (
+              <li
+                key={idx}
+                className="group p-2 border rounded-lg transition-all duration-300 
+                 bg-gray-100 dark:bg-gray-800 
+                 border-gray-300 dark:border-gray-700 
+                 hover:bg-gray-200 dark:hover:bg-gray-700"
               >
-                <Twitter size={20} />
-              </a>
-            </li>
-            <li className="p-2 border border-gray-400 bg-gray-200 rounded-lg">
-              <a
-                href="https://www.instagram.com/__shiiivammm__/"
-                target="_blank"
-                className="text-gray-600"
-              >
-                <Instagram size={20} />
-              </a>
-            </li>
-            <li className="p-2  border border-gray-400 bg-gray-200 rounded-lg">
-              <a
-                href="https://www.linkedin.com/in/the-shivam-gupta/"
-                target="_blank"
-                className="text-gray-600"
-              >
-                <Linkedin size={20} />
-              </a>
-            </li>
+                <a
+                  href={item.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={item.label}
+                  className={`text-gray-600 dark:text-gray-300 transition-colors duration-300 ${item.hoverColor}`}
+                >
+                  <item.icon size={20} />
+                </a>
+              </li>
+            ))}
           </ul>
 
           <div className="text-sm text-gray-700 dark:text-gray-300 uppercase text-center sm:text-left mt-2">
@@ -139,29 +151,29 @@ const Header = ({ currency, setCurrency }) => {
 
           <div className="flex space-x-2 text-gray-500 dark:text-gray-200">
             <select
-              className="px-2 py-1 text-lg cursor-pointer"
+              className="px-2 py-1 text-lg cursor-pointer dark:bg-gray-800 bg-gray-200 rounded-sm"
               value={currency}
               onChange={(e) => setCurrency(e.target.value)}
             >
-              <option className="dark:text-gray-500" value="USD">
+              <option className="dark:text-gray-300" value="USD">
                 USD $
               </option>
-              <option className="dark:text-gray-500" value="INR">
+              <option className="dark:text-gray-300" value="INR">
                 INR ₹
               </option>
             </select>
 
             <select
               onChange={handleLanguageChange}
-              className="px-2 py-1 text-lg uppercase cursor-pointer"
+              className="px-2 py-1 text-lg uppercase cursor-pointer dark:bg-gray-800 bg-gray-200 rounded-sm"
             >
-              <option className="dark:text-gray-500" value="en">
+              <option className="dark:text-gray-300" value="en">
                 English
               </option>
-              <option className="dark:text-gray-500" value="hi">
+              <option className="dark:text-gray-300" value="hi">
                 Hindi
               </option>
-              <option className="dark:text-gray-500" value="es">
+              <option className="dark:text-gray-300" value="es">
                 Spanish
               </option>
             </select>
@@ -171,7 +183,7 @@ const Header = ({ currency, setCurrency }) => {
       </div>
 
       {/* Header Main */}
-      <div className="py-4 border-t border-b border-gray-200 dark:border-gray-500 dark:bg-gray-800">
+      <div className="py-4 border-t border-b border-gray-200 dark:border-gray-700 dark:bg-black">
         <div className="container mx-auto flex flex-wrap items-center justify-evenly gap-4 px-4 sm:px-6">
           <Link to="/">
             <img
@@ -237,14 +249,14 @@ const Header = ({ currency, setCurrency }) => {
                 onClick={() => setAuthOpen(true)}
                 className="relative text-gray-600 dark:text-gray-300 cursor-pointer"
               >
-                <CircleUser size={35} />
+                <CircleUser size={32} />
               </button>
             )}
             <button
               onClick={() => navigate("/favorites")}
               className="relative text-gray-600 dark:text-gray-300 cursor-pointer"
             >
-              <Heart size={35} />
+              <Heart size={32} />
               <span className="absolute -top-1 -right-2 text-xs bg-pink-500 text-white rounded-full px-1 font-bold">
                 {favorites.length}
               </span>
@@ -253,7 +265,7 @@ const Header = ({ currency, setCurrency }) => {
               onClick={() => navigate("/cart")}
               className="relative text-gray-600 dark:text-gray-300 cursor-pointer"
             >
-              <ShoppingCart size={35} />
+              <ShoppingCart size={32} />
               <span className="absolute -top-1 -right-2 text-xs bg-pink-500 text-white rounded-full px-1 font-bold">
                 {cart.length}
               </span>
@@ -266,7 +278,7 @@ const Header = ({ currency, setCurrency }) => {
       <AuthModal isOpen={isAuthOpen} onClose={() => setAuthOpen(false)} />
 
       {/* Desktop Navigation */}
-      <nav className="hidden md:block border-b border-gray-200 dark:border-gray-500 dark:bg-gray-800">
+      <nav className="hidden md:block border-b border-gray-200 dark:border-gray-700 dark:bg-black">
         <div className="flex items-center justify-center container mx-auto">
           <ul className="flex space-x-8 py-4 text-lg font-bold text-gray-600 dark:text-gray-300">
             <li className="relative group">
@@ -283,7 +295,7 @@ const Header = ({ currency, setCurrency }) => {
                 {t("header.categories")}
                 <span className="absolute left-0 -bottom-1 w-0 h-[3px] bg-pink-500 transition-all group-hover:w-full"></span>
               </a>
-              <div className="absolute left-1/2 transform -translate-x-1/4 w-fit h-[17em] bg-white dark:bg-gray-800 shadow-lg mt-2 opacity-0 pointer-events-none group-hover:pointer-events-auto group-hover:opacity-100 transition-opacity duration-300 z-50 rounded-xl border border-gray-200 dark:border-gray-500 py-2">
+              <div className="absolute left-1/2 transform -translate-x-1/4 w-fit h-[17em] bg-white dark:bg-black shadow-lg mt-2 opacity-0 pointer-events-none group-hover:pointer-events-auto group-hover:opacity-100 transition-opacity duration-300 z-50 rounded-xl border border-gray-200 dark:border-gray-700 py-2">
                 <div className="flex items-center justify-evenly gap-20 p-4 px-12 rounded-2xl mt-1">
                   <div className="relative">
                     <h3 className="font-bold mb-4">{t("dropdown.gadgets")}</h3>
@@ -522,7 +534,7 @@ const Header = ({ currency, setCurrency }) => {
                 {t("header.men")}
                 <span className="absolute left-0 -bottom-1 w-0 h-[3px] bg-pink-500 transition-all group-hover:w-full"></span>
               </a>
-              <div className="absolute left-1/2 transform -translate-x-1/6 w-[12em] h-[12em] bg-white dark:bg-gray-800 shadow-lg mt-2 opacity-0 pointer-events-none group-hover:pointer-events-auto group-hover:opacity-100 transition-opacity duration-300 z-50 rounded-xl border border-gray-200 dark:border-gray-400 p-4">
+              <div className="absolute left-1/2 transform -translate-x-1/6 w-[12em] h-[12em] bg-white dark:bg-black shadow-lg mt-2 opacity-0 pointer-events-none group-hover:pointer-events-auto group-hover:opacity-100 transition-opacity duration-300 z-50 rounded-xl border border-gray-200 dark:border-gray-700 p-4">
                 <div className="rounded-2xl">
                   <div className="relative text-left">
                     <ul className="space-y-3 text-gray-500 text-lg font-medium">
@@ -589,7 +601,7 @@ const Header = ({ currency, setCurrency }) => {
                 {t("header.women")}
                 <span className="absolute left-0 -bottom-1 w-0 h-[3px] bg-pink-500 transition-all group-hover:w-full"></span>
               </a>
-              <div className="absolute left-1/2 transform -translate-x-1/5 w-[12em] h-[12em] bg-white dark:bg-gray-800 shadow-lg mt-2 opacity-0 pointer-events-none group-hover:pointer-events-auto group-hover:opacity-100 transition-opacity duration-300 z-50 rounded-xl border border-gray-200 dark:border-gray-400 p-4">
+              <div className="absolute left-1/2 transform -translate-x-1/5 w-[12em] h-[12em] bg-white dark:bg-black shadow-lg mt-2 opacity-0 pointer-events-none group-hover:pointer-events-auto group-hover:opacity-100 transition-opacity duration-300 z-50 rounded-xl border border-gray-200 dark:border-gray-700 p-4">
                 <div className="rounded-2xl">
                   <div className="relative text-left">
                     <ul className="space-y-3 text-gray-500 text-lg font-medium">
@@ -656,7 +668,7 @@ const Header = ({ currency, setCurrency }) => {
                 {t("header.jewelry")}
                 <span className="absolute left-0 -bottom-1 w-0 h-[3px] bg-pink-500 transition-all group-hover:w-full"></span>
               </a>
-              <div className="absolute left-1/2 transform -translate-x-1/5 w-[11em] h-[10em] bg-white dark:bg-gray-800 shadow-lg mt-2 opacity-0 pointer-events-none group-hover:pointer-events-auto group-hover:opacity-100 transition-opacity duration-300 z-50 rounded-xl border border-gray-200 dark:border-gray-400 p-4">
+              <div className="absolute left-1/2 transform -translate-x-1/5 w-[11em] h-[10em] bg-white dark:bg-black shadow-lg mt-2 opacity-0 pointer-events-none group-hover:pointer-events-auto group-hover:opacity-100 transition-opacity duration-300 z-50 rounded-xl border border-gray-200 dark:border-gray-700 p-4">
                 <div className="rounded-2xl">
                   <div className="relative text-left">
                     <ul className="space-y-3 text-gray-500 text-lg font-medium">
@@ -713,7 +725,7 @@ const Header = ({ currency, setCurrency }) => {
                 {t("header.perfume")}
                 <span className="absolute left-0 -bottom-1 w-0 h-[3px] bg-pink-500 transition-all group-hover:w-full"></span>
               </a>
-              <div className="absolute left-1/2 transform -translate-x-1/5 w-[12em] h-[10em] bg-white dark:bg-gray-800 shadow-lg mt-2 opacity-0 pointer-events-none group-hover:pointer-events-auto group-hover:opacity-100 transition-opacity duration-300 z-50 rounded-xl border border-gray-200 dark:border-gray-400 p-4">
+              <div className="absolute left-1/2 transform -translate-x-1/5 w-[12em] h-[10em] bg-white dark:bg-black shadow-lg mt-2 opacity-0 pointer-events-none group-hover:pointer-events-auto group-hover:opacity-100 transition-opacity duration-300 z-50 rounded-xl border border-gray-200 dark:border-gray-700 p-4">
                 <div className="rounded-2xl">
                   <div className="relative text-left">
                     <ul className="space-y-3 text-gray-500 text-lg font-medium">

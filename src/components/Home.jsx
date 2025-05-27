@@ -12,6 +12,7 @@ import CompareModal from "./ui/CompareModal";
 // Images import:
 import model_1 from "../assets/image.png";
 import model_2 from "../assets/womenGlasses.png";
+import { useCompare } from "./context/CompareContext";
 
 // Categories
 const categories = [
@@ -52,23 +53,8 @@ export default function Home({ currency }) {
   const { addToCart } = useCart();
   const navigate = useNavigate();
   const [selectedProduct, setSelectedProduct] = useState(null);
-  const [compareList, setCompareList] = useState([]);
-  const [isCompareOpen, setIsCompareOpen] = useState(false);
   const [shuffledProducts, setShuffledProducts] = useState([]);
-
-  const handleAddToCompare = (product) => {
-    setCompareList((prev) => {
-      if (prev.some((p) => p.name === product.name)) return prev; // Check if already in compare list
-      if (prev.length >= 2) return prev; // Allow only 2 products in compare list
-      return [...prev, product]; // Add product to compare list
-    });
-    setIsCompareOpen(true); // Open compare modal
-  };
-
-  const handleCloseCompare = () => {
-    setCompareList([]);
-    setIsCompareOpen(false);
-  };
+  const { compareList, isCompareOpen, addToCompare, clearCompare } = useCompare();
 
   // Scroll effect on Categories
   const controls = useAnimation();
@@ -94,8 +80,8 @@ export default function Home({ currency }) {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-800">
-      <section className="flex flex-col-reverse md:flex-row bg-pink-50 dark:bg-gray-800 p-8 items-center justify-evenly gap-12">
+    <div className="min-h-screen bg-gray-50 dark:bg-black">
+      <section className="flex flex-col-reverse md:flex-row bg-pink-50 dark:bg-black p-8 items-center justify-evenly gap-12">
         <div className="space-y-4 text-center md:text-left max-w-md">
           <h2 className="text-2xl md:text-3xl font-bold text-gray-800 dark:text-gray-50">
             {t("home.trendingAccessories")}
@@ -113,7 +99,6 @@ export default function Home({ currency }) {
           </p>
           <Button
             onClick={() => navigate("/products")}
-            className="bg-pink-500 hover:bg-pink-400 cursor-pointer rounded-sm px-4 py-2"
           >
             {t("home.shopNow")}
           </Button>
@@ -147,8 +132,9 @@ export default function Home({ currency }) {
           {[...categories, ...categories].map((item, id) => (
             <motion.div
               whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.99 }}
               key={id}
-              className="backdrop-blur-lg dark:bg-gray-700 border border-pink-200 dark:border-gray-400 p-5 rounded-xl shadow-xl dark:shadow-gray-300 dark:shadow-sm w-45 text-center hover:shadow-2xl hover:bg-white dark:hover:bg-gray-500 cursor-pointer"
+              className="backdrop-blur-lg dark:bg-gray-800 border border-pink-200 dark:border-gray-700 p-5 rounded-xl shadow-xl dark:shadow-gray-500 dark:shadow-sm w-45 text-center hover:shadow-[0_5px_12px_rgb(0_0_0_/_0.25)] hover:bg-white dark:hover:bg-gray-700 cursor-pointer"
             >
               <div className="relative">
                 <img
@@ -176,7 +162,7 @@ export default function Home({ currency }) {
         <CategorySection />
 
         {/* Product Grids */}
-        <div className="min-h-screen bg-gray-100 dark:bg-gray-700 p-10">
+        <div className="min-h-screen bg-gray-100 dark:bg-gray-800 p-10">
           <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
             {shuffledProducts.map((product, index) => (
               <ProductCard
@@ -184,10 +170,10 @@ export default function Home({ currency }) {
                 product={product}
                 currency={currency}
                 onQuickView={(p) => setSelectedProduct(p)}
-                onAddToCompare={handleAddToCompare}
+                onAddToCompare={addToCompare}
                 compareList={compareList}
                 isCompareOpen={isCompareOpen}
-                handleCloseCompare={handleCloseCompare}
+                handleCloseCompare={clearCompare}
                 addToCart={addToCart}
               />
             ))}
@@ -215,12 +201,14 @@ export default function Home({ currency }) {
                 {t("compare.compareItems")}
               </h4>
               {compareList.map((item) => (
-                <p key={item.name} className="text-md text-gray-600 dark:text-gray-700">
+                <p
+                  key={item.name}
+                  className="text-md text-gray-600 dark:text-gray-700"
+                >
                   {t(item.name)}
                 </p>
               ))}
               <button
-                onClick={() => setIsCompareOpen(true)}
                 className="mt-6 w-full py-3 bg-pink-400 text-white font-semibold text-base rounded-xl hover:bg-pink-500 transition cursor-pointer"
               >
                 {t("compare.selectProduct")}
@@ -232,7 +220,7 @@ export default function Home({ currency }) {
         <CompareModal
           products={compareList}
           isOpen={isCompareOpen}
-          onClose={handleCloseCompare}
+          onClose={clearCompare}
           currency={currency}
         />
       </div>

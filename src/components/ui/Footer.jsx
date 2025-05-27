@@ -9,7 +9,7 @@ export default function Footer() {
   const navigate = useNavigate();
 
   return (
-    <footer className="bg-gray-200 dark:bg-gray-800 border-t dark:border-gray-500 text-gray-300 py-10 text-lg">
+    <footer className="bg-gray-200 dark:bg-gray-800 border-t dark:border-gray-700 text-gray-300 py-10 text-lg">
       <div className="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-5 gap-8">
         {/* LOGO */}
         <div className="flex items-center">

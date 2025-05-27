@@ -16,7 +16,7 @@ const CompareModal = ({ products, isOpen, onClose, currency }) => {
       onClose={onClose}
       className="fixed z-50 inset-0 overflow-y-auto"
     >
-      <div className="fixed inset-0 flex items-center justify-center backdrop-blur-lg bg-transparent bg-opacity-30 rounded-xl" />
+      <div className="fixed inset-0 flex items-center justify-center backdrop-blur-xl bg-transparent rounded-xl" />
 
       <div className="fixed inset-0 flex items-center justify-center p-4">
         <Dialog.Panel
@@ -25,18 +25,18 @@ const CompareModal = ({ products, isOpen, onClose, currency }) => {
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.9 }}
           transition={{ duration: 0.3, ease: "easeOut" }}
-          className="relative max-w-4xl w-full bg-white dark:bg-gray-200 rounded-xl p-10 shadow-xl focus:outline-none"
+          className="relative max-w-4xl w-full bg-transparent border border-gray-400 rounded-xl p-10 shadow-xl dark:shadow-gray-500 focus:outline-none"
         >
           {/* Close button (focusable) */}
           <button
             onClick={onClose}
-            className="absolute top-4 right-4 text-gray-800 hover:text-black cursor-pointer"
+            className="absolute top-4 right-4 text-gray-800 dark:text-white hover:text-black dark:hover:text-gray-200 cursor-pointer"
             aria-label="Close modal"
           >
             <X size={24} />
           </button>
 
-          <h2 className="text-2xl font-bold text-center text-gray-700 dark:text-gray-800 mb-8">
+          <h2 className="text-2xl font-bold text-center text-gray-700 dark:text-gray-200 mb-8">
             {t("compare.compareProduct")}
           </h2>
 
@@ -49,7 +49,7 @@ const CompareModal = ({ products, isOpen, onClose, currency }) => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.2 }}
-                className="p-4 border rounded-xl flex flex-col items-center justify-around border-gray-100 dark:border-gray-200 shadow-lg"
+                className="p-4 border rounded-xl flex flex-col items-center justify-around border-gray-100 dark:border-gray-400 shadow-lg dark:shadow-gray-500"
               >
                 <img
                   src={
@@ -60,14 +60,13 @@ const CompareModal = ({ products, isOpen, onClose, currency }) => {
                   alt={product.name}
                   className="w-45 h-45 object-contain mb-3"
                   loading="lazy"
-                  style={{ mixBlendMode: "multiply" }}
                 />
-                <h3 className="text-lg font-semibold text-gray-700 text-center">
+                <h3 className="text-lg font-semibold text-gray-700 dark:text-gray-300 text-center">
                   {t(product.name)}
                 </h3>
-                <p className="text-sm text-gray-500 dark:text-gray-600">{t(product.category)}</p>
+                <p className="text-sm text-gray-500 dark:text-gray-100">{t(product.category)}</p>
                 <div className="flex items-center justify-center gap-2 mt-2">
-                  <p className="text-green-600 font-bold">
+                  <p className="text-green-500 font-bold">
                     {currency === "USD"
                       ? `$${product.price}`
                       : `₹${Math.round(product.price * 83)}`}
