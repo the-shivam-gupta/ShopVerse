@@ -5,6 +5,8 @@ import { useTranslation } from "react-i18next";
 import { useCart } from "../context/CartContext";
 import ProductQuickView from "./ProductQuickView";
 import { useNavigate, useParams } from "react-router-dom";
+import { useCompare } from "../context/CompareContext";
+import CompareModal from "./CompareModal";
 
 const categoryStructure = {
   SHIRTS: [
@@ -31,13 +33,7 @@ const categoryStructure = {
   BEAUTY: ["SKINCARE", "MAKEUP", "PERFUME", "HAIRCARE", "GROOMING KIT"],
 };
 
-const ProductListingPage = ({
-  currency,
-  onAddToCompare,
-  compareList = [],
-  isCompareOpen,
-  handleCloseCompare,
-}) => {
+const ProductListingPage = ({ currency }) => {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [priceRange, setPriceRange] = useState([0, 2000]);
   const [sortType, setSortType] = useState("default");
@@ -49,6 +45,8 @@ const ProductListingPage = ({
   const [selectedCategory, setSelectedCategory] = useState(
     categoryName || "All"
   );
+  const { compareList, isCompareOpen, addToCompare, clearCompare } =
+    useCompare();
 
   useEffect(() => {
     if (categoryName) {
@@ -103,13 +101,13 @@ const ProductListingPage = ({
   };
 
   return (
-    <div className="flex flex-col md:flex-row p-4 gap-6 dark:bg-gray-800">
+    <div className="flex flex-col md:flex-row p-4 gap-6 dark:bg-black">
       {/* Sidebar Filters */}
       <motion.aside
         initial={{ x: -50, opacity: 0 }}
         animate={{ x: 0, opacity: 1 }}
         transition={{ duration: 0.5 }}
-        className="lg:sticky lg:top-6 w-full md:w-1/5 space-y-4 flex flex-col px-5 py-6 shadow-xl h-fit rounded-xl bg-linear-to-tr from-white to-pink-50 dark:bg-gradient-to-tr dark:from-gray-500 dark:to-gray-600 border border-gray-200 dark:border-gray-400"
+        className="lg:sticky lg:top-6 w-full md:w-1/5 space-y-4 flex flex-col px-5 py-6 shadow-xl h-fit rounded-xl bg-linear-to-tr from-white to-pink-50 dark:bg-gradient-to-tr dark:from-gray-600 dark:to-gray-800 border border-gray-200 dark:border-gray-400"
       >
         <div className="border p-3 border-pink-100 dark:border-gray-400 rounded-xl">
           <h2 className="text-xl font-semibold mb-2 text-gray-600 dark:text-gray-100">
@@ -124,7 +122,7 @@ const ProductListingPage = ({
             className={`block w-full text-left px-3 py-1 rounded cursor-pointer dark:text-gray-100 ${
               selectedCategory === "All"
                 ? "bg-pink-500 font-semibold"
-                : "hover:bg-gray-100 dark:hover:bg-gray-500"
+                : "hover:bg-gray-100 dark:hover:bg-gray-600"
             }`}
           >
             All
@@ -141,7 +139,7 @@ const ProductListingPage = ({
                 className={`block w-full text-left px-3 py-1 rounded cursor-pointer dark:text-gray-100 ${
                   selectedCategory === parent
                     ? "bg-pink-500 font-semibold"
-                    : "hover:bg-gray-100 dark:hover:bg-gray-500"
+                    : "hover:bg-gray-100 dark:hover:bg-gray-600"
                 }`}
               >
                 {parent}
@@ -167,7 +165,7 @@ const ProductListingPage = ({
                         className={`block w-full text-left px-3 py-1 rounded cursor-pointer dark:text-gray-200 ${
                           selectedCategory === sub
                             ? "bg-pink-100 dark:bg-pink-400 text-pink-400 dark:text-white font-semibold"
-                            : "hover:bg-gray-50 dark:hover:bg-gray-500"
+                            : "hover:bg-gray-50 dark:hover:bg-gray-600"
                         }`}
                       >
                         ~ {sub}
@@ -180,24 +178,36 @@ const ProductListingPage = ({
           ))}
         </div>
 
-        <div className="border p-2 rounded-xl border-pink-100 dark:border-gray-400">
-          <h2 className="text-xl font-semibold text-gray-700 dark:text-gray-100">
+        <div className="border p-3 rounded-xl border-pink-100 dark:border-gray-400">
+          <h2 className="text-xl font-semibold text-gray-700 dark:text-gray-100 mb-2">
             {t("filter.priceRange")}
           </h2>
-          <div className="text-sm mt-2 dark:text-gray-200">
-            {t("filter.upTo")}{" "}
-            {currency === "USD"
-              ? `$${priceRange[1]}`
-              : `₹${Math.round(priceRange[1] * 83)}`}
+
+          <div className="flex items-center gap-2 mb-2">
+            <input
+              type="number"
+              min={0}
+              value={priceRange[0] || ""}
+              onChange={(e) => {
+                const value = Math.max(0, Number(e.target.value));
+                setPriceRange([value, Math.max(value, priceRange[1])]);
+              }}
+              placeholder={t("filter.min")}
+              className="w-1/2 p-2 rounded border dark:bg-gray-700 dark:text-white"
+            />
+            <span className="text-gray-500 dark:text-gray-300">-</span>
+            <input
+              type="number"
+              min={0}
+              value={priceRange[1] !== 2000 ? priceRange[1] : ""}
+              onChange={(e) => {
+                const value = Math.max(1, Number(e.target.value));
+                setPriceRange([Math.min(priceRange[0], value), value]);
+              }}
+              placeholder={t("filter.max")}
+              className="w-1/2 p-2 rounded border dark:bg-gray-700 dark:text-white"
+            />
           </div>
-          <input
-            type="range"
-            min="0"
-            max="2000"
-            value={priceRange[1]}
-            onChange={(e) => setPriceRange([0, Number(e.target.value)])}
-            className="w-full cursor-pointer accent-pink-400"
-          />
         </div>
 
         <div className="p-2">
@@ -207,7 +217,7 @@ const ProductListingPage = ({
           <select
             value={sortType}
             onChange={(e) => setSortType(e.target.value)}
-            className="w-full p-2 rounded border cursor-pointer dark:text-gray-100 dark:bg-gray-500"
+            className="w-full p-2 rounded border cursor-pointer dark:text-gray-100 dark:bg-gray-700"
           >
             <option value="default">{t("filter.default")}</option>
             <option value="priceLowHigh">{t("filter.priceLowToHigh")}</option>
@@ -219,7 +229,7 @@ const ProductListingPage = ({
 
       {/* Products Section */}
       <motion.section
-        className="w-1/2 md:w-4/5 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 bg-gray-100 dark:bg-gray-700 p-10"
+        className="w-1/2 md:w-4/5 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 bg-gray-100 dark:bg-gray-800 p-10"
         variants={containerVariants}
         initial="hidden"
         animate="visible"
@@ -240,16 +250,50 @@ const ProductListingPage = ({
                 currency={currency}
                 addToFavorites={() => removeFromFavorites(product.name)}
                 onQuickView={(p) => setSelectedProduct(p)}
-                onAddToCompare={onAddToCompare}
+                onAddToCompare={addToCompare}
                 compareList={compareList}
                 isCompareOpen={isCompareOpen}
-                handleCloseCompare={handleCloseCompare}
+                handleCloseCompare={clearCompare}
                 addToCart={addToCart}
               />
             </motion.div>
           ))}
         </AnimatePresence>
+        {/* Compare items */}
+        <AnimatePresence>
+          {compareList.length > 0 && (
+            <motion.div
+              initial={{ opacity: 0, y: 50, scale: 0.9 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 50, scale: 0.9 }}
+              transition={{ duration: 0.3 }}
+              className="fixed bottom-6 right-6 bg-white dark:bg-gray-200 p-6 shadow-2xl rounded-2xl w-80 z-50"
+            >
+              <h4 className="font-bold mb-4 text-lg text-gray-700 dark:text-gray-800">
+                {t("compare.compareItems")}
+              </h4>
+              {compareList.map((item) => (
+                <p
+                  key={item.name}
+                  className="text-md text-gray-600 dark:text-gray-700"
+                >
+                  {t(item.name)}
+                </p>
+              ))}
+              <button className="mt-6 w-full py-3 bg-pink-400 text-white font-semibold text-base rounded-xl hover:bg-pink-500 transition cursor-pointer">
+                {t("compare.selectProduct")}
+              </button>
+            </motion.div>
+          )}
+        </AnimatePresence>
+        <CompareModal
+          products={compareList}
+          isOpen={isCompareOpen}
+          onClose={clearCompare}
+          currency={currency}
+        />
       </motion.section>
+      
       {/* Quick View Modal */}
       <ProductQuickView
         product={selectedProduct}

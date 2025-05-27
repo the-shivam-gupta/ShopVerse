@@ -245,7 +245,10 @@
     "default": "Default",
     "priceLowToHigh": "Price: Low to High",
     "priceHighToLow": "Price: High to Low",
-    "ratingHighToLow": "Rating: High to Low"
+    "ratingHighToLow": "Rating: High to Low",
+    "min": "Min",
+    "max": "Max",
+    "showingUpTo": "Showing up to"
   },
   "contact": {
     "contactUs": "Contact Us",

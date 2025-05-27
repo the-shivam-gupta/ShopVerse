@@ -37,7 +37,7 @@ const CartPage = ({ currency }) => {
   // No Items in cart
   if (cart.length === 0) {
     return (
-      <div className="w-full dark:bg-gray-800 h-[100dvh]">
+      <div className="w-full dark:bg-black h-[100dvh]">
         <div className="container mx-auto py-8">
           <h1 className="text-2xl font-bold mb-4 dark:text-gray-100">
             {t("cart.cart")}
@@ -51,7 +51,7 @@ const CartPage = ({ currency }) => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 dark:bg-gray-800 p-4 sm:p-6">
+    <div className="min-h-screen bg-gray-100 dark:bg-black p-4 sm:p-6">
       <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Cart Items */}
         <div className="lg:col-span-2 space-y-4">
@@ -70,7 +70,7 @@ const CartPage = ({ currency }) => {
                   transition: { duration: 0.5, ease: "easeInOut" },
                 }}
                 transition={{ duration: 0.3 }}
-                className="bg-white p-4 rounded-xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow"
+                className="bg-transparent border border-gray-300 dark:border-gray-500 p-4 rounded-xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-md dark:shadow-gray-500"
               >
                 <div className="flex items-start gap-4 w-full sm:w-auto">
                   <img
@@ -79,11 +79,11 @@ const CartPage = ({ currency }) => {
                     className="w-24 h-24 object-contain rounded"
                   />
                   <div>
-                    <h2 className="text-lg font-semibold text-gray-800">
+                    <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-300">
                       {t(item.name)}
                     </h2>
-                    <p className="text-gray-500 text-sm">{t(item.category)}</p>
-                    <p className="text-gray-700 font-bold mt-1">
+                    <p className="text-gray-500 dark:text-gray-100 text-sm">{t(item.category)}</p>
+                    <p className="text-green-500 font-bold mt-1">
                       {getPrice(item.price)}
                       <span className="text-gray-400 line-through text-sm ml-2">
                         {getPrice(item.originalPrice)}

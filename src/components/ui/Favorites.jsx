@@ -19,7 +19,7 @@ const FavoritesPage = ({
 
   if (favorites.length === 0) {
     return (
-      <div className="dark:bg-gray-800 w-full h-[100dvh]">
+      <div className="dark:bg-black w-full h-[100dvh]">
         <div className="container mx-auto py-8">
           <h1 className="text-2xl font-bold mb-4 dark:text-gray-100">
             {t("favorite.favorites")}
@@ -33,7 +33,7 @@ const FavoritesPage = ({
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 dark:bg-gray-800 p-10">
+    <div className="min-h-screen bg-gray-100 dark:bg-black p-10">
       <h1 className="text-2xl font-bold mb-4 text-gray-700 dark:text-gray-100">
         Your Favorites
       </h1>

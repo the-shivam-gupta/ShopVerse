@@ -19,7 +19,7 @@ const AboutUs = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="w-full dark:bg-gray-800">
+    <div className="w-full dark:bg-black bg-gray-100">
       <motion.div
         className="max-w-5xl mx-auto px-4 py-16 space-y-12"
         initial="hidden"
@@ -110,13 +110,13 @@ const AboutUs = () => {
                 onClick={() => navigate("/products")}
                 key={item}
                 whileHover={{ scale: 1.05 }}
-                className="bg-pink-50 dark:bg-gray-300 rounded-xl shadow hover:shadow-lg transition cursor-pointer flex flex-col items-center p-6"
+                className="bg-pink-50 dark:bg-gray-700 rounded-xl shadow hover:shadow-lg transition cursor-pointer flex flex-col items-center p-6"
               >
                 <div className="text-4xl mb-2" aria-label={item} title={item}>
                   {icon}
                 </div>
                 <h3 className="text-xl font-semibold text-pink-600">{item}</h3>
-                <p className="text-gray-500 dark:text-gray-700 text-md text-center mt-1">
+                <p className="text-gray-500 dark:text-gray-200 text-md text-center mt-1">
                   Explore our collection of {item.toLowerCase()} for every
                   occasion.
                 </p>
@@ -134,7 +134,7 @@ const AboutUs = () => {
           <motion.button
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.95 }}
-            className="bg-pink-500 text-white px-8 py-3 w-1/5 cursor-pointer rounded-md font-medium shadow hover:bg-pink-400 transition"
+            className="bg-pink-500 dark:text-white text-black px-8 py-3 w-1/5 cursor-pointer rounded-md font-medium shadow hover:bg-pink-400 transition"
           >
             Shop Now
           </motion.button>

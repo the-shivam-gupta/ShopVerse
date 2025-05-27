@@ -8,7 +8,6 @@ import Footer from "./components/ui/Footer";
 import CartPage from "./components/ui/CartPage";
 import { useCart } from "./components/context/CartContext";
 import ProductListingPage from "./components/ui/ProductListingPage";
-import ScrollToTop from "./components/ui/ScrollToTop";
 import ContactUs from "./components/ui/ContactUs";
 import AboutUs from "./components/ui/AboutUs";
 
@@ -17,7 +16,6 @@ const AppRouter = ({ currency, setCurrency }) => {
   const { cart, setCart } = useCart();
   return (
     <Router>
-      <ScrollToTop />
       <Header
         currency={currency}
         setCurrency={setCurrency}
