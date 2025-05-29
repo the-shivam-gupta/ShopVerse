@@ -1,9 +1,10 @@
-import React, { useRef } from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { Link, useNavigate } from "react-router-dom";
 import { useFavorites } from "../context/FavoritesContext";
 import { useCart } from "../context/CartContext";
+import { motion, AnimatePresence } from "framer-motion";
+import { useSearch } from "../context/SearchContext";
 import {
   Facebook,
   Twitter,
@@ -58,9 +59,11 @@ import sunglasses from "../../icons/sunglasses.png";
 import tablet from "../../icons/tablet.png";
 
 const Header = ({ currency, setCurrency }) => {
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null);
   const [isAuthOpen, setAuthOpen] = useState(false);
   const [user, setUser] = useState(null);
-  const [searchText, setSearchText] = useState("");
+  const { searchQuery, setSearchQuery } = useSearch();
   const navigate = useNavigate();
   const { t, i18n } = useTranslation();
   const { favorites } = useFavorites();
@@ -88,12 +91,31 @@ const Header = ({ currency, setCurrency }) => {
     inputRef.current?.focus();
   };
 
+  // Close on outside click
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+        setDropdownOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  // Search
+  const handleSearch = () => {
+    if (searchQuery.trim()) {
+      navigate("/products");
+    }
+  };
+
   return (
     <header>
       {/* Header Top */}
       <div className="bg-gray-100 py-2 dark:bg-black">
-        <div className="container mx-auto px-4 flex flex-wrap items-center sm:justify-between justify-center">
-          <ul className="flex items-center justify-center space-x-2">
+        <div className="container mx-auto px-4 flex flex-col sm:flex-row flex-wrap items-center justify-between gap-2">
+          {/* Social Icons */}
+          <ul className="flex justify-center sm:justify-start space-x-2">
             {[
               {
                 href: "#",
@@ -123,9 +145,9 @@ const Header = ({ currency, setCurrency }) => {
               <li
                 key={idx}
                 className="group p-2 border rounded-lg transition-all duration-300 
-                 bg-gray-100 dark:bg-gray-800 
-                 border-gray-300 dark:border-gray-700 
-                 hover:bg-gray-200 dark:hover:bg-gray-700"
+            bg-gray-100 dark:bg-gray-800 
+            border-gray-300 dark:border-gray-700 
+            hover:bg-gray-200 dark:hover:bg-gray-700"
               >
                 <a
                   href={item.href}
@@ -140,43 +162,36 @@ const Header = ({ currency, setCurrency }) => {
             ))}
           </ul>
 
-          <div className="text-sm text-gray-700 dark:text-gray-300 uppercase text-center sm:text-left mt-2">
+          {/* Free Shipping Message */}
+          <div className="text-center sm:text-left text-sm text-gray-700 dark:text-gray-300 uppercase">
             <span className="font-semibold text-gray-600 dark:text-gray-200">
               {t("header.freeShipping")}
-            </span>
+            </span>{" "}
             {currency === "USD"
               ? t("header.Order Over - $40")
               : t("header.Order Over - ₹3320")}
           </div>
 
-          <div className="flex space-x-2 text-gray-500 dark:text-gray-200">
+          {/* Currency / Language / Theme Toggle */}
+          <div className="flex flex-wrap justify-center sm:justify-end items-center space-x-2 text-gray-500 dark:text-gray-200">
             <select
-              className="px-2 py-1 text-lg cursor-pointer dark:bg-gray-800 bg-gray-200 rounded-sm"
+              className="px-2 py-1 text-sm cursor-pointer dark:bg-gray-800 bg-gray-200 rounded-sm"
               value={currency}
               onChange={(e) => setCurrency(e.target.value)}
             >
-              <option className="dark:text-gray-300" value="USD">
-                USD $
-              </option>
-              <option className="dark:text-gray-300" value="INR">
-                INR ₹
-              </option>
+              <option value="USD">USD $</option>
+              <option value="INR">INR ₹</option>
             </select>
 
             <select
               onChange={handleLanguageChange}
-              className="px-2 py-1 text-lg uppercase cursor-pointer dark:bg-gray-800 bg-gray-200 rounded-sm"
+              className="px-2 py-1 text-sm uppercase cursor-pointer dark:bg-gray-800 bg-gray-200 rounded-sm"
             >
-              <option className="dark:text-gray-300" value="en">
-                English
-              </option>
-              <option className="dark:text-gray-300" value="hi">
-                Hindi
-              </option>
-              <option className="dark:text-gray-300" value="es">
-                Spanish
-              </option>
+              <option value="en">English</option>
+              <option value="hi">Hindi</option>
+              <option value="es">Spanish</option>
             </select>
+
             <DarkModeToggle />
           </div>
         </div>
@@ -184,30 +199,31 @@ const Header = ({ currency, setCurrency }) => {
 
       {/* Header Main */}
       <div className="py-4 border-t border-b border-gray-200 dark:border-gray-700 dark:bg-black">
-        <div className="container mx-auto flex flex-wrap items-center justify-evenly gap-4 px-4 sm:px-6">
-          <Link to="/">
+        <div className="container mx-auto flex flex-col sm:flex-row items-center justify-around gap-4 px-4 sm:px-6">
+          {/* Logo */}
+          <Link to="/" className="shrink-0">
             <img
               src={logo}
               alt="Logo"
-              className="w-24 h-auto rounded-full sm:w-20"
+              className="w-20 sm:w-24 h-auto rounded-full"
             />
           </Link>
 
           {/* Search Box */}
-          <div className="relative w-full max-w-md sm:max-w-sm">
+          <div className="relative lg:w-full md:max-w-md sm:max-w-sm">
             <input
               ref={inputRef}
-              value={searchText}
-              onChange={(e) => setSearchText(e.target.value)}
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              onKeyDown={(e) => e.key === "Enter" && handleSearch()}
               type="search"
               placeholder={t("header.searchPlaceholder")}
               className="w-full border border-gray-300 dark:border-pink-500 dark:text-gray-50 bg-transparent rounded-full px-4 pr-16 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-pink-500 caret-pink-500
-                   [&::-webkit-search-cancel-button]:appearance-none" // hides the default X
+          [&::-webkit-search-cancel-button]:appearance-none"
             />
-            {/* Clear (X) Icon */}
-            {searchText && (
+            {searchQuery && (
               <button
-                onClick={() => setSearchText("")}
+                onClick={() => setSearchQuery("")}
                 className="absolute right-10 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-pink-400 cursor-pointer"
               >
                 <X size={18} />
@@ -215,43 +231,64 @@ const Header = ({ currency, setCurrency }) => {
             )}
             <button
               type="submit"
-              onClick={handleFocus}
+              onClick={handleSearch}
               className="absolute right-5 top-1/2 -translate-y-1/2 text-pink-500 hover:text-pink-600 cursor-pointer"
             >
               <Search size={18} />
             </button>
           </div>
 
-          <div className="flex items-center justify-center space-x-4">
+          {/* Icons */}
+          <div className="flex items-center space-x-4">
             {user ? (
-              <div className="relative group">
+              <div ref={dropdownRef} className="relative user-dropdown">
                 <img
                   src={user.photoURL || "/src/assets/default-avatar.jpeg"}
+                  loading="lazy"
                   alt="Profile"
-                  className="w-8 h-8 rounded-full cursor-pointer border border-gray-300"
+                  onClick={() => setDropdownOpen((prev) => !prev)}
+                  className="w-9 h-9 rounded-full border-2 border-pink-400 cursor-pointer hover:ring-2 hover:ring-pink-300 transition"
                 />
-                <div className="absolute -left-1/2 hidden group-hover:block bg-white border border-gray-200 w-fit mt-2 p-3 rounded-lg shadow-lg transition-all duration-200 ease-in-out z-50">
-                  <p className="font-semibold text-gray-700">
-                    {user.displayName || user.email}
-                  </p>
-                  <div className="mt-2">
-                    <button
-                      onClick={() => signOut(auth)}
-                      className="w-fit py-2 px-4 bg-red-500 text-white text-sm font-medium rounded-lg hover:bg-red-400 transition-colors cursor-pointer"
+
+                <AnimatePresence>
+                  {dropdownOpen && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -10 }}
+                      transition={{ duration: 0.2 }}
+                      className="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-56 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-center p-4 z-50"
                     >
-                      Logout
-                    </button>
-                  </div>
-                </div>
+                      {/* Arrow */}
+                      <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-4 h-4 bg-white dark:bg-gray-900 transform rotate-45 border-l border-t border-gray-200 dark:border-gray-700 z-0" />
+
+                      {/* Content */}
+                      <p className="font-semibold text-gray-800 dark:text-gray-100 break-words text-sm">
+                        {user.displayName || user.email}
+                      </p>
+
+                      <button
+                        onClick={() => {
+                          signOut(auth);
+                          setDropdownOpen(false);
+                        }}
+                        className="mt-3 w-full py-2 rounded-md bg-red-500 text-white text-sm font-semibold hover:bg-red-600 transition-colors cursor-pointer"
+                      >
+                        Logout
+                      </button>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
             ) : (
               <button
                 onClick={() => setAuthOpen(true)}
-                className="relative text-gray-600 dark:text-gray-300 cursor-pointer"
+                className="text-gray-600 dark:text-gray-300 hover:text-pink-500 transition cursor-pointer"
               >
                 <CircleUser size={32} />
               </button>
             )}
+
             <button
               onClick={() => navigate("/favorites")}
               className="relative text-gray-600 dark:text-gray-300 cursor-pointer"
@@ -274,7 +311,7 @@ const Header = ({ currency, setCurrency }) => {
         </div>
       </div>
 
-      {/* Login Modal */}
+      {/* Auth Modal */}
       <AuthModal isOpen={isAuthOpen} onClose={() => setAuthOpen(false)} />
 
       {/* Desktop Navigation */}
@@ -295,237 +332,80 @@ const Header = ({ currency, setCurrency }) => {
                 {t("header.categories")}
                 <span className="absolute left-0 -bottom-1 w-0 h-[3px] bg-pink-500 transition-all group-hover:w-full"></span>
               </a>
-              <div className="absolute left-1/2 transform -translate-x-1/4 w-fit h-[17em] bg-white dark:bg-black shadow-lg mt-2 opacity-0 pointer-events-none group-hover:pointer-events-auto group-hover:opacity-100 transition-opacity duration-300 z-50 rounded-xl border border-gray-200 dark:border-gray-700 py-2">
-                <div className="flex items-center justify-evenly gap-20 p-4 px-12 rounded-2xl mt-1">
-                  <div className="relative">
-                    <h3 className="font-bold mb-4">{t("dropdown.gadgets")}</h3>
-                    <span className="absolute left-0 top-9 w-30 h-[1px] bg-gray-200 dark:bg-gray-400"></span>
-                    <ul className="mt-6 space-y-3 text-gray-500 text-lg font-medium">
-                      <li className="flex gap-3 group/item items-center">
-                        <img
-                          src={pc}
-                          width={26}
-                          className="transform rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
-                        />
-                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out dark:text-gray-300">
-                          {t("dropdown.desktop")}
-                        </a>
-                      </li>
-                      <li className="flex gap-3 group/item items-center">
-                        <img
-                          src={laptop}
-                          width={26}
-                          className="transform -rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
-                        />
-                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out dark:text-gray-300">
-                          {t("dropdown.laptop")}
-                        </a>
-                      </li>
-                      <li className="flex gap-3 group/item items-center">
-                        <img
-                          src={dslr}
-                          width={26}
-                          className="transform rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
-                        />
-                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out dark:text-gray-300">
-                          {t("dropdown.camera")}
-                        </a>
-                      </li>
-                      <li className="flex gap-3 group/item items-center">
-                        <img
-                          src={tablet}
-                          width={26}
-                          className="transform -rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
-                        />
-                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out dark:text-gray-300">
-                          {t("dropdown.tablet")}
-                        </a>
-                      </li>
-                      <li className="flex gap-3 group/item items-center">
-                        <img
-                          src={headphones}
-                          width={26}
-                          className="transform rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
-                        />
-                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out dark:text-gray-300">
-                          {t("dropdown.headphone")}
-                        </a>
-                      </li>
-                    </ul>
-                  </div>
-                  <div className="relative">
-                    <h3 className="font-bold mb-2">{t("dropdown.mens")}</h3>
-                    <span className="absolute left-0 top-9 w-30 h-[1px] bg-gray-200 dark:bg-gray-400"></span>
-                    <ul className="mt-6 space-y-3 text-gray-500 text-lg font-medium">
-                      <li className="flex gap-3 group/item items-center">
-                        <img
-                          src={blazer}
-                          width={26}
-                          className="transform rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
-                        />
-                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out dark:text-gray-300">
-                          {t("dropdown.formal")}
-                        </a>
-                      </li>
-                      <li className="flex gap-3 group/item items-center">
-                        <img
-                          src={jeans}
-                          width={26}
-                          className="transform -rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
-                        />
-                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out dark:text-gray-300">
-                          {t("dropdown.casual")}
-                        </a>
-                      </li>
-                      <li className="flex gap-3 group/item items-center">
-                        <img
-                          src={sports}
-                          width={26}
-                          className="transform rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
-                        />
-                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out dark:text-gray-300">
-                          {t("dropdown.sports")}
-                        </a>
-                      </li>
-                      <li className="flex gap-3 group/item items-center">
-                        <img
-                          src={jacket}
-                          width={26}
-                          className="transform -rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
-                        />
-                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out dark:text-gray-300">
-                          {t("dropdown.jacket")}
-                        </a>
-                      </li>
-                      <li className="flex gap-3 group/item items-center">
-                        <img
-                          src={sunglasses}
-                          width={26}
-                          className="transform rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
-                        />
-                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out dark:text-gray-300">
-                          {t("dropdown.sunglasses")}
-                        </a>
-                      </li>
-                    </ul>
-                  </div>
-                  <div className="relative">
-                    <h3 className="font-bold mb-2">{t("dropdown.women")}</h3>
-                    <span className="absolute left-0 top-9 w-30 h-[1px] bg-gray-200 dark:bg-gray-400"></span>
-                    <ul className="mt-6 space-y-3 text-gray-500 text-lg font-medium">
-                      <li className="flex gap-3 group/item items-center">
-                        <img
-                          src={dress}
-                          width={26}
-                          className="transform rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
-                        />
-                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out dark:text-gray-300">
-                          {t("dropdown.dressAndFrock")}
-                        </a>
-                      </li>
-                      <li className="flex gap-3 group/item items-center">
-                        <img
-                          src={necklace}
-                          width={26}
-                          className="transform -rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
-                        />
-                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out dark:text-gray-300">
-                          {t("dropdown.necklace")}
-                        </a>
-                      </li>
-                      <li className="flex gap-3 group/item items-center">
-                        <img
-                          src={perfume}
-                          width={26}
-                          className="transform rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
-                        />
-                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out dark:text-gray-300">
-                          {t("dropdown.perfume")}
-                        </a>
-                      </li>
-                      <li className="flex gap-3 group/item items-center">
-                        <img
-                          src={cosmetics}
-                          width={26}
-                          className="transform -rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
-                        />
-                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out dark:text-gray-300">
-                          {t("dropdown.cosmetics")}
-                        </a>
-                      </li>
-                      <li className="flex gap-3 group/item items-center">
-                        <img
-                          src={handbag}
-                          width={26}
-                          className="transform rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
-                        />
-                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out dark:text-gray-300">
-                          {t("dropdown.bags")}
-                        </a>
-                      </li>
-                    </ul>
-                  </div>
-                  <div className="relative">
-                    <h3 className="font-bold mb-2">
-                      {t("dropdown.electronics")}
-                    </h3>
-                    <span className="absolute left-0 top-9 w-30 h-[1px] bg-gray-200 dark:bg-gray-400"></span>
-                    <ul className="mt-6 space-y-3 text-gray-500 text-lg font-medium">
-                      <li className="flex gap-3 group/item items-center">
-                        <img
-                          src={smartwatch}
-                          width={26}
-                          className="transform rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
-                        />
-                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out dark:text-gray-300">
-                          {t("dropdown.smartWatch")}
-                        </a>
-                      </li>
-                      <li className="flex gap-3 group/item items-center">
-                        <img
-                          src={smartTv}
-                          width={26}
-                          className="transform -rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
-                        />
-                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out dark:text-gray-300">
-                          {t("dropdown.smartTV")}
-                        </a>
-                      </li>
-                      <li className="flex gap-3 group/item items-center">
-                        <img
-                          src={keyboard}
-                          width={26}
-                          className="transform rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
-                        />
-                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out dark:text-gray-300">
-                          {t("dropdown.keyboard")}
-                        </a>
-                      </li>
-                      <li className="flex gap-3 group/item items-center">
-                        <img
-                          src={mouse}
-                          width={26}
-                          className="transform -rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
-                        />
-                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out dark:text-gray-300">
-                          {t("dropdown.mouse")}
-                        </a>
-                      </li>
-                      <li className="flex gap-3 group/item items-center">
-                        <img
-                          src={microphone}
-                          width={26}
-                          className="transform rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
-                        />
-                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out dark:text-gray-300">
-                          {t("dropdown.microphone")}
-                        </a>
-                      </li>
-                    </ul>
-                  </div>
+              <div className="absolute left-1/2 transform -translate-x-1/4 w-max p-8 bg-white dark:bg-black shadow-lg mt-2 opacity-0 pointer-events-none group-hover:pointer-events-auto group-hover:opacity-100 transition-opacity duration-300 z-50 rounded-xl border border-gray-200 dark:border-gray-700">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10">
+                  {/* Single Category Block */}
+                  {[
+                    {
+                      title: t("dropdown.gadgets"),
+                      items: [
+                        { icon: pc, label: t("dropdown.desktop") },
+                        { icon: laptop, label: t("dropdown.laptop") },
+                        { icon: dslr, label: t("dropdown.camera") },
+                        { icon: tablet, label: t("dropdown.tablet") },
+                        { icon: headphones, label: t("dropdown.headphone") },
+                      ],
+                    },
+                    {
+                      title: t("dropdown.mens"),
+                      items: [
+                        { icon: blazer, label: t("dropdown.formal") },
+                        { icon: jeans, label: t("dropdown.casual") },
+                        { icon: sports, label: t("dropdown.sports") },
+                        { icon: jacket, label: t("dropdown.jacket") },
+                        { icon: sunglasses, label: t("dropdown.sunglasses") },
+                      ],
+                    },
+                    {
+                      title: t("dropdown.women"),
+                      items: [
+                        { icon: dress, label: t("dropdown.dressAndFrock") },
+                        { icon: necklace, label: t("dropdown.necklace") },
+                        { icon: perfume, label: t("dropdown.perfume") },
+                        { icon: cosmetics, label: t("dropdown.cosmetics") },
+                        { icon: handbag, label: t("dropdown.bags") },
+                      ],
+                    },
+                    {
+                      title: t("dropdown.electronics"),
+                      items: [
+                        { icon: smartwatch, label: t("dropdown.smartWatch") },
+                        { icon: smartTv, label: t("dropdown.smartTV") },
+                        { icon: keyboard, label: t("dropdown.keyboard") },
+                        { icon: mouse, label: t("dropdown.mouse") },
+                        { icon: microphone, label: t("dropdown.microphone") },
+                      ],
+                    },
+                  ].map((category, index) => (
+                    <div key={index} className="min-w-[12rem]">
+                      <h3 className="font-bold mb-3 text-lg">
+                        {category.title}
+                      </h3>
+                      <div className="h-[1px] bg-gray-200 dark:bg-gray-400 mb-4" />
+                      <ul className="space-y-3 text-gray-500 text-base font-medium">
+                        {category.items.map((item, i) => (
+                          <li key={i} className="flex items-center">
+                            <div className="flex items-center gap-3 flex-row-reverse">
+                              <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out dark:text-gray-300 peer">
+                                {item.label}
+                              </a>
+                              <img
+                                src={item.icon}
+                                width={26}
+                                alt=""
+                                className="transform scale-90 translate-y-1 opacity-70 transition-all duration-300 
+                 peer-hover:scale-100 peer-hover:translate-y-0 peer-hover:opacity-100 dark:invert"
+                              />
+                            </div>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
                 </div>
               </div>
             </li>
+            {/* Men */}
             <li className="relative group">
               <a
                 href="#"
@@ -534,65 +414,41 @@ const Header = ({ currency, setCurrency }) => {
                 {t("header.men")}
                 <span className="absolute left-0 -bottom-1 w-0 h-[3px] bg-pink-500 transition-all group-hover:w-full"></span>
               </a>
-              <div className="absolute left-1/2 transform -translate-x-1/6 w-[12em] h-[12em] bg-white dark:bg-black shadow-lg mt-2 opacity-0 pointer-events-none group-hover:pointer-events-auto group-hover:opacity-100 transition-opacity duration-300 z-50 rounded-xl border border-gray-200 dark:border-gray-700 p-4">
+              <div className="absolute left-1/2 transform -translate-x-1/2 min-w-[12em] max-w-[16em] min-h-[10em] p-4 bg-white dark:bg-black shadow-lg mt-2 opacity-0 pointer-events-none group-hover:pointer-events-auto group-hover:opacity-100 transition-opacity duration-300 z-50 rounded-xl border border-gray-200 dark:border-gray-700">
                 <div className="rounded-2xl">
                   <div className="relative text-left">
                     <ul className="space-y-3 text-gray-500 text-lg font-medium">
-                      <li className="flex gap-3 group/item items-center">
-                        <img
-                          src={smartwatch}
-                          width={26}
-                          className="transform rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
-                        />
-                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out dark:text-gray-300">
-                          {t("dropdown.watch")}
-                        </a>
-                      </li>
-                      <li className="flex gap-3 group/item items-center">
-                        <img
-                          src={cap}
-                          width={26}
-                          className="transform -rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
-                        />
-                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out dark:text-gray-300">
-                          {t("dropdown.caps")}
-                        </a>
-                      </li>
-                      <li className="flex gap-3 group/item items-center">
-                        <img
-                          src={poloShirt}
-                          width={26}
-                          className="transform rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
-                        />
-                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out dark:text-gray-300">
-                          {t("dropdown.shirtAndTshirt")}
-                        </a>
-                      </li>
-                      <li className="flex gap-3 group/item items-center">
-                        <img
-                          src={sneakers}
-                          width={26}
-                          className="transform -rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
-                        />
-                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out dark:text-gray-300">
-                          {t("dropdown.shoes")}
-                        </a>
-                      </li>
-                      <li className="flex gap-3 group/item items-center">
-                        <img
-                          src={shorts}
-                          width={26}
-                          className="transform rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
-                        />
-                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out dark:text-gray-300">
-                          {t("dropdown.shortAndJeans")}
-                        </a>
-                      </li>
+                      {[
+                        { icon: smartwatch, label: t("dropdown.watch") },
+                        { icon: cap, label: t("dropdown.caps") },
+                        {
+                          icon: poloShirt,
+                          label: t("dropdown.shirtAndTshirt"),
+                        },
+                        { icon: sneakers, label: t("dropdown.shoes") },
+                        { icon: shorts, label: t("dropdown.shortAndJeans") },
+                      ].map((item, i) => (
+                        <li key={i} className="flex items-center">
+                          <div className="flex items-center gap-3 flex-row-reverse">
+                            <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out dark:text-gray-300 peer">
+                              {item.label}
+                            </a>
+                            <img
+                              src={item.icon}
+                              width={26}
+                              alt=""
+                              className="transform scale-90 translate-y-1 opacity-70 transition-all duration-300 
+                 peer-hover:scale-100 peer-hover:translate-y-0 peer-hover:opacity-100 dark:invert"
+                            />
+                          </div>
+                        </li>
+                      ))}
                     </ul>
                   </div>
                 </div>
               </div>
             </li>
+            {/* WOMEN */}
             <li className="relative group">
               <a
                 href="#"
@@ -601,65 +457,38 @@ const Header = ({ currency, setCurrency }) => {
                 {t("header.women")}
                 <span className="absolute left-0 -bottom-1 w-0 h-[3px] bg-pink-500 transition-all group-hover:w-full"></span>
               </a>
-              <div className="absolute left-1/2 transform -translate-x-1/5 w-[12em] h-[12em] bg-white dark:bg-black shadow-lg mt-2 opacity-0 pointer-events-none group-hover:pointer-events-auto group-hover:opacity-100 transition-opacity duration-300 z-50 rounded-xl border border-gray-200 dark:border-gray-700 p-4">
+              <div className="absolute left-1/2 transform -translate-x-1/2 min-w-[12em] max-w-[16em] min-h-[10em] p-4 bg-white dark:bg-black shadow-lg mt-2 opacity-0 pointer-events-none group-hover:pointer-events-auto group-hover:opacity-100 transition-opacity duration-300 z-50 rounded-xl border border-gray-200 dark:border-gray-700">
                 <div className="rounded-2xl">
                   <div className="relative text-left">
                     <ul className="space-y-3 text-gray-500 text-lg font-medium">
-                      <li className="flex gap-3 group/item items-center">
-                        <img
-                          src={necklace}
-                          width={26}
-                          className="transform rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
-                        />
-                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out dark:text-gray-300">
-                          {t("dropdown.necklace")}
-                        </a>
-                      </li>
-                      <li className="flex gap-3 group/item items-center">
-                        <img
-                          src={handbag}
-                          width={26}
-                          className="transform -rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
-                        />
-                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out dark:text-gray-300">
-                          {t("dropdown.bags")}
-                        </a>
-                      </li>
-                      <li className="flex gap-3 group/item items-center">
-                        <img
-                          src={dress}
-                          width={26}
-                          className="transform rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
-                        />
-                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out dark:text-gray-300">
-                          {t("dropdown.dressAndFrock")}
-                        </a>
-                      </li>
-                      <li className="flex gap-3 group/item items-center">
-                        <img
-                          src={bracelet}
-                          width={26}
-                          className="transform -rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
-                        />
-                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out dark:text-gray-300">
-                          {t("dropdown.bracelet")}
-                        </a>
-                      </li>
-                      <li className="flex gap-3 group/item items-center">
-                        <img
-                          src={heals}
-                          width={26}
-                          className="transform rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
-                        />
-                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out dark:text-gray-300">
-                          {t("dropdown.heals")}
-                        </a>
-                      </li>
+                      {[
+                        { icon: necklace, label: t("dropdown.necklace") },
+                        { icon: handbag, label: t("dropdown.bags") },
+                        { icon: dress, label: t("dropdown.dressAndFrock") },
+                        { icon: bracelet, label: t("dropdown.bracelet") },
+                        { icon: heals, label: t("dropdown.heals") },
+                      ].map((item, i) => (
+                        <li key={i} className="flex items-center">
+                          <div className="flex items-center gap-3 flex-row-reverse">
+                            <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out dark:text-gray-300 peer">
+                              {item.label}
+                            </a>
+                            <img
+                              src={item.icon}
+                              width={26}
+                              alt=""
+                              className="transform scale-90 translate-y-1 opacity-70 transition-all duration-300 
+                 peer-hover:scale-100 peer-hover:translate-y-0 peer-hover:opacity-100 dark:invert"
+                            />
+                          </div>
+                        </li>
+                      ))}
                     </ul>
                   </div>
                 </div>
               </div>
             </li>
+            {/* JEWELRY */}
             <li className="relative group">
               <a
                 href="#"
@@ -668,55 +497,37 @@ const Header = ({ currency, setCurrency }) => {
                 {t("header.jewelry")}
                 <span className="absolute left-0 -bottom-1 w-0 h-[3px] bg-pink-500 transition-all group-hover:w-full"></span>
               </a>
-              <div className="absolute left-1/2 transform -translate-x-1/5 w-[11em] h-[10em] bg-white dark:bg-black shadow-lg mt-2 opacity-0 pointer-events-none group-hover:pointer-events-auto group-hover:opacity-100 transition-opacity duration-300 z-50 rounded-xl border border-gray-200 dark:border-gray-700 p-4">
+              <div className="absolute left-1/2 transform -translate-x-1/2 min-w-[12em] max-w-[16em] min-h-[10em] p-4 bg-white dark:bg-black shadow-lg mt-2 opacity-0 pointer-events-none group-hover:pointer-events-auto group-hover:opacity-100 transition-opacity duration-300 z-50 rounded-xl border border-gray-200 dark:border-gray-700">
                 <div className="rounded-2xl">
                   <div className="relative text-left">
                     <ul className="space-y-3 text-gray-500 text-lg font-medium">
-                      <li className="flex gap-3 group/item items-center">
-                        <img
-                          src={necklace}
-                          width={26}
-                          className="transform rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
-                        />
-                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out dark:text-gray-300">
-                          {t("dropdown.necklace")}
-                        </a>
-                      </li>
-                      <li className="flex gap-3 group/item items-center">
-                        <img
-                          src={earings}
-                          width={26}
-                          className="transform -rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
-                        />
-                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out dark:text-gray-300">
-                          {t("dropdown.earings")}
-                        </a>
-                      </li>
-                      <li className="flex gap-3 group/item items-center">
-                        <img
-                          src={bracelet}
-                          width={26}
-                          className="transform rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
-                        />
-                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out dark:text-gray-300">
-                          {t("dropdown.bracelet")}
-                        </a>
-                      </li>
-                      <li className="flex gap-3 group/item items-center">
-                        <img
-                          src={ring}
-                          width={26}
-                          className="transform -rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
-                        />
-                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out dark:text-gray-300">
-                          {t("dropdown.rings")}
-                        </a>
-                      </li>
+                      {[
+                        { icon: necklace, label: t("dropdown.necklace") },
+                        { icon: earings, label: t("dropdown.earings") },
+                        { icon: bracelet, label: t("dropdown.bracelet") },
+                        { icon: ring, label: t("dropdown.rings") },
+                      ].map((item, i) => (
+                        <li key={i} className="flex items-center">
+                          <div className="flex items-center gap-3 flex-row-reverse">
+                            <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out dark:text-gray-300 peer">
+                              {item.label}
+                            </a>
+                            <img
+                              src={item.icon}
+                              width={26}
+                              alt=""
+                              className="transform scale-90 translate-y-1 opacity-70 transition-all duration-300 
+                 peer-hover:scale-100 peer-hover:translate-y-0 peer-hover:opacity-100 dark:invert"
+                            />
+                          </div>
+                        </li>
+                      ))}
                     </ul>
                   </div>
                 </div>
               </div>
             </li>
+            {/* PERFUME */}
             <li className="relative group">
               <a
                 href="#"
@@ -725,55 +536,37 @@ const Header = ({ currency, setCurrency }) => {
                 {t("header.perfume")}
                 <span className="absolute left-0 -bottom-1 w-0 h-[3px] bg-pink-500 transition-all group-hover:w-full"></span>
               </a>
-              <div className="absolute left-1/2 transform -translate-x-1/5 w-[12em] h-[10em] bg-white dark:bg-black shadow-lg mt-2 opacity-0 pointer-events-none group-hover:pointer-events-auto group-hover:opacity-100 transition-opacity duration-300 z-50 rounded-xl border border-gray-200 dark:border-gray-700 p-4">
+              <div className="absolute left-1/2 transform -translate-x-1/2 min-w-[12em] max-w-[16em] min-h-[10em] p-4 bg-white dark:bg-black shadow-lg mt-2 opacity-0 pointer-events-none group-hover:pointer-events-auto group-hover:opacity-100 transition-opacity duration-300 z-50 rounded-xl border border-gray-200 dark:border-gray-700">
                 <div className="rounded-2xl">
                   <div className="relative text-left">
                     <ul className="space-y-3 text-gray-500 text-lg font-medium">
-                      <li className="flex gap-3 group/item items-center">
-                        <img
-                          src={deodorant}
-                          width={26}
-                          className="transform rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
-                        />
-                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out dark:text-gray-300">
-                          {t("dropdown.deodrant")}
-                        </a>
-                      </li>
-                      <li className="flex gap-3 group/item items-center">
-                        <img
-                          src={airFreshner}
-                          width={26}
-                          className="transform -rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
-                        />
-                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out dark:text-gray-300">
-                          {t("dropdown.airFreshner")}
-                        </a>
-                      </li>
-                      <li className="flex gap-3 group/item items-center">
-                        <img
-                          src={bodyPerfume}
-                          width={26}
-                          className="transform rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
-                        />
-                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out dark:text-gray-300">
-                          {t("dropdown.bodyPerfume")}
-                        </a>
-                      </li>
-                      <li className="flex gap-3 group/item items-center">
-                        <img
-                          src={spray}
-                          width={26}
-                          className="transform -rotate-12 transition-transform duration-300 group-hover/item:rotate-0 dark:invert"
-                        />
-                        <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out dark:text-gray-300">
-                          {t("dropdown.clothesPerfume")}
-                        </a>
-                      </li>
+                      {[
+                        { icon: deodorant, label: t("dropdown.deodorant") },
+                        { icon: airFreshner, label: t("dropdown.airFreshner") },
+                        { icon: bodyPerfume, label: t("dropdown.bodyPerfume") },
+                        { icon: spray, label: t("dropdown.clothesPerfume") },
+                      ].map((item, i) => (
+                        <li key={i} className="flex items-center">
+                          <div className="flex items-center gap-3 flex-row-reverse">
+                            <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out dark:text-gray-300 peer">
+                              {item.label}
+                            </a>
+                            <img
+                              src={item.icon}
+                              width={26}
+                              alt=""
+                              className="transform scale-90 translate-y-1 opacity-70 transition-all duration-300 
+                 peer-hover:scale-100 peer-hover:translate-y-0 peer-hover:opacity-100 dark:invert"
+                            />
+                          </div>
+                        </li>
+                      ))}
                     </ul>
                   </div>
                 </div>
               </div>
             </li>
+            {/* HotOffers */}
             <li className="relative group">
               <a
                 href="#"

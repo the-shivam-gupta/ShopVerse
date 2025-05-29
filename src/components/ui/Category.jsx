@@ -1,14 +1,18 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { FaPlus, FaMinus } from "react-icons/fa";
 import { motion, AnimatePresence, useAnimation } from "framer-motion";
+import { useNavigate } from "react-router-dom";
+import { useSearch } from "../context/SearchContext";
 
 export default function CategorySection() {
   const [openCategories, setOpenCategories] = useState({});
   const [animatedCategories, setAnimatedCategories] = useState({});
   const [currentReview, setCurrentReview] = useState(0);
   const { t } = useTranslation();
+  const navigate = useNavigate();
+  const { setSearchQuery } = useSearch();
 
   const toggleCategory = (category) => {
     setOpenCategories((prev) => {
@@ -20,7 +24,7 @@ export default function CategorySection() {
   };
 
   // Animate numbers
-  function AnimatedCountRow({ name, count, shouldAnimate, onAnimated }) {
+  function AnimatedCountRow({ name, count, shouldAnimate, onAnimated, onClick }) {
     const controls = useAnimation();
     const [displayCount, setDisplayCount] = useState(0);
     // Animate count on mount
@@ -41,7 +45,14 @@ export default function CategorySection() {
 
     return (
       <div className="flex justify-between">
-        <span>{name}</span>
+        <motion.span
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9 }}
+          onClick={onClick}
+          className="cursor-pointer inline-block origin-left text-sm"
+        >
+          ~ {name}
+        </motion.span>
         <motion.span
           initial={{ countValue: 0 }}
           animate={controls}
@@ -171,7 +182,9 @@ export default function CategorySection() {
   return (
     <div className="lg:sticky lg:top-4 h-fit">
       <div className="w-70 h-fit p-4 rounded-lg shadow-md border border-gray-200 dark:border-gray-500 bg-gradient-to-tr from-white to-pink-50 dark:bg-gradient-to-tr dark:from-gray-800 dark:to-gray-600">
-        <h2 className="text-lg font-bold mb-4 dark:text-gray-200">{t("category.category")}</h2>
+        <h2 className="text-lg font-bold mb-4 dark:text-gray-200">
+          {t("category.category")}
+        </h2>
 
         {categories.map((cat) => (
           <div key={cat.id}>
@@ -188,8 +201,7 @@ export default function CategorySection() {
                 </span>
               </div>
               <span className="dark:text-gray-200">
-
-              {openCategories[cat.id] ? <FaMinus /> : <FaPlus />}
+                {openCategories[cat.id] ? <FaMinus /> : <FaPlus />}
               </span>
             </motion.div>
 
@@ -215,6 +227,10 @@ export default function CategorySection() {
                           [cat.id]: true,
                         }))
                       }
+                      onClick={() => {
+                        setSearchQuery(t(item.name)); // store the translated subcategory as search
+                        navigate("/products");
+                      }}
                     />
                   ))}
                 </motion.div>
