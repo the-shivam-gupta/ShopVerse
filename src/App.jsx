@@ -8,6 +8,7 @@ import { CartProvider } from "./components/context/CartContext";
 import AppRouter from "./Router";
 import ScrollToTop from "./components/ui/ScrollToTop";
 import { CompareProvider } from "./components/context/CompareContext";
+import { SearchProvider } from "./components/context/SearchContext";
 
 function App() {
   const [currency, setCurrency] = useState("USD");
@@ -16,12 +17,14 @@ function App() {
     <>
       <I18nextProvider i18n={i18n}>
         <CartProvider>
-          <CompareProvider>
-            <FavoritesProvider>
-              <AppRouter currency={currency} setCurrency={setCurrency} />
-              <ScrollToTop />
-            </FavoritesProvider>
-          </CompareProvider>
+          <SearchProvider>
+            <CompareProvider>
+              <FavoritesProvider>
+                <AppRouter currency={currency} setCurrency={setCurrency} />
+                <ScrollToTop />
+              </FavoritesProvider>
+            </CompareProvider>
+          </SearchProvider>
         </CartProvider>
       </I18nextProvider>
     </>

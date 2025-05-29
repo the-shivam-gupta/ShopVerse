@@ -7,6 +7,7 @@ import ProductQuickView from "./ProductQuickView";
 import { useNavigate, useParams } from "react-router-dom";
 import { useCompare } from "../context/CompareContext";
 import CompareModal from "./CompareModal";
+import { useSearch } from "../context/SearchContext";
 
 const categoryStructure = {
   SHIRTS: [
@@ -47,6 +48,7 @@ const ProductListingPage = ({ currency }) => {
   );
   const { compareList, isCompareOpen, addToCompare, clearCompare } =
     useCompare();
+  const { searchQuery, setSearchQuery } = useSearch();
 
   useEffect(() => {
     if (categoryName) {
@@ -73,6 +75,14 @@ const ProductListingPage = ({ currency }) => {
       return inPriceRange && inCategory;
     });
 
+    // search query after initial filtering
+    if (searchQuery.trim()) {
+      filtered = filtered.filter((product) =>
+        product.name.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+    }
+
+    // Sorting logic
     if (sortType === "priceLowHigh") {
       filtered.sort((a, b) => a.price - b.price);
     } else if (sortType === "priceHighLow") {
@@ -135,6 +145,8 @@ const ProductListingPage = ({ currency }) => {
                     expandedCategory === parent ? null : parent
                   );
                   setSelectedCategory(parent);
+                  setSearchQuery("");
+                  navigate("/products");
                 }}
                 className={`block w-full text-left px-3 py-1 rounded cursor-pointer dark:text-gray-100 ${
                   selectedCategory === parent
@@ -160,6 +172,7 @@ const ProductListingPage = ({ currency }) => {
                         key={sub}
                         onClick={() => {
                           setSelectedCategory(sub);
+                          setSearchQuery("");
                           navigate(`/products/category/${sub.toUpperCase()}`);
                         }}
                         className={`block w-full text-left px-3 py-1 rounded cursor-pointer dark:text-gray-200 ${
@@ -293,7 +306,7 @@ const ProductListingPage = ({ currency }) => {
           currency={currency}
         />
       </motion.section>
-      
+
       {/* Quick View Modal */}
       <ProductQuickView
         product={selectedProduct}

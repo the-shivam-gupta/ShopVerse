@@ -9,10 +9,10 @@ export default function Footer() {
   const navigate = useNavigate();
 
   return (
-    <footer className="bg-gray-200 dark:bg-gray-800 border-t dark:border-gray-700 text-gray-300 py-10 text-lg">
+    <footer className="relative bg-gray-200 dark:bg-gray-800 border-t dark:border-gray-700 text-gray-300 py-10 text-lg">
       <div className="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-5 gap-8">
         {/* LOGO */}
-        <div className="flex items-center">
+        <div className="flex items-center justify-center w-25 sm:w-30 md:w-34 xl:w-42 m-auto">
           <Link to="/">
             <img
               src={logo}
@@ -28,7 +28,7 @@ export default function Footer() {
             {t("footer.popularCategories")}
             <span className="block w-10 h-0.5 bg-pink-500 mt-1"></span>
           </h3>
-          <ul className="space-y-2 dark:text-gray-400 text-gray-500/90 text-xl font-medium">
+          <ul className="space-y-2 dark:text-gray-400 text-gray-500/90 sm:text-xl text-lg font-medium">
             <li className="hover:text-pink-400 duration-200 ease-in-out cursor-pointer">
               {t("footer.fashion")}
             </li>
@@ -53,7 +53,7 @@ export default function Footer() {
             {t("footer.products")}
             <span className="block w-10 h-0.5 bg-pink-500 mt-1"></span>
           </h3>
-          <ul className="space-y-2 dark:text-gray-400 text-gray-500/90 text-xl font-medium">
+          <ul className="space-y-2 dark:text-gray-400 text-gray-500/90 sm:text-xl text-lg font-medium">
             <li className="hover:text-pink-400 duration-200 ease-in-out cursor-pointer">
               {t("footer.pricesDrop")}
             </li>
@@ -81,7 +81,7 @@ export default function Footer() {
             {t("footer.ourCompany")}
             <span className="block w-10 h-0.5 bg-pink-500 mt-1"></span>
           </h3>
-          <ul className="space-y-2 dark:text-gray-400 text-gray-500/90 text-xl font-medium">
+          <ul className="space-y-2 dark:text-gray-400 text-gray-500/90 sm:text-xl text-lg font-medium">
             <li className="hover:text-pink-400 duration-200 ease-in-out cursor-pointer">
               {t("footer.delivery")}
             </li>
@@ -109,7 +109,7 @@ export default function Footer() {
             {t("footer.products")}
             <span className="block w-10 h-0.5 bg-pink-500 mt-1"></span>
           </h3>
-          <ul className="space-y-2 dark:text-gray-400 text-gray-500/90 text-xl font-medium">
+          <ul className="space-y-2 dark:text-gray-400 text-gray-500/90 sm:text-xl text-lg font-medium">
             <li className="hover:text-pink-400 duration-200 ease-in-out cursor-pointer">
               {t("footer.pricesDrop")}
             </li>

@@ -13,6 +13,7 @@ import CompareModal from "./ui/CompareModal";
 import model_1 from "../assets/image.png";
 import model_2 from "../assets/womenGlasses.png";
 import { useCompare } from "./context/CompareContext";
+import { useSearch } from "./context/SearchContext";
 
 // Categories
 const categories = [
@@ -54,7 +55,9 @@ export default function Home({ currency }) {
   const navigate = useNavigate();
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [shuffledProducts, setShuffledProducts] = useState([]);
-  const { compareList, isCompareOpen, addToCompare, clearCompare } = useCompare();
+  const { compareList, isCompareOpen, addToCompare, clearCompare } =
+    useCompare();
+  const { setSearchQuery } = useSearch();
 
   // Scroll effect on Categories
   const controls = useAnimation();
@@ -82,7 +85,8 @@ export default function Home({ currency }) {
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-black">
       <section className="flex flex-col-reverse md:flex-row bg-pink-50 dark:bg-black p-8 items-center justify-evenly gap-12">
-        <div className="space-y-4 text-center md:text-left max-w-md">
+        {/* Text Content */}
+        <div className="space-y-4 flex flex-col text-center md:text-left max-w-md">
           <h2 className="text-2xl md:text-3xl font-bold text-gray-800 dark:text-gray-50">
             {t("home.trendingAccessories")}
           </h2>
@@ -97,22 +101,39 @@ export default function Home({ currency }) {
               $ <span className="text-lg font-extrabold">15</span>.00
             </span>
           </p>
-          <Button
-            onClick={() => navigate("/products")}
-          >
+          <Button onClick={() => navigate("/products")}>
             {t("home.shopNow")}
           </Button>
         </div>
-        <div className="relative w-[250px] md:w-[320px] h-[180px] md:h-[220px]">
-          <img
+
+        {/* Image Container with Overlap from Corners */}
+        <div className="relative w-[260px] sm:w-[300px] md:w-[360px] h-[220px] sm:h-[260px] md:h-[300px]">
+          <motion.img
             src={model_1}
             alt="Model 1"
-            className="absolute -left-10 bottom-2 w-[150px] md:w-[250px] rounded-full border-4 border-pink-100 dark:border-gray-300 z-10"
+            initial={{ x: -80, y: -80, opacity: 0 }}
+            animate={{ x: 0, y: 0, opacity: 1 }}
+            whileHover={{
+              scale: 1.05,
+              y: -4,
+              boxShadow: "0px 8px 20px rgba(0,0,0,0.5)",
+            }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="absolute top-0 left-0 w-[60%] md:w-[60%] rounded-full border-4 border-pink-100 dark:border-gray-300 z-10"
           />
-          <img
+
+          <motion.img
             src={model_2}
             alt="Model 2"
-            className="absolute left-20 md:left-28 top-6 w-[150px] md:w-[250px] rounded-full border-4 border-pink-100 dark:border-gray-300 z-20"
+            initial={{ x: 80, y: 80, opacity: 0 }}
+            animate={{ x: 0, y: 0, opacity: 1 }}
+            whileHover={{
+              scale: 1.05,
+              y: -4,
+              boxShadow: "0px 8px 20px rgba(0,0,0,0.5)",
+            }}
+            transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
+            className="absolute bottom-0 right-0 w-[60%] md:w-[60%] rounded-full border-4 border-pink-100 dark:border-gray-300 z-20"
           />
         </div>
       </section>
@@ -147,7 +168,10 @@ export default function Home({ currency }) {
                 {t(item.title)}
               </div>
               <button
-                onClick={() => navigate("/products")}
+                onClick={() => {
+                  setSearchQuery(t(item.title)); // translated title as search
+                  navigate("/products");
+                }}
                 className="mt-3 text-pink-500 text-sm rounded-full bg-pink-100 hover:bg-pink-200 px-4 py-1 transition-all cursor-pointer"
               >
                 {t("home.showAll")}
@@ -163,7 +187,7 @@ export default function Home({ currency }) {
 
         {/* Product Grids */}
         <div className="min-h-screen bg-gray-100 dark:bg-gray-800 p-10">
-          <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
             {shuffledProducts.map((product, index) => (
               <ProductCard
                 key={product.name}
@@ -208,9 +232,7 @@ export default function Home({ currency }) {
                   {t(item.name)}
                 </p>
               ))}
-              <button
-                className="mt-6 w-full py-3 bg-pink-400 text-white font-semibold text-base rounded-xl hover:bg-pink-500 transition cursor-pointer"
-              >
+              <button className="mt-6 w-full py-3 bg-pink-400 text-white font-semibold text-base rounded-xl hover:bg-pink-500 transition cursor-pointer">
                 {t("compare.selectProduct")}
               </button>
             </motion.div>
