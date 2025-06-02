@@ -378,10 +378,10 @@ const Header = ({ currency, setCurrency }) => {
                     },
                   ].map((category, index) => (
                     <div key={index} className="min-w-[12rem]">
-                      <h3 className="font-bold mb-3 text-lg">
+                      <h3 className="font-bold mb-1 text-lg">
                         {category.title}
                       </h3>
-                      <div className="h-[1px] bg-gray-200 dark:bg-gray-400 mb-4" />
+                      <div className="h-[0.5px] w-[9em] bg-gray-200 dark:bg-gray-400 mb-4" />
                       <ul className="space-y-3 text-gray-500 text-base font-medium">
                         {category.items.map((item, i) => (
                           <li key={i} className="flex items-center">

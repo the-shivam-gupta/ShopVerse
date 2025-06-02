@@ -19,6 +19,11 @@ const products = [
       "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/f_png/v1746936945/SAGE-GREEN-2-Photoroom_by0rqf.png",
     hoverImage:
       "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/f_png/v1746943109/BLACK_7df11807-93c3-49d9-8347-614a9160f3d7_adgvoe.webp",
+    colors: ["#6b7280", "#000000"],
+    sizes: ["S", "M", "L", "XL"],
+    description: "Comfortable oversized T-shirt perfect for casual wear.",
+    inStock: true,
+    reviewCount: 62,
   },
   {
     name: "card.poloShirt",
@@ -31,6 +36,12 @@ const products = [
       "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/f_png/v1746939670/images-Photoroom_qumjbl.png",
     hoverImage:
       "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/f_png/v1746940244/-473Wx593H-410478807-1515-MODEL_vjo1tk_044d16.avif",
+    colors: ["#ffffff", "#1e3a8a"],
+    sizes: ["S", "M", "L", "XL"],
+    description:
+      "Classic polo shirt ideal for both casual and semi-formal looks.",
+    inStock: true,
+    reviewCount: 40,
   },
   {
     name: "card.mencasualShirt",
@@ -43,6 +54,11 @@ const products = [
       "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/f_png/v1746940586/011a2cad5a22200d6085a7fccef76bf1cad8ac8a_egbdlo.avif",
     hoverImage:
       "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/f_png/v1746940952/3b324e8953a17cf0d84b98cedfec69c9fb4ae304_okoyfi.avif",
+    colors: ["#9ca3af", "#4b5563"],
+    sizes: ["S", "M", "L", "XL"],
+    description: "Easygoing casual shirt suitable for daily wear.",
+    inStock: true,
+    reviewCount: 53,
   },
   {
     name: "card.menformalShirt",
@@ -54,6 +70,11 @@ const products = [
       "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/f_png/v1746941155/07545309538-e1_uhxgy4.jpg",
     hoverImage:
       "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/f_png/v1746941322/01063309403-e1_ueh3ky.jpg",
+    colors: ["#f3f4f6", "#111827"],
+    sizes: ["S", "M", "L", "XL"],
+    description: "A crisp, formal shirt for professional occasions.",
+    inStock: true,
+    reviewCount: 75,
   },
   {
     name: "card.mendenimShirt",
@@ -66,6 +87,12 @@ const products = [
       "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/f_png/v1746941427/04470424407-e1_pwahdl.jpg",
     hoverImage:
       "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/f_png/v1746941663/04470424407-e2_zw6rby.jpg",
+    colors: ["#1f2937", "#3b82f6"],
+    sizes: ["S", "M", "L", "XL"],
+    description:
+      "A lightweight denim overshirt perfect for layering year-round.",
+    inStock: true,
+    reviewCount: 87,
   },
   {
     name: "card.menprintedShirt",
@@ -77,6 +104,11 @@ const products = [
       "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/f_png/v1746941816/shopping_rimzm3.webp",
     hoverImage:
       "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/f_png/v1746941926/shopping_zydzpc.webp",
+    colors: ["#e5e7eb", "#6d28d9"],
+    sizes: ["S", "M", "L", "XL"],
+    description: "Stylish printed shirt for a bold, standout look.",
+    inStock: true,
+    reviewCount: 68,
   },
 
   // ELECRONICS
@@ -90,8 +122,13 @@ const products = [
       "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/f_png/v1746943210/81AmHv7jKsL._SX679__d9avyi.jpg",
     hoverImage:
       "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/f_png/v1746943248/71F07y-AdAL._SX679__fwcv6h.jpg",
+    colors: ["#000000", "#f9fafb"],
+    sizes: [],
+    description:
+      "Elegant women's watch with modern design and premium materials.",
+    inStock: true,
+    reviewCount: 120,
   },
-
   {
     name: "card.sonyHeadphone",
     category: "card.headphone",
@@ -102,6 +139,11 @@ const products = [
       "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/f_png/v1746968435/51UBVW9enzL._SL1200__dbht3c.jpg",
     hoverImage:
       "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/f_png/v1746968463/41jR_301vvL._SL1200__vddqsr.jpg",
+    colors: ["#1f2937"],
+    sizes: [],
+    description: "Sony over-ear headphones with deep bass and noise isolation.",
+    inStock: true,
+    reviewCount: 87,
   },
   {
     name: "card.phone",
@@ -114,6 +156,12 @@ const products = [
       "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/f_png/v1746968524/samsung-s23-ultra-5g-1-11-485x485-optimized_vqrw8b.webp",
     hoverImage:
       "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/f_png/v1746968553/samg7_launtp.png",
+    colors: ["#111827", "#f3f4f6"],
+    sizes: [],
+    description:
+      "High-performance smartphone with cutting-edge features and stunning design.",
+    inStock: true,
+    reviewCount: 210,
   },
   {
     name: "card.tab",
@@ -125,6 +173,11 @@ const products = [
       "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/f_png/v1746968626/shopping_rnti4f.webp",
     hoverImage:
       "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/f_png/v1746968643/shopping_hfcza3.webp",
+    colors: ["#d1d5db", "#4b5563"],
+    sizes: [],
+    description: "Lightweight and powerful tablet, perfect for work and play.",
+    inStock: false,
+    reviewCount: 134,
   },
   {
     name: "card.DellLaptop",
@@ -137,6 +190,12 @@ const products = [
       "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/f_png/v1746968702/shopping_c8kn76.webp",
     hoverImage:
       "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/f_png/v1746968705/shopping_gkauct.webp",
+    colors: ["#1f2937", "#d1d5db"],
+    sizes: [],
+    description:
+      "Reliable Dell laptop with high performance for productivity and entertainment.",
+    inStock: true,
+    reviewCount: 98,
   },
   {
     name: "card.smartwatch",
@@ -148,6 +207,12 @@ const products = [
       "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/f_png/v1746968769/shopping_dkhn68.webp",
     hoverImage:
       "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/f_png/v1746968771/shopping_pr8j5k.webp",
+    colors: ["#10b981", "#1e3a8a"],
+    sizes: [],
+    description:
+      "Advanced smartwatch with fitness tracking, notifications, and more.",
+    inStock: true,
+    reviewCount: 152,
   },
   {
     name: "card.wiredPowerBank",
@@ -159,9 +224,14 @@ const products = [
       "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/f_png/v1746968822/shopping_ykpho1.webp",
     hoverImage:
       "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/f_png/v1746968825/shopping_yfm0tn.webp",
+    colors: ["#111827", "#f3f4f6"],
+    sizes: [],
+    description:
+      "High-capacity wired power bank for fast and reliable charging.",
+    inStock: false,
+    reviewCount: 110,
   },
 
-  // BOTTOM
   {
     name: "card.midiSkirt",
     category: "card.skirt",
@@ -173,6 +243,12 @@ const products = [
       "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/f_png/v1746942111/04758010800-e1_eeizat.jpg",
     hoverImage:
       "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/f_png/v1746943018/04758010800-e2_fgyqp4.jpg",
+    colors: ["#e5e7eb", "#1f2937"],
+    sizes: ["XS", "S", "M", "L"],
+    description:
+      "Chic and flowy midi skirt perfect for casual and formal wear.",
+    inStock: true,
+    reviewCount: 102,
   },
   {
     name: "card.menjeans",
@@ -185,6 +261,11 @@ const products = [
       "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/f_png/v1746968891/shopping_bances.webp",
     hoverImage:
       "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/f_png/v1746968940/shopping_or61a1.webp",
+    colors: ["#1f2937", "#6b7280"],
+    sizes: ["30", "32", "34", "36"],
+    description: "Classic straight-fit jeans with modern style and durability.",
+    inStock: true,
+    reviewCount: 89,
   },
   {
     name: "card.mentrousers",
@@ -196,6 +277,12 @@ const products = [
       "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/f_png/v1746969042/shopping_nnszq6.webp",
     hoverImage:
       "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/f_png/v1746969047/shopping_yjhrd9.webp",
+    colors: ["#374151", "#9ca3af"],
+    sizes: ["S", "M", "L", "XL"],
+    description:
+      "Versatile men's trousers designed for comfort and everyday wear.",
+    inStock: false,
+    reviewCount: 76,
   },
   {
     name: "card.menshorts",
@@ -207,6 +294,11 @@ const products = [
       "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/f_png/v1746969152/shopping_ln3rcp.webp",
     hoverImage:
       "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/f_png/v1746969156/shopping_s0hwm3.webp",
+    colors: ["#f3f4f6", "#1e3a8a"],
+    sizes: ["S", "M", "L"],
+    description: "Breathable and stylish shorts perfect for warm weather days.",
+    inStock: true,
+    reviewCount: 91,
   },
 
   // ACCESSORIES
@@ -221,6 +313,12 @@ const products = [
       "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/f_png/v1746969252/qs55z9vln2zkthusyjp3_kkvxjv.webp",
     hoverImage:
       "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/f_png/v1746969259/t2kdcsyps4da4bd99nps_ix0dcp.webp",
+    colors: ["#b5651d", "#654321"],
+    sizes: ["One Size"],
+    description:
+      "Elegant men’s bracelet made from premium materials, perfect for everyday wear.",
+    inStock: true,
+    reviewCount: 58,
   },
   {
     name: "card.womenNecklace",
@@ -233,6 +331,12 @@ const products = [
       "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/f_png/v1746969388/shopping_b8kvbg.webp",
     hoverImage:
       "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/f_png/v1746969395/shopping_cvnzjd.webp",
+    colors: ["#d4af37", "#c0c0c0"],
+    sizes: ["One Size"],
+    description:
+      "Stylish and delicate necklace designed to elevate any outfit.",
+    inStock: true,
+    reviewCount: 72,
   },
   {
     name: "card.womenRings",
@@ -244,6 +348,12 @@ const products = [
       "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/f_png/v1746969539/shopping_npwdfg.webp",
     hoverImage:
       "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/a_hflip/f_png/v1746969545/shopping_rzdl8n.webp",
+    colors: ["#ffd700", "#ffffff"],
+    sizes: ["6", "7", "8", "9"],
+    description:
+      "Beautiful rings crafted with attention to detail, perfect for any occasion.",
+    inStock: true,
+    reviewCount: 95,
   },
   {
     name: "card.menSunglasses",
@@ -256,6 +366,11 @@ const products = [
       "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/f_png/v1746969718/shopping_p5zqky.webp",
     hoverImage:
       "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/f_png/v1746969729/shopping_eogcmz.webp",
+    colors: ["#000000", "#4b4b4b"],
+    sizes: ["One Size"],
+    description: "Modern and sleek sunglasses offering full UV protection.",
+    inStock: true,
+    reviewCount: 61,
   },
   {
     name: "card.menWallet",
@@ -267,6 +382,11 @@ const products = [
       "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/f_png/v1746969796/shopping_qijinu.webp",
     hoverImage:
       "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/f_png/v1746969801/shopping_o3ulge.webp",
+    colors: ["#3b2f2f", "#5a4a42"],
+    sizes: ["One Size"],
+    description: "Compact and durable men’s wallet with multiple compartments.",
+    inStock: true,
+    reviewCount: 77,
   },
 
   // OUTWEAR
@@ -280,6 +400,12 @@ const products = [
       "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/f_png/v1746969892/03833399064-e1_lf3whl.jpg",
     hoverImage:
       "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/f_png/v1746969897/03833399064-e2_fnp8qq.jpg",
+    colors: ["#000000", "#1c1c1c", "#4b4b4b"],
+    sizes: ["S", "M", "L", "XL"],
+    description:
+      "Stylish men’s jacket perfect for casual and semi-formal occasions.",
+    inStock: true,
+    reviewCount: 48,
   },
   {
     name: "card.menBlazer",
@@ -292,6 +418,12 @@ const products = [
       "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/f_png/v1746970008/shopping_csdi1y.webp",
     hoverImage:
       "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/f_png/v1746970017/shopping_ddy7jl.webp",
+    colors: ["#2e2e2e", "#555555"],
+    sizes: ["M", "L", "XL"],
+    description:
+      "Elegant men’s blazer ideal for formal events and office wear.",
+    inStock: true,
+    reviewCount: 55,
   },
   {
     name: "card.longCoat",
@@ -304,6 +436,11 @@ const products = [
       "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/f_png/v1746970105/41_PfFffWsL._AC_SX522__a7ymdz.jpg",
     hoverImage:
       "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/f_png/v1746970112/41QOYsRIyzL._AC_SX522__l8fy70.jpg",
+    colors: ["#444444", "#222222", "#777777"],
+    sizes: ["L", "XL", "XXL"],
+    description: "Warm and stylish long coat designed for winter weather.",
+    inStock: true,
+    reviewCount: 39,
   },
   {
     name: "card.blackHoodie",
@@ -315,6 +452,12 @@ const products = [
       "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/f_png/v1746970174/shopping_xs26lw.webp",
     hoverImage:
       "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/f_png/v1746970181/shopping_vnpggq.webp",
+    colors: ["#000000","#964B00"],
+    sizes: ["S", "M", "L"],
+    description:
+      "Comfortable black hoodie suitable for casual wear and workouts.",
+    inStock: true,
+    reviewCount: 64,
   },
   {
     name: "card.greyCardigan",
@@ -326,6 +469,11 @@ const products = [
       "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/f_png/v1746970245/shopping_t7vtlu.webp",
     hoverImage:
       "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/f_png/v1746970255/shopping_pgygkk.webp",
+    colors: ["#808080", "#a9a9a9"],
+    sizes: ["M", "L"],
+    description: "Soft and cozy grey cardigan, perfect for layering.",
+    inStock: true,
+    reviewCount: 52,
   },
   {
     name: "card.denimVest",
@@ -337,6 +485,11 @@ const products = [
       "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/f_png/v1746970361/shopping_jq3pqk.webp",
     hoverImage:
       "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/f_png/v1746970368/shopping_cgotmj.webp",
+    colors: ["#1e3d59", "#2e5a88"],
+    sizes: ["S", "M", "L"],
+    description: "Casual denim vest with classic styling for a timeless look.",
+    inStock: true,
+    reviewCount: 33,
   },
 
   // SHOES
@@ -350,6 +503,12 @@ const products = [
       "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/f_png/v1746970478/61kliJGTrML._SY625__nteiu5.jpg",
     hoverImage:
       "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/f_png/v1746970484/71XCHR8wBiL._SY625__pzjpje.jpg",
+    colors: ["#000000", "#7f7f7f"],
+    sizes: ["8", "9", "10", "11"],
+    description:
+      "Durable men's shoes suitable for both casual and formal settings.",
+    inStock: true,
+    reviewCount: 58,
   },
   {
     name: "card.whiteSneakers",
@@ -362,6 +521,12 @@ const products = [
       "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/f_png/v1746970532/40341087_1-puma-by-cliq-mens-smash-pop-white-casual-sneakers_k220ml.webp",
     hoverImage:
       "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/f_png/v1746970541/40341087-3_1-puma-by-cliq-mens-smash-pop-white-casual-sneakers_lbluy4.webp",
+    colors: ["#ffffff"],
+    sizes: ["8", "9", "10", "11"],
+    description:
+      "Comfortable and stylish white sneakers perfect for everyday wear.",
+    inStock: true,
+    reviewCount: 76,
   },
   {
     name: "card.leatherSandals",
@@ -373,6 +538,12 @@ const products = [
       "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/f_png/v1746970586/shopping_eyemra.webp",
     hoverImage:
       "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/f_png/v1746970595/shopping_l3l3cv.webp",
+    colors: ["#a0522d", "#deb887"],
+    sizes: ["9", "10", "11"],
+    description:
+      "Casual leather sandals ideal for warm weather and beach trips.",
+    inStock: true,
+    reviewCount: 41,
   },
   {
     name: "card.ankleBoots",
@@ -384,6 +555,11 @@ const products = [
       "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/f_png/v1746970650/shopping_d57b3i.webp",
     hoverImage:
       "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/f_png/v1746970661/shopping_tredvn.webp",
+    colors: ["#5c3a21", "#3e2f1c"],
+    sizes: ["8", "9", "10"],
+    description: "Premium ankle boots crafted for durability and style.",
+    inStock: true,
+    reviewCount: 69,
   },
   {
     name: "card.beachFlipFlops",
@@ -395,6 +571,12 @@ const products = [
       "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/f_png/v1746970740/shopping_fgh6ty.webp",
     hoverImage:
       "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/f_png/v1746970750/shopping_ehpyoo.webp",
+    colors: ["#ffcc00", "#ffdd33"],
+    sizes: ["One Size"],
+    description:
+      "Lightweight and comfortable flip flops for beach and casual use.",
+    inStock: true,
+    reviewCount: 47,
   },
   {
     name: "card.casualLoafers",
@@ -406,6 +588,11 @@ const products = [
       "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/f_png/v1746970863/shopping_oj6enk.webp",
     hoverImage:
       "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/f_png/v1746970872/shopping_xree37.webp",
+    colors: ["#8b4513", "#a0522d"],
+    sizes: ["8", "9", "10"],
+    description: "Comfortable casual loafers for everyday wear.",
+    inStock: true,
+    reviewCount: 50,
   },
 
   // BAGS
@@ -419,6 +606,11 @@ const products = [
       "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/f_png/v1746970953/shopping_qmysmp.webp",
     hoverImage:
       "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/f_png/v1746970960/shopping_esmb0z.webp",
+    colors: ["#333333", "#666666"],
+    sizes: ["One Size"],
+    description: "Durable casual backpack suitable for daily use and travel.",
+    inStock: true,
+    reviewCount: 43,
   },
   {
     name: "card.luxuryHandbag",
@@ -431,6 +623,12 @@ const products = [
       "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/f_png/v1746971033/shopping_ou38ur.webp",
     hoverImage:
       "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/f_png/v1746971039/shopping_idtpuf.webp",
+    colors: ["#d4af37", "#b8860b"],
+    sizes: ["One Size"],
+    description:
+      "Elegant luxury handbag with premium materials and craftsmanship.",
+    inStock: true,
+    reviewCount: 38,
   },
   {
     name: "card.simpleToteBag",
@@ -442,6 +640,11 @@ const products = [
       "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/f_png/v1746971103/shopping_nvhrs5.webp",
     hoverImage:
       "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/f_png/v1746971110/shopping_g2l3oh.webp",
+    colors: ["#a0522d", "#d2b48c"],
+    sizes: ["One Size"],
+    description: "Simple and practical tote bag perfect for everyday errands.",
+    inStock: true,
+    reviewCount: 47,
   },
   {
     name: "card.menMessengerBag",
@@ -453,6 +656,12 @@ const products = [
       "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/f_png/v1746971225/shopping_y4uwno.webp",
     hoverImage:
       "https://res.cloudinary.com/djgykvahm/image/upload/v1746971233/shopping_oxtca8.webp",
+    colors: ["#3b2f2f", "#4d3a3a"],
+    sizes: ["One Size"],
+    description:
+      "Stylish messenger bag designed for convenience and everyday use.",
+    inStock: true,
+    reviewCount: 34,
   },
   {
     name: "card.sportDuffelBag",
@@ -464,9 +673,13 @@ const products = [
       "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/f_png/v1746971281/shopping_bjkvyv.webp",
     hoverImage:
       "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/f_png/v1746971290/shopping_h7vtjs.webp",
+    colors: ["#000000", "#2f4f4f"],
+    sizes: ["One Size"],
+    description: "Durable sport duffel bag ideal for gym and travel.",
+    inStock: true,
+    reviewCount: 29,
   },
 
-  // BEAUTY
   {
     name: "card.skinCareSet",
     category: "card.skincare",
@@ -478,6 +691,11 @@ const products = [
       "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/f_png/v1746971370/shopping_y6qpgy.webp",
     hoverImage:
       "https://res.cloudinary.com/djgykvahm/image/upload/v1746971379/shopping_ixijyg.webp",
+    colors: ["#f5e1da", "#f1c1b6", "#f8d6cc"],
+    sizes: ["Standard"],
+    description: "Complete skin care set for glowing, healthy skin.",
+    inStock: true,
+    reviewCount: 82,
   },
   {
     name: "card.matteMakeupKit",
@@ -489,6 +707,11 @@ const products = [
       "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/f_png/v1746971492/shopping_i7xqyy.webp",
     hoverImage:
       "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/f_png/v1746971507/shopping_grli7g.webp",
+    colors: ["#c48b8b", "#a3676d", "#814b52"],
+    sizes: ["Standard"],
+    description: "Matte makeup kit with long-lasting, high-pigment colors.",
+    inStock: true,
+    reviewCount: 65,
   },
   {
     name: "card.perfumeSet",
@@ -501,6 +724,12 @@ const products = [
       "https://res.cloudinary.com/djgykvahm/image/upload/v1746971585/shopping_gp0ljb.webp",
     hoverImage:
       "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/f_png/v1746971593/shopping_xub5a8.webp",
+    colors: ["#f3d2d2", "#f5c6c6"],
+    sizes: ["50ml", "100ml"],
+    description:
+      "Popular perfume set with lasting fragrance for all occasions.",
+    inStock: true,
+    reviewCount: 94,
   },
   {
     name: "card.haircareEssentials",
@@ -512,6 +741,11 @@ const products = [
       "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/f_png/v1746971641/shopping_zhc2n4.webp",
     hoverImage:
       "https://res.cloudinary.com/djgykvahm/image/upload/v1746971648/shopping_vfcuon.webp",
+    colors: ["#f9e6d2", "#f4c9a9"],
+    sizes: ["Standard"],
+    description: "Essential hair care products for smooth, healthy hair.",
+    inStock: true,
+    reviewCount: 59,
   },
   {
     name: "card.groomingKitMen",
@@ -523,6 +757,11 @@ const products = [
       "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/f_png/v1746971786/shopping_odnmtx.webp",
     hoverImage:
       "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/f_png/v1746971800/shopping_e5jvsr.webp",
+    colors: ["#323232", "#4b4b4b"],
+    sizes: ["Standard"],
+    description: "Complete grooming kit tailored for men's daily needs.",
+    inStock: true,
+    reviewCount: 71,
   },
 ];
 
@@ -568,7 +807,7 @@ const ProductCard = ({ product, currency, onQuickView, onAddToCompare }) => {
 
   return (
     <div
-      className="overflow-hidden relative bg-white dark:bg-transparent rounded-xl shadow hover:shadow-xl dark:hover:shadow-md dark:shadow-gray-100 transition-all p-4 hover:-translate-y-2"
+      className="overflow-hidden w-full h-full relative bg-white dark:bg-transparent rounded-xl shadow hover:shadow-xl dark:hover:shadow-md dark:shadow-gray-100 transition-all p-4 hover:-translate-y-2"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >

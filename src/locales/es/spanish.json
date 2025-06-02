@@ -193,7 +193,9 @@
     "giftOption": "Este pedido contiene un regalo",
     "proceedToBuy": "Proceder a comprar",
     "securePayment": "<strong>100% Pagos seguros:</strong> <br /> Se aceptan todas las tarjetas principales y UPI",
-    "youSaved": "Ahorraste"
+    "youSaved": "Ahorraste",
+    "itemRemoved": "Artículo eliminado del carrito.",
+    "undo": "Deshacer"
   },
   "testimonial": {
     "testimonial": "Testimonios"

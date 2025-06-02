@@ -18,7 +18,8 @@ export const CartProvider = ({ children }) => {
     setCart((prev) => {
       const alreadyExists = prev.some((item) => item.name === product.name);
       if (alreadyExists) return prev;
-      return [...prev, product];
+
+      return [...prev, { ...product, quantity: 1 }];
     });
   };
 
@@ -26,11 +27,26 @@ export const CartProvider = ({ children }) => {
     setCart((prev) => prev.filter((item) => item.name !== productName));
   };
 
+  const addToCartAtIndex = (item, index) => {
+    setCart((prevCart) => {
+      const newCart = [...prevCart];
+      newCart.splice(index, 0, item);
+      return newCart;
+    });
+  };
+
   const clearCart = () => setCart([]);
 
   return (
     <CartContext.Provider
-      value={{ cart, addToCart, removeFromCart, clearCart, setCart }}
+      value={{
+        cart,
+        addToCart,
+        removeFromCart,
+        clearCart,
+        setCart,
+        addToCartAtIndex,
+      }}
     >
       {children}
     </CartContext.Provider>

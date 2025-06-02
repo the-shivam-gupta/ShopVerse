@@ -117,7 +117,7 @@ const ProductListingPage = ({ currency }) => {
         initial={{ x: -50, opacity: 0 }}
         animate={{ x: 0, opacity: 1 }}
         transition={{ duration: 0.5 }}
-        className="lg:sticky lg:top-6 w-full md:w-1/5 space-y-4 flex flex-col px-5 py-6 shadow-xl h-fit rounded-xl bg-linear-to-tr from-white to-pink-50 dark:bg-gradient-to-tr dark:from-gray-600 dark:to-gray-800 border border-gray-200 dark:border-gray-400"
+        className="w-full md:w-70 h-fit p-4 rounded-lg shadow-md border border-gray-200 dark:border-gray-500 bg-gradient-to-tr from-white to-pink-50 dark:bg-gradient-to-tr dark:from-gray-800 dark:to-gray-600"
       >
         <div className="border p-3 border-pink-100 dark:border-gray-400 rounded-xl">
           <h2 className="text-xl font-semibold mb-2 text-gray-600 dark:text-gray-100">
@@ -242,7 +242,7 @@ const ProductListingPage = ({ currency }) => {
 
       {/* Products Section */}
       <motion.section
-        className="w-1/2 md:w-4/5 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 bg-gray-100 dark:bg-gray-800 p-10"
+        className="flex-[4] min-w-0 grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6 bg-gray-100 dark:bg-gray-800 p-4 xs:p-6 md:p-10"
         variants={containerVariants}
         initial="hidden"
         animate="visible"

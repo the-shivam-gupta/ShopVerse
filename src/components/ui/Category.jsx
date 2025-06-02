@@ -181,7 +181,7 @@ export default function CategorySection() {
 
   return (
     <div className="lg:sticky lg:top-4 h-fit">
-      <div className="w-70 h-fit p-4 rounded-lg shadow-md border border-gray-200 dark:border-gray-500 bg-gradient-to-tr from-white to-pink-50 dark:bg-gradient-to-tr dark:from-gray-800 dark:to-gray-600">
+      <div className="w-full md:w-70 h-fit p-4 rounded-lg shadow-md border border-gray-200 dark:border-gray-500 bg-gradient-to-tr from-white to-pink-50 dark:bg-gradient-to-tr dark:from-gray-800 dark:to-gray-600">
         <h2 className="text-lg font-bold mb-4 dark:text-gray-200">
           {t("category.category")}
         </h2>
@@ -241,7 +241,7 @@ export default function CategorySection() {
       </div>
 
       {/* Rotating Reviews BELOW */}
-      <div className="w-70 mt-4 p-4 rounded-lg shadow-md border border-gray-200 dark:border-gray-500 bg-pink-50 dark:bg-gradient-to-tr dark:from-gray-800 dark:to-gray-600">
+      <div className="w-full mt-4 p-4 rounded-lg shadow-md border border-gray-200 dark:border-gray-500 bg-pink-50 dark:bg-gradient-to-tr dark:from-gray-800 dark:to-gray-600">
         <h3 className="text-lg font-bold mb-2 text-gray-600 dark:text-gray-200">
           {t("testimonial.testimonial")} 💬
         </h3>
