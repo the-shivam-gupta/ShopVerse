@@ -73,15 +73,15 @@ const ContactUs = () => {
     (field === "name" ? name : field === "email" ? email : message).length > 0;
 
   return (
-    <div className="w-full h-[100dvh] dark:bg-black bg-gray-100">
+    <div className="w-full min-h-screen dark:bg-black bg-gray-100">
       <motion.div
-        className="max-w-3xl mx-auto px-4 py-16"
+        className="max-w-3xl mx-auto px-4 sm:px-6 md:px-8 py-12 sm:py-16"
         initial="hidden"
         animate="visible"
         variants={containerVariants}
       >
         <motion.h2
-          className="text-3xl md:text-4xl font-bold text-center mb-8 text-pink-400"
+          className="text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-8 text-pink-400"
           variants={childVariants}
         >
           {t("contact.contactUs")}
@@ -89,7 +89,7 @@ const ContactUs = () => {
 
         <motion.form
           onSubmit={handleSubmit}
-          className="bg-white dark:bg-gray-700 shadow-lg border border-gray-200 dark:border-gray-700 rounded-xl p-10 space-y-6"
+          className="bg-white dark:bg-gray-700 shadow-lg border border-gray-200 dark:border-gray-700 rounded-xl p-6 sm:p-8 md:p-10 space-y-6"
           variants={childVariants}
         >
           {/* Name Field */}
@@ -173,18 +173,20 @@ const ContactUs = () => {
             />
           </div>
 
+          {/* Submit Button */}
           <div className="flex justify-center">
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               type="submit"
-              className="bg-pink-400 text-white px-6 py-2 rounded-md font-medium shadow hover:bg-pink-500 transition-all cursor-pointer w-1/3"
+              className="bg-pink-400 text-white px-6 py-2 rounded-md font-medium shadow hover:bg-pink-500 transition-all cursor-pointer w-full sm:w-2/3 md:w-1/3"
             >
               {t("contact.sendMessage")}
             </motion.button>
           </div>
         </motion.form>
 
+        {/* Success Message */}
         <AnimatePresence>
           {submitted && (
             <motion.div

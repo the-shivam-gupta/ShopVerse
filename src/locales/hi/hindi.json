@@ -193,7 +193,9 @@
     "giftOption": "इस ऑर्डर में उपहार शामिल है",
     "proceedToBuy": "खरीदारी जारी रखें",
     "securePayment": "<strong>100% सुरक्षित भुगतान:</strong> <br /> सभी प्रमुख कार्ड और UPI समर्थित",
-    "youSaved": "आपने बचाए"
+    "youSaved": "आपने बचाए",
+    "itemRemoved": "आइटम को कार्ट से हटाया गया है।",
+    "undo": "पूर्ववत करें"
   },
   "testimonial": {
     "testimonial": "शंसापत्र"

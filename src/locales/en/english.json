@@ -99,7 +99,7 @@
     "compare": "Compare",
     "addToCart": "Add to Cart",
     "headphone": "HEADPHONE",
-    "sonyHeadphone":"Sony Wireless Bluetooth Headphones with mic",
+    "sonyHeadphone": "Sony Wireless Bluetooth Headphones with mic",
     "casualShirt": "CASUAL SHIRT",
     "mencasualShirt": "Men's Regular Fit Casual Shirt",
     "menformalShirt": "Spread Collar Slim Fit Formal Shirt",
@@ -193,7 +193,9 @@
     "giftOption": "This order contains a gift",
     "proceedToBuy": "Proceed to Buy",
     "securePayment": "<strong>100% Secure Payments:</strong> <br /> All major cards  and UPI supported",
-    "youSaved": "You Saved"
+    "youSaved": "You Saved",
+    "itemRemoved": "Item removed from cart.",
+    "undo": "Undo"
   },
   "testimonial": {
     "testimonial": "Testimonials"
