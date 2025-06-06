@@ -57,6 +57,8 @@ import sports from "../../icons/sports.png";
 import spray from "../../icons/spray.png";
 import sunglasses from "../../icons/sunglasses.png";
 import tablet from "../../icons/tablet.png";
+import frock from "../../icons/baby-frock.png";
+import toy from "../../icons/toys.png";
 
 const Header = ({ currency, setCurrency }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -69,6 +71,7 @@ const Header = ({ currency, setCurrency }) => {
   const { favorites } = useFavorites();
   const { cart } = useCart();
   const inputRef = useRef();
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const handleLanguageChange = (e) => {
     i18n.changeLanguage(e.target.value);
@@ -386,9 +389,17 @@ const Header = ({ currency, setCurrency }) => {
                         {category.items.map((item, i) => (
                           <li key={i} className="flex items-center">
                             <div className="flex items-center gap-3 flex-row-reverse">
-                              <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out dark:text-gray-300 peer">
+                              <a
+                                onClick={() =>
+                                  navigate(
+                                    `/products/category/${item.label.toUpperCase()}`
+                                  )
+                                }
+                                className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out dark:text-gray-300 peer"
+                              >
                                 {item.label}
                               </a>
+
                               <img
                                 src={item.icon}
                                 width={26}
@@ -407,10 +418,7 @@ const Header = ({ currency, setCurrency }) => {
             </li>
             {/* Men */}
             <li className="relative group">
-              <a
-                href="#"
-                className="hover:text-pink-500 ease-in-out duration-200"
-              >
+              <a className="hover:text-pink-500 ease-in-out duration-200 cursor-pointer">
                 {t("header.men")}
                 <span className="absolute left-0 -bottom-1 w-0 h-[3px] bg-pink-500 transition-all group-hover:w-full"></span>
               </a>
@@ -430,7 +438,14 @@ const Header = ({ currency, setCurrency }) => {
                       ].map((item, i) => (
                         <li key={i} className="flex items-center">
                           <div className="flex items-center gap-3 flex-row-reverse">
-                            <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out dark:text-gray-300 peer">
+                            <a
+                              onClick={() =>
+                                navigate(
+                                  `/products/category/${item.label.toUpperCase()}`
+                                )
+                              }
+                              className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out dark:text-gray-300 peer"
+                            >
                               {item.label}
                             </a>
                             <img
@@ -450,10 +465,7 @@ const Header = ({ currency, setCurrency }) => {
             </li>
             {/* WOMEN */}
             <li className="relative group">
-              <a
-                href="#"
-                className="hover:text-pink-500 ease-in-out duration-200"
-              >
+              <a className="hover:text-pink-500 ease-in-out duration-200 cursor-pointer">
                 {t("header.women")}
                 <span className="absolute left-0 -bottom-1 w-0 h-[3px] bg-pink-500 transition-all group-hover:w-full"></span>
               </a>
@@ -470,7 +482,14 @@ const Header = ({ currency, setCurrency }) => {
                       ].map((item, i) => (
                         <li key={i} className="flex items-center">
                           <div className="flex items-center gap-3 flex-row-reverse">
-                            <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out dark:text-gray-300 peer">
+                            <a
+                              onClick={() =>
+                                navigate(
+                                  `/products/category/${item.label.toUpperCase()}`
+                                )
+                              }
+                              className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out dark:text-gray-300 peer"
+                            >
                               {item.label}
                             </a>
                             <img
@@ -488,12 +507,53 @@ const Header = ({ currency, setCurrency }) => {
                 </div>
               </div>
             </li>
+            {/* KIDS */}
+            <li className="relative group">
+              <a className="hover:text-pink-500 ease-in-out duration-200 cursor-pointer">
+                {t("header.kids")}
+                <span className="absolute left-0 -bottom-1 w-0 h-[3px] bg-pink-500 transition-all group-hover:w-full"></span>
+              </a>
+              <div className="absolute left-1/2 transform -translate-x-1/2 min-w-[12em] max-w-[16em] min-h-[10em] p-4 bg-white dark:bg-black shadow-lg mt-2 opacity-0 pointer-events-none group-hover:pointer-events-auto group-hover:opacity-100 transition-opacity duration-300 z-50 rounded-xl border border-gray-200 dark:border-gray-700">
+                <div className="rounded-2xl">
+                  <div className="relative text-left">
+                    <ul className="space-y-3 text-gray-500 text-lg font-medium">
+                      {[
+                        { icon: poloShirt, label: t("dropdown.kidsTshirts") },
+                        { icon: shorts, label: t("dropdown.kidsShorts") },
+                        { icon: sneakers, label: t("dropdown.kidsShoes") },
+                        { icon: frock, label: t("dropdown.kidsFrocks") },
+                        { icon: toy, label: t("dropdown.kidsToys") },
+                      ].map((item, i) => (
+                        <li key={i} className="flex items-center">
+                          <div className="flex items-center gap-3 flex-row-reverse">
+                            <a
+                              onClick={() =>
+                                navigate(
+                                  `/products/category/${item.label.toUpperCase()}`
+                                )
+                              }
+                              className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out dark:text-gray-300 peer"
+                            >
+                              {item.label}
+                            </a>
+                            <img
+                              src={item.icon}
+                              width={26}
+                              alt=""
+                              className="transform scale-90 translate-y-1 opacity-70 transition-all duration-300 
+                  peer-hover:scale-100 peer-hover:translate-y-0 peer-hover:opacity-100 dark:invert"
+                            />
+                          </div>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </li>
             {/* JEWELRY */}
             <li className="relative group">
-              <a
-                href="#"
-                className="hover:text-pink-500 ease-in-out duration-200"
-              >
+              <a className="hover:text-pink-500 ease-in-out duration-200 cursor-pointer">
                 {t("header.jewelry")}
                 <span className="absolute left-0 -bottom-1 w-0 h-[3px] bg-pink-500 transition-all group-hover:w-full"></span>
               </a>
@@ -509,7 +569,14 @@ const Header = ({ currency, setCurrency }) => {
                       ].map((item, i) => (
                         <li key={i} className="flex items-center">
                           <div className="flex items-center gap-3 flex-row-reverse">
-                            <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out dark:text-gray-300 peer">
+                            <a
+                              onClick={() =>
+                                navigate(
+                                  `/products/category/${item.label.toUpperCase()}`
+                                )
+                              }
+                              className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out dark:text-gray-300 peer"
+                            >
                               {item.label}
                             </a>
                             <img
@@ -529,14 +596,11 @@ const Header = ({ currency, setCurrency }) => {
             </li>
             {/* PERFUME */}
             <li className="relative group">
-              <a
-                href="#"
-                className="hover:text-pink-500 ease-in-out duration-200"
-              >
+              <a className="hover:text-pink-500 ease-in-out duration-200 cursor-pointer">
                 {t("header.perfume")}
                 <span className="absolute left-0 -bottom-1 w-0 h-[3px] bg-pink-500 transition-all group-hover:w-full"></span>
               </a>
-              <div className="absolute left-1/2 transform -translate-x-1/2 min-w-[12em] max-w-[16em] min-h-[10em] p-4 bg-white dark:bg-black shadow-lg mt-2 opacity-0 pointer-events-none group-hover:pointer-events-auto group-hover:opacity-100 transition-opacity duration-300 z-50 rounded-xl border border-gray-200 dark:border-gray-700">
+              <div className="absolute sm:left-1 lg:left-1/2 transform -translate-x-1/2 min-w-[12em] max-w-[16em] min-h-[10em] p-4 bg-white dark:bg-black shadow-lg mt-2 opacity-0 pointer-events-none group-hover:pointer-events-auto group-hover:opacity-100 transition-opacity duration-300 z-50 rounded-xl border border-gray-200 dark:border-gray-700">
                 <div className="rounded-2xl">
                   <div className="relative text-left">
                     <ul className="space-y-3 text-gray-500 text-lg font-medium">
@@ -548,7 +612,14 @@ const Header = ({ currency, setCurrency }) => {
                       ].map((item, i) => (
                         <li key={i} className="flex items-center">
                           <div className="flex items-center gap-3 flex-row-reverse">
-                            <a className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out dark:text-gray-300 peer">
+                            <a
+                              onClick={() =>
+                                navigate(
+                                  `/products/category/${item.label.toUpperCase()}`
+                                )
+                              }
+                              className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out dark:text-gray-300 peer"
+                            >
                               {item.label}
                             </a>
                             <img
@@ -566,44 +637,99 @@ const Header = ({ currency, setCurrency }) => {
                 </div>
               </div>
             </li>
-            {/* HotOffers */}
-            <li className="relative group">
-              <a
-                href="#"
-                className="hover:text-pink-500 ease-in-out duration-200"
-              >
-                {t("header.hotOffers")}
-                <span className="absolute left-0 -bottom-1 w-0 h-[3px] bg-pink-500 transition-all group-hover:w-full"></span>
-              </a>
-            </li>
           </ul>
         </div>
       </nav>
 
-      {/* Mobile Bottom Navigation */}
-      <div className="fixed bottom-0 left-0 right-0 flex justify-around bg-white border-t p-2 md:hidden z-10">
-        <button>
-          <Menu size={24} />
-        </button>
-        <button className="relative">
-          <ShoppingCart size={24} />
-          <span className="absolute -top-1 -right-2 text-xs bg-red-500 text-white rounded-full px-1">
-            {cart.length}
-          </span>
-        </button>
-        <button>
-          <Home size={24} />
-        </button>
-        <button className="relative">
-          <Heart size={24} />
-          <span className="absolute -top-1 -right-2 text-xs bg-red-500 text-white rounded-full px-1">
-            0
-          </span>
-        </button>
-        <button>
-          <Grid size={24} />
+      {/* Top Hamburger for Small Screens */}
+      <div className="fixed top-4 left-4 z-30 md:hidden">
+        <button onClick={() => setMenuOpen(true)}>
+          <Menu size={28} className="text-black dark:text-white" />
         </button>
       </div>
+      {/* AnimatePresence manages entry/exit animation */}
+      <AnimatePresence>
+        {menuOpen && (
+          <>
+            {/* Blurred Background with Dark Mode Support */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.25 }}
+              className="fixed inset-0 z-40 bg-white/70 dark:bg-black/50 backdrop-blur-md overflow-hidden h-screen"
+              onClick={() => setMenuOpen(false)} // optional: click outside to close
+            />
+
+            {/* Sliding Menu Panel */}
+            <motion.div
+              initial={{ x: "-100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "-100%" }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
+              className="fixed top-0 left-0 bottom-0 w-full bg-white dark:bg-zinc-900/80 z-50 shadow-lg p-6 flex flex-col justify-center items-center"
+            >
+              {/* Close Icon */}
+              <button
+                className="absolute top-5 right-5 self-end mb-6 text-black dark:text-white"
+                onClick={() => setMenuOpen(false)}
+              >
+                <X size={28} />
+              </button>
+
+              {/* Menu Items */}
+              <nav className="flex flex-col gap-6 text-lg font-medium text-gray-800 dark:text-gray-200">
+                <button
+                  onClick={() => {
+                    navigate("/");
+                    setMenuOpen(false);
+                  }}
+                  className="flex items-center gap-4 cursor-pointer"
+                >
+                  <Home size={24} />
+                  {t("hamburger.home")}
+                </button>
+                <button
+                  onClick={() => {
+                    navigate("favorites");
+                    setMenuOpen(false);
+                  }}
+                  className="flex items-center gap-4 cursor-pointer relative"
+                >
+                  <Heart size={24} />
+                  <span className="absolute -top-1 left-3 text-xs bg-red-500 text-white rounded-full px-1">
+                    {favorites.length}
+                  </span>
+                  {t("hamburger.favorites")}
+                </button>
+                <button
+                  onClick={() => {
+                    navigate("cart");
+                    setMenuOpen(false);
+                  }}
+                  className="flex items-center gap-4 cursor-pointer relative"
+                >
+                  <ShoppingCart size={24} />
+                  <span className="absolute -top-1 left-3 text-xs bg-red-500 text-white rounded-full px-1">
+                    {cart.length}
+                  </span>
+                  {t("hamburger.cart")}
+                </button>
+                <button
+                  onClick={() => {
+                    navigate("products");
+                    setMenuOpen(false);
+                  }}
+                  className="flex items-center gap-4 cursor-pointer"
+                >
+                  <Grid size={24} />
+                  {t("hamburger.categories")}
+                </button>
+              </nav>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
     </header>
   );
 };

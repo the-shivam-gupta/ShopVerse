@@ -177,7 +177,7 @@
     "compareItems": "Comparar artículos"
   },
   "favorite": {
-    "favorites": "Tus favoritos",
+    "favorites": "Tus favoritos 💖",
     "noFavItem": "Aún no hay artículos favoritos."
   },
   "cart": {
@@ -237,7 +237,12 @@
     "deodrant": "Desodorante",
     "airFreshner": "Ambientador",
     "bodyPerfume": "Perfume Corporal",
-    "clothesPerfume": "Perfume para Ropa"
+    "clothesPerfume": "Perfume para Ropa",
+    "kidsTshirts": "Camisetas",
+    "kidsShorts": "Pantalones cortos",
+    "kidsShoes": "Zapatos",
+    "kidsFrocks": "Vestidos",
+    "kidsToys": "Juguetes"
   },
   "contact": {
     "contactUs": "Contáctanos",
@@ -247,5 +252,11 @@
     "message": "Mensaje",
     "sendMessage": "Enviar mensaje",
     "messageSentSuccessfully": "✅ ¡Tu mensaje ha sido enviado exitosamente!"
+  },
+  "hamburger": {
+    "home": "Inicio",
+    "favorites": "Favoritos",
+    "cart": "Carrito",
+    "categories": "Categorías"
   }
 }

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { Heart, Eye, Plus, Star, Shuffle } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import CompareModal from "./CompareModal";
@@ -139,7 +139,7 @@ const products = [
       "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/f_png/v1746968435/51UBVW9enzL._SL1200__dbht3c.jpg",
     hoverImage:
       "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/f_png/v1746968463/41jR_301vvL._SL1200__vddqsr.jpg",
-    colors: ["#1f2937"],
+    colors: ["#1f2937", "#ffffff"],
     sizes: [],
     description: "Sony over-ear headphones with deep bass and noise isolation.",
     inStock: true,
@@ -452,7 +452,7 @@ const products = [
       "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/f_png/v1746970174/shopping_xs26lw.webp",
     hoverImage:
       "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/f_png/v1746970181/shopping_vnpggq.webp",
-    colors: ["#000000","#964B00"],
+    colors: ["#000000", "#964B00"],
     sizes: ["S", "M", "L"],
     description:
       "Comfortable black hoodie suitable for casual wear and workouts.",
@@ -765,165 +765,167 @@ const products = [
   },
 ];
 
-const ProductCard = ({ product, currency, onQuickView, onAddToCompare }) => {
-  const { t } = useTranslation();
-  const { addToCart } = useCart();
-  const { favorites, addToFavorites, removeFromFavorites } = useFavorites();
-  const [hovered, setHovered] = useState(false);
-
-  const isFavorited = favorites.some((item) => item.name === product.name);
-  const handleFavoriteClick = () => {
-    if (isFavorited) {
-      removeFromFavorites(product.name); // uses product.name as unique key
-    } else {
-      addToFavorites(product);
-    }
-  };
-
-  const handleAddToCart = () => {
-    const cartProduct = {
-      ...product,
-      image: product.mainImage,
+const ProductCard = React.memo(
+  ({ product, currency, onQuickView, onAddToCompare }) => {
+    const { t } = useTranslation();
+    const { addToCart } = useCart();
+    const { favorites, addToFavorites, removeFromFavorites } = useFavorites();
+    const [hovered, setHovered] = useState(false);
+    const isFavorited = favorites.some((item) => item.name === product.name);
+    const handleFavoriteClick = () => {
+      if (isFavorited) {
+        removeFromFavorites(product.name); // uses product.name as unique key
+      } else {
+        addToFavorites(product);
+      }
     };
-    addToCart(cartProduct);
-  };
 
-  const stars = {
-    total: 5, // total number of stars
-    filled: Math.floor(product.rating), // number of fully filled stars
-  };
+    const handleAddToCart = () => {
+      const cartProduct = {
+        ...product,
+        image: product.mainImage,
+      };
+      addToCart(cartProduct);
+    };
 
-  const conversionRate = 83; // 1 USD = 83 INR
+    const stars = {
+      total: 5, // total number of stars
+      filled: Math.floor(product.rating), // number of fully filled stars
+    };
 
-  const price =
-    currency === "USD"
-      ? `$${product.price}`
-      : `₹${Math.round(product.price * conversionRate)}`;
+    const conversionRate = 83; // 1 USD = 83 INR
 
-  const originalPrice =
-    currency === "USD"
-      ? `$${product.originalPrice}`
-      : `₹${Math.round(product.originalPrice * conversionRate)}`;
+    const price =
+      currency === "USD"
+        ? `$${product.price}`
+        : `₹${Math.round(product.price * conversionRate)}`;
 
-  return (
-    <div
-      className="overflow-hidden w-full h-full relative bg-white dark:bg-transparent rounded-xl shadow hover:shadow-xl dark:hover:shadow-md dark:shadow-gray-100 transition-all p-4 hover:-translate-y-2"
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-    >
-      <div className="relative">
-        {/* Images */}
-        <img
-          src={hovered ? product.hoverImage : product.mainImage}
-          alt={product.name}
-          className="w-full h-64 object-contain transition-all duration-300 bg-transparent ease-linear overflow-hidden"
-        />
+    const originalPrice =
+      currency === "USD"
+        ? `$${product.originalPrice}`
+        : `₹${Math.round(product.originalPrice * conversionRate)}`;
 
-        {/* Icons */}
-        <div
-          className={`absolute top-4 right-4 flex flex-col gap-2 transition-all duration-300 ease-linear ${
-            hovered ? "opacity-100" : "opacity-0"
-          }`}
-        >
-          {/* Favorite */}
-          <div className="relative group">
-            <button
-              onClick={handleFavoriteClick}
-              className="bg-white p-2 rounded-full shadow hover:bg-gray-100 cursor-pointer"
-            >
-              <Heart
-                size={20}
-                color={isFavorited ? "red" : "black"}
-                fill={isFavorited ? "red" : "none"}
+    return (
+      <div
+        className="overflow-hidden w-full h-full relative bg-white dark:bg-transparent rounded-xl shadow hover:shadow-xl dark:hover:shadow-md dark:shadow-gray-100 transition-all p-4 hover:-translate-y-2"
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+      >
+        <div className="relative">
+          {/* Images */}
+          <img
+            loading="lazy"
+            src={hovered ? product.hoverImage : product.mainImage}
+            alt={product.name}
+            className="w-full h-64 object-contain transition-all duration-300 bg-transparent ease-linear overflow-hidden"
+          />
+
+          {/* Icons */}
+          <div
+            className={`absolute top-4 right-4 flex flex-col gap-2 transition-all duration-300 ease-linear ${
+              hovered ? "opacity-100" : "opacity-0"
+            }`}
+          >
+            {/* Favorite */}
+            <div className="relative group">
+              <button
+                onClick={handleFavoriteClick}
+                className="bg-white p-2 rounded-full shadow hover:bg-gray-100 cursor-pointer"
+              >
+                <Heart
+                  size={20}
+                  color={isFavorited ? "red" : "black"}
+                  fill={isFavorited ? "red" : "none"}
+                />
+              </button>
+              <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 whitespace-nowrap bg-black dark:bg-white text-white dark:text-black text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-all duration-200 pointer-events-none">
+                {t("card.favorite")}
+                <div className="absolute top-5 left-1/2 -translate-x-1/2 w-2 h-2 bg-black dark:bg-white rotate-45"></div>
+              </div>
+            </div>
+
+            {/* Quick View */}
+            <div className="relative group">
+              <button
+                onClick={() => onQuickView(product)}
+                className="bg-white p-2 rounded-full shadow hover:bg-gray-100 cursor-pointer"
+              >
+                <Eye size={20} />
+              </button>
+              <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 whitespace-nowrap bg-black dark:bg-white text-white dark:text-black text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-all duration-200 pointer-events-none">
+                {t("card.quickView")}
+                <div className="absolute top-5 left-1/2 -translate-x-1/2 w-2 h-2 bg-black dark:bg-white rotate-45"></div>
+              </div>
+            </div>
+
+            {/* Compare */}
+            <div className="relative group">
+              <button
+                onClick={() => onAddToCompare(product)}
+                className="bg-white p-2 rounded-full shadow hover:bg-gray-100 cursor-pointer"
+                strokeWidth={1.5}
+              >
+                <Shuffle size={20} />
+              </button>
+              <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 whitespace-nowrap bg-black dark:bg-white text-white dark:text-black text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-all duration-200 pointer-events-none">
+                {t("card.compare")}
+                <div className="absolute top-5 left-1/2 -translate-x-1/2 w-2 h-2 bg-black dark:bg-white rotate-45"></div>
+              </div>
+            </div>
+
+            {/* Add to Cart */}
+            <div className="relative group">
+              <button
+                onClick={handleAddToCart}
+                className="bg-white p-2 rounded-full shadow hover:bg-gray-100 cursor-pointer"
+              >
+                <Plus size={20} />
+              </button>
+              <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 whitespace-nowrap bg-black dark:bg-white text-white dark:text-black text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-all duration-200 pointer-events-none">
+                {t("card.addToCart")}
+                <div className="absolute top-5 left-1/2 -translate-x-1/2 w-2 h-2 bg-black dark:bg-white rotate-45"></div>
+              </div>
+            </div>
+          </div>
+
+          {/* Discount badge */}
+          {product.badge && (
+            <span className="absolute -top-0 -left-10 w-[110px] rotate-[-45deg] bg-green-500 text-white text-xs font-bold text-center py-1 shadow-md">
+              {product.badge}
+            </span>
+          )}
+        </div>
+
+        {/* Details */}
+        <div className="mt-4 flex flex-col">
+          <p className="text-pink-400 font-semibold text-md text-left ml-2 cursor-pointer">
+            {t(product.category)}
+          </p>
+          <h3 className="text-gray-500 dark:text-gray-300 text-[1em] mt-1 text-left text-xl tracking-wider ml-2 cursor-pointer hover:text-gray-600 dark:hover:text-gray-200 duration-200">
+            {t(product.name)}
+          </h3>
+          <div className="flex justify-start items-start text-yellow-400 mt-2 ml-2">
+            {[...Array(stars.total)].map((_, index) => (
+              <Star
+                key={index}
+                fill={index < stars.filled ? "orange" : "none"}
+                strokeWidth={1}
+                className="border-yellow-200 dark:border-yellow-400"
               />
-            </button>
-            <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 whitespace-nowrap bg-black dark:bg-white text-white dark:text-black text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-all duration-200 pointer-events-none">
-              {t("card.favorite")}
-              <div className="absolute top-5 left-1/2 -translate-x-1/2 w-2 h-2 bg-black dark:bg-white rotate-45"></div>
-            </div>
+            ))}
           </div>
-
-          {/* Quick View */}
-          <div className="relative group">
-            <button
-              onClick={() => onQuickView(product)}
-              className="bg-white p-2 rounded-full shadow hover:bg-gray-100 cursor-pointer"
-            >
-              <Eye size={20} />
-            </button>
-            <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 whitespace-nowrap bg-black dark:bg-white text-white dark:text-black text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-all duration-200 pointer-events-none">
-              {t("card.quickView")}
-              <div className="absolute top-5 left-1/2 -translate-x-1/2 w-2 h-2 bg-black dark:bg-white rotate-45"></div>
-            </div>
+          <div className="mt-2 text-left space-x-4 ml-2">
+            <span className="text-lg font-bold text-gray-800 dark:text-gray-100">
+              {price}
+            </span>
+            <span className="text-gray-400 dark:text-gray-400 line-through text-md">
+              {originalPrice}
+            </span>
           </div>
-
-          {/* Compare */}
-          <div className="relative group">
-            <button
-              onClick={() => onAddToCompare(product)}
-              className="bg-white p-2 rounded-full shadow hover:bg-gray-100 cursor-pointer"
-              strokeWidth={1.5}
-            >
-              <Shuffle size={20} />
-            </button>
-            <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 whitespace-nowrap bg-black dark:bg-white text-white dark:text-black text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-all duration-200 pointer-events-none">
-              {t("card.compare")}
-              <div className="absolute top-5 left-1/2 -translate-x-1/2 w-2 h-2 bg-black dark:bg-white rotate-45"></div>
-            </div>
-          </div>
-
-          {/* Add to Cart */}
-          <div className="relative group">
-            <button
-              onClick={handleAddToCart}
-              className="bg-white p-2 rounded-full shadow hover:bg-gray-100 cursor-pointer"
-            >
-              <Plus size={20} />
-            </button>
-            <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 whitespace-nowrap bg-black dark:bg-white text-white dark:text-black text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-all duration-200 pointer-events-none">
-              {t("card.addToCart")}
-              <div className="absolute top-5 left-1/2 -translate-x-1/2 w-2 h-2 bg-black dark:bg-white rotate-45"></div>
-            </div>
-          </div>
-        </div>
-
-        {/* Discount badge */}
-        {product.badge && (
-          <span className="absolute -top-0 -left-10 w-[110px] rotate-[-45deg] bg-green-500 text-white text-xs font-bold text-center py-1 shadow-md">
-            {product.badge}
-          </span>
-        )}
-      </div>
-
-      {/* Details */}
-      <div className="mt-4 flex flex-col">
-        <p className="text-pink-400 font-semibold text-md text-left ml-2 cursor-pointer">
-          {t(product.category)}
-        </p>
-        <h3 className="text-gray-500 dark:text-gray-300 text-[1em] mt-1 text-left text-xl tracking-wider ml-2 cursor-pointer hover:text-gray-600 dark:hover:text-gray-200 duration-200">
-          {t(product.name)}
-        </h3>
-        <div className="flex justify-start items-start text-yellow-400 mt-2 ml-2">
-          {[...Array(stars.total)].map((_, index) => (
-            <Star
-              key={index}
-              fill={index < stars.filled ? "orange" : "none"}
-              strokeWidth={1}
-              className="border-yellow-200 dark:border-yellow-400"
-            />
-          ))}
-        </div>
-        <div className="mt-2 text-left space-x-4 ml-2">
-          <span className="text-lg font-bold text-gray-800 dark:text-gray-100">
-            {price}
-          </span>
-          <span className="text-gray-400 dark:text-gray-400 line-through text-md">
-            {originalPrice}
-          </span>
         </div>
       </div>
-    </div>
-  );
-};
+    );
+  }
+);
 
 export { ProductCard, products };

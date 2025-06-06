@@ -11,7 +11,7 @@
     "jewelry": "JEWELRY",
     "perfume": "PERFUME",
     "blog": "BLOG",
-    "hotOffers": "HOT OFFERS"
+    "kids": "KIDS"
   },
   "home": {
     "trendingAccessories": "Trending Accessories",
@@ -237,7 +237,12 @@
     "deodorant": "Deodorant",
     "airFreshner": "Air Freshner",
     "bodyPerfume": "Body Perfume",
-    "clothesPerfume": "Clothes Perfume"
+    "clothesPerfume": "Clothes Perfume",
+    "kidsTshirts": "T-Shirts",
+    "kidsShorts": "Shorts",
+    "kidsShoes": "Shoes",
+    "kidsFrocks": "Frocks",
+    "kidsToys": "Toys"
   },
   "filter": {
     "category": "Category",
@@ -260,5 +265,11 @@
     "message": "Message",
     "sendMessage": "Send Message",
     "messageSentSuccessfully": "✅ Your message has been sent successfully!"
+  },
+  "hamburger": {
+    "home": "Home",
+    "favorites": "Favorites",
+    "cart": "Cart",
+    "categories": "Categories"
   }
 }

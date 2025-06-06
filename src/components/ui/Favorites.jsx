@@ -36,7 +36,7 @@ const FavoritesPage = ({ currency }) => {
       <h1 className="text-2xl font-bold mb-4 text-gray-700 dark:text-gray-100">
         {t("favorite.favorites")}
       </h1>
-      <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-8 w-full">
+      <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 2xl:grid-cols-6 gap-8 w-full">
         {favorites.map((product) => (
           <ProductCard
             key={product.name}
@@ -68,20 +68,22 @@ const FavoritesPage = ({ currency }) => {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 50, scale: 0.9 }}
             transition={{ duration: 0.3 }}
-            className="fixed bottom-6 right-6 bg-white dark:bg-gray-200 p-6 shadow-2xl rounded-2xl w-80 z-50"
+            className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 bg-white/80 dark:bg-gray-100/80 backdrop-blur-md p-4 sm:p-6 shadow-xl rounded-2xl w-[90vw] max-w-xs sm:max-w-sm z-50"
           >
-            <h4 className="font-bold mb-4 text-lg text-gray-700 dark:text-gray-800">
+            <h4 className="font-bold mb-2 text-sm sm:text-lg text-gray-700 dark:text-gray-800">
               {t("compare.compareItems")}
             </h4>
+
             {compareList.map((item) => (
               <p
                 key={item.name}
-                className="text-md text-gray-600 dark:text-gray-700"
+                className="text-sm text-gray-600 dark:text-gray-700 truncate"
               >
                 {t(item.name)}
               </p>
             ))}
-            <button className="mt-6 w-full py-3 bg-pink-400 text-white font-semibold text-base rounded-xl hover:bg-pink-500 transition cursor-pointer">
+
+            <button className="mt-4 w-full py-2.5 sm:py-3 bg-pink-400 text-white font-semibold text-sm sm:text-base rounded-xl hover:bg-pink-500 transition cursor-pointer">
               {t("compare.selectProduct")}
             </button>
           </motion.div>
