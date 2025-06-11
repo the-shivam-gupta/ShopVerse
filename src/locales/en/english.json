@@ -45,8 +45,14 @@
     "termsConditions": "Terms And Conditions",
     "aboutUs": "About Us",
     "securePayment": "Secure Payment",
-    "services": "SERVICES",
-    "contact": "CONTACT"
+    "services": "CUSTOMER SERVICE",
+    "contact": "CONTACT",
+    "helpCenter": "Help Center",
+    "trackOrder": "Track My Order",
+    "Return&Exchange": "Return & Exchange",
+    "shipping": "Shipping Info",
+    "faqs": "FAQs",
+    "allRightsReserved": "All Rights Reserved"
   },
   "category": {
     "category": "CATEGORIES",
@@ -271,5 +277,9 @@
     "favorites": "Favorites",
     "cart": "Cart",
     "categories": "Categories"
+  },
+  "deals": {
+    "bestDeal": "Best Deals",
+    "HotPicks": "Hot Picks 🔥"
   }
 }

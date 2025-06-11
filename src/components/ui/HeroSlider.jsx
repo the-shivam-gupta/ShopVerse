@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { Trans, useTranslation } from "react-i18next";
@@ -17,7 +17,7 @@ import sneaker2 from "../../assets/sneaker2.webp";
 const slides = [
   {
     titleLines: ["TRENDY", "OUTFITS"],
-    subtitle: "Trending Accessories",
+    subtitle: "Trending Clothes",
     startingAt: 25,
     description: "Perfect for everyday style with premium comfort.",
     images: [shirt_1, shirt_2],
@@ -58,7 +58,7 @@ const HeroSlider = () => {
 
   const intervalRef = useRef(null);
 
-  const startAutoSlide = () => {
+  const startAutoSlide = useCallback(() => {
     clearInterval(intervalRef.current);
     intervalRef.current = setInterval(() => {
       if (!isPaused) {
@@ -66,31 +66,34 @@ const HeroSlider = () => {
         setCurrent((prev) => (prev + 1) % slides.length);
       }
     }, 5500);
-  };
+  }, [isPaused, slides.length]);
 
   useEffect(() => {
     startAutoSlide();
     return () => clearInterval(intervalRef.current);
   }, [isPaused]);
 
-  const handleDotClick = (index) => {
-    if (index === current) return;
-    setDirection(index > current ? 1 : -1);
-    setCurrent(index);
-    startAutoSlide();
-  };
+  const handleDotClick = useCallback(
+    (index) => {
+      if (index === current) return;
+      setDirection(index > current ? 1 : -1);
+      setCurrent(index);
+      startAutoSlide();
+    },
+    [current, startAutoSlide]
+  );
 
-  const handlePrev = () => {
+  const handlePrev = useCallback(() => {
     setDirection(-1);
     setCurrent((prev) => (prev - 1 + slides.length) % slides.length);
     startAutoSlide();
-  };
+  }, [slides.length, startAutoSlide]);
 
-  const handleNext = () => {
+  const handleNext = useCallback(() => {
     setDirection(1);
     setCurrent((prev) => (prev + 1) % slides.length);
     startAutoSlide();
-  };
+  }, [slides.length, startAutoSlide]);
 
   const slide = slides[current];
 
@@ -139,7 +142,7 @@ const HeroSlider = () => {
           animate="center"
           exit="exit"
           transition={{ duration: 0.7, ease: "easeInOut" }}
-          className="space-y-5 flex flex-col text-center md:text-left max-w-md"
+          className="space-y-5 flex flex-col items-center md:items-baseline text-center md:text-left max-w-md"
         >
           <h2 className="text-lg md:text-xl font-semibold text-gray-600 dark:text-gray-300 tracking-wide uppercase">
             {slide.subtitle}
@@ -181,7 +184,7 @@ const HeroSlider = () => {
             animate="center"
             exit="exit"
             transition={{ duration: 0.8, delay: 0.1 }}
-            className="absolute top-0 left-12 w-[240px] h-[240px] object-cover rounded-full border-4 border-pink-100 dark:border-gray-300 z-10"
+            className="absolute top-0 left-28 w-[240px] h-[240px] object-cover rounded-full border-4 border-pink-100 dark:border-gray-300 z-10"
           />
         </AnimatePresence>
 
@@ -195,7 +198,7 @@ const HeroSlider = () => {
             animate="center"
             exit="exit"
             transition={{ duration: 0.8 }}
-            className="absolute bottom-0 -left-24 w-[240px] h-[240px] object-cover rounded-full border-4 border-pink-100 dark:border-gray-300 z-20"
+            className="absolute bottom-0 -left-8 w-[240px] h-[240px] object-cover rounded-full border-4 border-pink-100 dark:border-gray-300 z-20"
           />
         </AnimatePresence>
       </div>

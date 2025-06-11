@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { Dialog } from "@headlessui/react";
 import { Star, X } from "lucide-react";
 import { useTranslation } from "react-i18next";
@@ -12,21 +12,16 @@ const ProductQuickView = ({ product, isOpen, onClose, currency }) => {
   const [isAnimating, setIsAnimating] = useState(false);
   const { addToCart } = useCart();
 
-  const handleAddToCart = () => {
-    const cartProduct = {
-      ...product,
-      image: product.mainImage,
-    };
+  const handleAddToCart = useCallback(() => {
+    const cartProduct = { ...product, image: product.mainImage };
     addToCart(cartProduct);
-
     setAdded(true);
     setIsAnimating(true);
-    // Reset states
     setTimeout(() => {
       setAdded(false);
       setIsAnimating(false);
     }, 1000);
-  };
+  }, [addToCart, product]);
 
   if (!product) return null;
 
@@ -80,7 +75,6 @@ const ProductQuickView = ({ product, isOpen, onClose, currency }) => {
 
                   {/* Product Info */}
                   <div className="flex flex-col gap-2 items-center sm:items-start justify-center w-full sm:w-[45%] lg:w-[40%] text-center sm:text-left">
-
                     <h2 className="text-lg sm:text-2xl font-semibold text-gray-800 dark:text-gray-200">
                       {t(product.name)}
                     </h2>

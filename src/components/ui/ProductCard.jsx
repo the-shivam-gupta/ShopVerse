@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useState, useCallback, useMemo } from "react";
 import { Heart, Eye, Plus, Star, Shuffle } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import CompareModal from "./CompareModal";
@@ -766,44 +766,44 @@ const products = [
 ];
 
 const ProductCard = React.memo(
-  ({ product, currency, onQuickView, onAddToCompare }) => {
+  ({
+    product,
+    currency,
+    onQuickView,
+    onAddToCompare,
+    onAddToCart,
+    isFavorited,
+    onToggleFavorite,
+  }) => {
     const { t } = useTranslation();
-    const { addToCart } = useCart();
-    const { favorites, addToFavorites, removeFromFavorites } = useFavorites();
     const [hovered, setHovered] = useState(false);
-    const isFavorited = favorites.some((item) => item.name === product.name);
-    const handleFavoriteClick = () => {
-      if (isFavorited) {
-        removeFromFavorites(product.name); // uses product.name as unique key
-      } else {
-        addToFavorites(product);
-      }
-    };
 
-    const handleAddToCart = () => {
+    const handleAddToCart = useCallback(() => {
       const cartProduct = {
         ...product,
         image: product.mainImage,
       };
-      addToCart(cartProduct);
-    };
+      onAddToCart(cartProduct);
+    }, [product, onAddToCart]);
 
     const stars = {
-      total: 5, // total number of stars
-      filled: Math.floor(product.rating), // number of fully filled stars
+      total: 5,
+      filled: Math.floor(product.rating),
     };
 
-    const conversionRate = 83; // 1 USD = 83 INR
+    const conversionRate = 83;
 
-    const price =
-      currency === "USD"
+    const price = useMemo(() => {
+      return currency === "USD"
         ? `$${product.price}`
         : `₹${Math.round(product.price * conversionRate)}`;
+    }, [product.price, currency]);
 
-    const originalPrice =
-      currency === "USD"
+    const originalPrice = useMemo(() => {
+      return currency === "USD"
         ? `$${product.originalPrice}`
         : `₹${Math.round(product.originalPrice * conversionRate)}`;
+    }, [product.originalPrice, currency]);
 
     return (
       <div
@@ -812,24 +812,36 @@ const ProductCard = React.memo(
         onMouseLeave={() => setHovered(false)}
       >
         <div className="relative">
-          {/* Images */}
-          <img
-            loading="lazy"
-            src={hovered ? product.hoverImage : product.mainImage}
-            alt={product.name}
-            className="w-full h-64 object-contain transition-all duration-300 bg-transparent ease-linear overflow-hidden"
-          />
+          <div className="relative w-full h-64 overflow-hidden">
+            {/* Main Image */}
+            <img
+              src={product.mainImage}
+              alt={product.name}
+              className={`absolute inset-0 w-full h-full object-contain transition-opacity duration-500 z-[1] ${
+                hovered ? "opacity-0" : "opacity-100"
+              }`}
+            />
+
+            {/* Hover Image */}
+            <img
+              src={product.hoverImage}
+              alt={product.name}
+              className={`absolute inset-0 w-full h-full object-contain transition-opacity duration-200 z-[2] ${
+                hovered ? "opacity-100" : "opacity-0"
+              }`}
+            />
+          </div>
 
           {/* Icons */}
           <div
-            className={`absolute top-4 right-4 flex flex-col gap-2 transition-all duration-300 ease-linear ${
+            className={`absolute top-4 right-4 flex flex-col gap-2 transition-all duration-300 ease-linear z-3 ${
               hovered ? "opacity-100" : "opacity-0"
             }`}
           >
             {/* Favorite */}
             <div className="relative group">
               <button
-                onClick={handleFavoriteClick}
+                onClick={onToggleFavorite}
                 className="bg-white p-2 rounded-full shadow hover:bg-gray-100 cursor-pointer"
               >
                 <Heart

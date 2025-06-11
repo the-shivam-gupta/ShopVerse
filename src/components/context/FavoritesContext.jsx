@@ -33,6 +33,12 @@ export const FavoritesProvider = ({ children }) => {
     });
   }, []);
 
+//   useEffect(() => {
+//   setFavorites([]);
+//   localStorage.removeItem("favorites"); // Optional: clear from localStorage too
+// }, []);
+
+
   const removeFromFavorites = useCallback((productName) => {
     setFavorites((prev) => prev.filter((item) => item.name !== productName));
   }, []);

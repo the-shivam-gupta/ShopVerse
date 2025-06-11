@@ -44,8 +44,14 @@
     "termsConditions": "Términos y condiciones",
     "aboutUs": "Sobre nosotros",
     "securePayment": "Pago seguro",
-    "services": "SERVICIOS",
-    "contact": "CONTACTO"
+    "services": "SERVICIO AL CLIENTE",
+    "contact": "CONTACTO",
+    "helpCenter": "Centro de ayuda",
+    "trackOrder": "Rastrear mi pedido",
+    "Return&Exchange": "Devoluciones y cambios",
+    "shipping": "Información de envío",
+    "faqs": "Preguntas frecuentes",
+    "allRightsReserved": "Todos los derechos reservados"
   },
   "category": {
     "category": "CATEGORÍA",
