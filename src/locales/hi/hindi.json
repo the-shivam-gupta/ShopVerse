@@ -44,8 +44,14 @@
     "termsConditions": "नियम और शर्तें",
     "aboutUs": "हमारे बारे में",
     "securePayment": "सुरक्षित भुगतान",
-    "services": "सेवाएँ",
-    "contact": "संपर्क"
+    "services": "ग्राहक सेवा",
+    "contact": "संपर्क",
+    "helpCenter": "सहायता केंद्र",
+    "trackOrder": "अपना ऑर्डर ट्रैक करें",
+    "Return&Exchange": "वापसी और विनिमय",
+    "shipping": "शिपिंग जानकारी",
+    "faqs": "अक्सर पूछे जाने वाले सवाल",
+    "allRightsReserved": "सर्वाधिकार सुरक्षित"
   },
   "category": {
     "category": "श्रेणी",

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback, useMemo } from "react";
 import { useCart } from "../context/CartContext";
 import { Trans, useTranslation } from "react-i18next";
 import { Trash2, Plus, Minus } from "lucide-react";
@@ -11,78 +11,96 @@ const CartPage = ({ currency }) => {
   const [undoTimeout, setUndoTimeout] = useState(null);
 
   const conversionRate = 83;
-  const getPrice = (price) =>
-    currency === "USD" ? `$${price}` : `₹${Math.round(price * conversionRate)}`;
 
-  const subtotal = cart.reduce(
-    (sum, item) => sum + item.price * item.quantity,
-    0
-  );
-  const originalTotal = cart.reduce(
-    (sum, item) => sum + item.originalPrice * item.quantity,
-    0
+  const getPrice = useCallback(
+    (price) =>
+      currency === "USD"
+        ? `$${price}`
+        : `₹${Math.round(price * conversionRate)}`,
+    [currency]
   );
 
-  const discountTotal = originalTotal - subtotal;
+  const subtotal = useMemo(
+    () => cart.reduce((sum, item) => sum + item.price * item.quantity, 0),
+    [cart]
+  );
 
-  const discountPercentage =
-    originalTotal > 0 ? Math.round((discountTotal / originalTotal) * 100) : 0;
+  const originalTotal = useMemo(
+    () =>
+      cart.reduce((sum, item) => sum + item.originalPrice * item.quantity, 0),
+    [cart]
+  );
 
-  const total =
-    currency === "USD"
-      ? `$${subtotal.toFixed(2)}`
-      : `₹${Math.round(subtotal * conversionRate).toLocaleString()}`;
+  const discountTotal = useMemo(
+    () => originalTotal - subtotal,
+    [originalTotal, subtotal]
+  );
 
-  const formattedOriginalTotal =
-    currency === "USD"
-      ? `$${originalTotal.toFixed(2)}`
-      : `₹${Math.round(originalTotal * conversionRate).toLocaleString()}`;
+  const discountPercentage = useMemo(
+    () =>
+      originalTotal > 0 ? Math.round((discountTotal / originalTotal) * 100) : 0,
+    [originalTotal, discountTotal]
+  );
 
-  const formattedDiscount =
-    currency === "USD"
-      ? `$${discountTotal.toFixed(2)}`
-      : `₹${Math.round(discountTotal * conversionRate).toLocaleString()}`;
+  const total = useMemo(
+    () =>
+      currency === "USD"
+        ? `$${subtotal.toFixed(2)}`
+        : `₹${Math.round(subtotal * conversionRate).toLocaleString()}`,
+    [subtotal, currency]
+  );
 
-  const handleRemove = (item) => {
-    // Find index of item in cart
-    const index = cart.findIndex((cartItem) => cartItem.name === item.name);
-    setRecentlyRemoved({ item, index });
-    removeFromCart(item.name);
+  const formattedDiscount = useMemo(
+    () =>
+      currency === "USD"
+        ? `$${discountTotal.toFixed(2)}`
+        : `₹${Math.round(discountTotal * conversionRate).toLocaleString()}`,
+    [discountTotal, currency]
+  );
 
-    const timeout = setTimeout(() => {
-      setRecentlyRemoved(null);
-    }, 5000);
-    setUndoTimeout(timeout);
-  };
+  const handleRemove = useCallback(
+    (item) => {
+      const index = cart.findIndex((cartItem) => cartItem.name === item.name);
+      setRecentlyRemoved({ item, index });
+      removeFromCart(item.name);
 
-  const handleUndo = () => {
+      const timeout = setTimeout(() => setRecentlyRemoved(null), 5000);
+      setUndoTimeout(timeout);
+    },
+    [cart, removeFromCart]
+  );
+
+  const handleUndo = useCallback(() => {
     clearTimeout(undoTimeout);
     if (recentlyRemoved) {
       addToCartAtIndex(recentlyRemoved.item, recentlyRemoved.index);
       setRecentlyRemoved(null);
     }
-  };
+  }, [undoTimeout, recentlyRemoved, addToCartAtIndex]);
 
-  const handleIncreaseQuantity = (item) => {
-    const updated = cart.map((product) =>
-      product.name === item.name
-        ? { ...product, quantity: product.quantity + 1 }
-        : product
-    );
-    setCart(updated);
-  };
+  const handleIncreaseQuantity = useCallback(
+    (item) => {
+      const updated = cart.map((product) =>
+        product.name === item.name
+          ? { ...product, quantity: product.quantity + 1 }
+          : product
+      );
+      setCart(updated);
+    },
+    [cart, setCart]
+  );
 
-  const handleDecreaseQuantity = (item) => {
-    const updated = cart.map((product) =>
-      product.name === item.name
-        ? {
-            ...product,
-            quantity: Math.max(1, product.quantity - 1),
-          }
-        : product
-    );
-    setCart(updated);
-  };
+  const handleDecreaseQuantity = useCallback(
+    (item) => {
+      const updated = cart.map((product) =>
+        product.name === item.name
+          ? { ...product, quantity: Math.max(1, product.quantity - 1) }
+          : product
+      );
+      setCart(updated);
+    },
+    [cart, setCart]
+  );
 
   return (
     <div className="min-h-screen bg-gray-100 dark:bg-black p-4 sm:p-6">
@@ -161,20 +179,17 @@ const CartPage = ({ currency }) => {
                     {/* Quantity Controls */}
                     <div className="flex gap-3 border border-gray-200 dark:border-gray-700 p-1 rounded-full">
                       <button
-                        onClick={() => {
-                          if (item.quantity === 1) {
-                            handleRemove(item); // remove if decreasing from 1
-                          } else {
-                            handleDecreaseQuantity(item);
-                          }
-                        }}
+                        onClick={() =>
+                          item.quantity === 1
+                            ? handleRemove(item)
+                            : handleDecreaseQuantity(item)
+                        }
                         className="bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-black dark:text-white rounded-full w-7 h-7 flex items-center justify-center cursor-pointer"
                       >
                         <Minus size={18} />
                       </button>
                       <span className="font-semibold text-gray-800 dark:text-gray-200">
-                        {item.quantity ?? 1}{" "}
-                        {/* Fallback in case quantity is undefined */}
+                        {item.quantity ?? 1}
                       </span>
                       <button
                         onClick={() => handleIncreaseQuantity(item)}

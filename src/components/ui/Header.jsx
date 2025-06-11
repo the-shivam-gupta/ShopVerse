@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { Link, useNavigate } from "react-router-dom";
 import { useFavorites } from "../context/FavoritesContext";
@@ -72,6 +72,29 @@ const Header = ({ currency, setCurrency }) => {
   const { cart } = useCart();
   const inputRef = useRef();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleDropdown = () => setIsOpen((prev) => !prev);
+  const closeDropdown = () => setIsOpen(false);
+
+  // Detect clicks outside the dropdown
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+        closeDropdown();
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+      document.addEventListener("touchstart", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("touchstart", handleClickOutside);
+    };
+  }, [isOpen]);
 
   const handleLanguageChange = (e) => {
     i18n.changeLanguage(e.target.value);
@@ -79,7 +102,6 @@ const Header = ({ currency, setCurrency }) => {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      console.log("Firebase User:", user); // <-- Check this in console
       if (user) {
         setUser(user);
       } else {
@@ -89,10 +111,6 @@ const Header = ({ currency, setCurrency }) => {
 
     return () => unsubscribe();
   }, []);
-
-  const handleFocus = () => {
-    inputRef.current?.focus();
-  };
 
   // Close on outside click
   useEffect(() => {
@@ -106,11 +124,20 @@ const Header = ({ currency, setCurrency }) => {
   }, []);
 
   // Search
-  const handleSearch = () => {
+  const handleSearch = useCallback(() => {
     if (searchQuery.trim()) {
       navigate("/products");
     }
-  };
+  }, [searchQuery, navigate]);
+  // Focus
+  const handleFocus = useCallback(() => {
+    inputRef.current?.focus();
+  }, []);
+  // Search & Focus
+  const handleClick = useCallback(() => {
+    handleFocus();
+    handleSearch();
+  }, [handleFocus, handleSearch]);
 
   return (
     <header>
@@ -234,7 +261,7 @@ const Header = ({ currency, setCurrency }) => {
             )}
             <button
               type="submit"
-              onClick={handleSearch}
+              onClick={handleClick}
               className="absolute right-5 top-1/2 -translate-y-1/2 text-pink-500 hover:text-pink-600 cursor-pointer"
             >
               <Search size={18} />
@@ -330,63 +357,121 @@ const Header = ({ currency, setCurrency }) => {
                 <span className="absolute left-0 -bottom-1 w-0 h-[3px] bg-pink-500 transition-all group-hover:w-full"></span>
               </a>
             </li>
-            <li className="relative group">
-              <a className="hover:text-pink-500 ease-in-out duration-200 cursor-pointer">
+            <li className="relative group" ref={dropdownRef}>
+              <a
+                onClick={toggleDropdown}
+                className="hover:text-pink-500 ease-in-out duration-200 cursor-pointer"
+              >
                 {t("header.categories")}
                 <span className="absolute left-0 -bottom-1 w-0 h-[3px] bg-pink-500 transition-all group-hover:w-full"></span>
               </a>
-              <div className="absolute left-1/2 transform -translate-x-1/4 w-max p-8 bg-white dark:bg-black shadow-lg mt-2 opacity-0 pointer-events-none group-hover:pointer-events-auto group-hover:opacity-100 transition-opacity duration-300 z-50 rounded-xl border border-gray-200 dark:border-gray-700">
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10">
-                  {/* Single Category Block */}
-                  {[
-                    {
-                      title: t("dropdown.gadgets"),
-                      items: [
-                        { icon: pc, label: t("dropdown.desktop") },
-                        { icon: laptop, label: t("dropdown.laptop") },
-                        { icon: dslr, label: t("dropdown.camera") },
-                        { icon: tablet, label: t("dropdown.tablet") },
-                        { icon: headphones, label: t("dropdown.headphone") },
-                      ],
-                    },
-                    {
-                      title: t("dropdown.mens"),
-                      items: [
-                        { icon: blazer, label: t("dropdown.formal") },
-                        { icon: jeans, label: t("dropdown.casual") },
-                        { icon: sports, label: t("dropdown.sports") },
-                        { icon: jacket, label: t("dropdown.jacket") },
-                        { icon: sunglasses, label: t("dropdown.sunglasses") },
-                      ],
-                    },
-                    {
-                      title: t("dropdown.women"),
-                      items: [
-                        { icon: dress, label: t("dropdown.dressAndFrock") },
-                        { icon: necklace, label: t("dropdown.necklace") },
-                        { icon: perfume, label: t("dropdown.perfume") },
-                        { icon: cosmetics, label: t("dropdown.cosmetics") },
-                        { icon: handbag, label: t("dropdown.bags") },
-                      ],
-                    },
-                    {
-                      title: t("dropdown.electronics"),
-                      items: [
-                        { icon: smartwatch, label: t("dropdown.smartWatch") },
-                        { icon: smartTv, label: t("dropdown.smartTV") },
-                        { icon: keyboard, label: t("dropdown.keyboard") },
-                        { icon: mouse, label: t("dropdown.mouse") },
-                        { icon: microphone, label: t("dropdown.microphone") },
-                      ],
-                    },
-                  ].map((category, index) => (
-                    <div key={index} className="min-w-[12rem]">
-                      <h3 className="font-bold mb-1 text-lg">
-                        {category.title}
-                      </h3>
-                      <div className="h-[0.5px] w-[9em] bg-gray-200 dark:bg-gray-400 mb-4" />
-                      <ul className="space-y-3 text-gray-500 text-base font-medium">
-                        {category.items.map((item, i) => (
+              {(isOpen || window.innerWidth >= 1024) && (
+                <div className="absolute left-1/2 transform -translate-x-1/4 w-max p-8 bg-white dark:bg-black shadow-lg mt-2 opacity-0 pointer-events-none group-hover:pointer-events-auto group-hover:opacity-100 transition-opacity duration-300 z-50 rounded-xl border border-gray-200 dark:border-gray-700">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10">
+                    {/* Single Category Block */}
+                    {[
+                      {
+                        title: t("dropdown.gadgets"),
+                        items: [
+                          { icon: pc, label: t("dropdown.desktop") },
+                          { icon: laptop, label: t("dropdown.laptop") },
+                          { icon: dslr, label: t("dropdown.camera") },
+                          { icon: tablet, label: t("dropdown.tablet") },
+                          { icon: headphones, label: t("dropdown.headphone") },
+                        ],
+                      },
+                      {
+                        title: t("dropdown.mens"),
+                        items: [
+                          { icon: blazer, label: t("dropdown.formal") },
+                          { icon: jeans, label: t("dropdown.casual") },
+                          { icon: sports, label: t("dropdown.sports") },
+                          { icon: jacket, label: t("dropdown.jacket") },
+                          { icon: sunglasses, label: t("dropdown.sunglasses") },
+                        ],
+                      },
+                      {
+                        title: t("dropdown.women"),
+                        items: [
+                          { icon: dress, label: t("dropdown.dressAndFrock") },
+                          { icon: necklace, label: t("dropdown.necklace") },
+                          { icon: perfume, label: t("dropdown.perfume") },
+                          { icon: cosmetics, label: t("dropdown.cosmetics") },
+                          { icon: handbag, label: t("dropdown.bags") },
+                        ],
+                      },
+                      {
+                        title: t("dropdown.electronics"),
+                        items: [
+                          { icon: smartwatch, label: t("dropdown.smartWatch") },
+                          { icon: smartTv, label: t("dropdown.smartTV") },
+                          { icon: keyboard, label: t("dropdown.keyboard") },
+                          { icon: mouse, label: t("dropdown.mouse") },
+                          { icon: microphone, label: t("dropdown.microphone") },
+                        ],
+                      },
+                    ].map((category, index) => (
+                      <div key={index} className="min-w-[12rem]">
+                        <h3 className="font-bold mb-1 text-lg">
+                          {category.title}
+                        </h3>
+                        <div className="h-[0.5px] w-[9em] bg-gray-200 dark:bg-gray-400 mb-4" />
+                        <ul className="space-y-3 text-gray-500 text-base font-medium">
+                          {category.items.map((item, i) => (
+                            <li key={i} className="flex items-center">
+                              <div className="flex items-center gap-3 flex-row-reverse">
+                                <a
+                                  onClick={() =>
+                                    navigate(
+                                      `/products/category/${item.label.toUpperCase()}`
+                                    )
+                                  }
+                                  className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out dark:text-gray-300 peer"
+                                >
+                                  {item.label}
+                                </a>
+
+                                <img
+                                  src={item.icon}
+                                  width={26}
+                                  alt=""
+                                  className="transform scale-90 translate-y-1 opacity-70 transition-all duration-300 
+                 peer-hover:scale-100 peer-hover:translate-y-0 peer-hover:opacity-100 dark:invert"
+                                />
+                              </div>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </li>
+            {/* Men */}
+            <li className="relative group" ref={dropdownRef}>
+              <a
+                onClick={toggleDropdown}
+                className="hover:text-pink-500 ease-in-out duration-200 cursor-pointer"
+              >
+                {t("header.men")}
+                <span className="absolute left-0 -bottom-1 w-0 h-[3px] bg-pink-500 transition-all group-hover:w-full"></span>
+              </a>
+              {(isOpen || window.innerWidth >= 1024) && (
+                <div className="absolute left-1/2 transform -translate-x-1/2 min-w-[12em] max-w-[16em] min-h-[10em] p-4 bg-white dark:bg-black shadow-lg mt-2 opacity-0 pointer-events-none group-hover:pointer-events-auto group-hover:opacity-100 transition-opacity duration-300 z-50 rounded-xl border border-gray-200 dark:border-gray-700">
+                  <div className="rounded-2xl">
+                    <div className="relative text-left">
+                      <ul className="space-y-3 text-gray-500 text-lg font-medium">
+                        {[
+                          { icon: smartwatch, label: t("dropdown.watch") },
+                          { icon: cap, label: t("dropdown.caps") },
+                          {
+                            icon: poloShirt,
+                            label: t("dropdown.shirtAndTshirt"),
+                          },
+                          { icon: sneakers, label: t("dropdown.shoes") },
+                          { icon: shorts, label: t("dropdown.shortAndJeans") },
+                        ].map((item, i) => (
                           <li key={i} className="flex items-center">
                             <div className="flex items-center gap-3 flex-row-reverse">
                               <a
@@ -399,7 +484,6 @@ const Header = ({ currency, setCurrency }) => {
                               >
                                 {item.label}
                               </a>
-
                               <img
                                 src={item.icon}
                                 width={26}
@@ -412,230 +496,209 @@ const Header = ({ currency, setCurrency }) => {
                         ))}
                       </ul>
                     </div>
-                  ))}
-                </div>
-              </div>
-            </li>
-            {/* Men */}
-            <li className="relative group">
-              <a className="hover:text-pink-500 ease-in-out duration-200 cursor-pointer">
-                {t("header.men")}
-                <span className="absolute left-0 -bottom-1 w-0 h-[3px] bg-pink-500 transition-all group-hover:w-full"></span>
-              </a>
-              <div className="absolute left-1/2 transform -translate-x-1/2 min-w-[12em] max-w-[16em] min-h-[10em] p-4 bg-white dark:bg-black shadow-lg mt-2 opacity-0 pointer-events-none group-hover:pointer-events-auto group-hover:opacity-100 transition-opacity duration-300 z-50 rounded-xl border border-gray-200 dark:border-gray-700">
-                <div className="rounded-2xl">
-                  <div className="relative text-left">
-                    <ul className="space-y-3 text-gray-500 text-lg font-medium">
-                      {[
-                        { icon: smartwatch, label: t("dropdown.watch") },
-                        { icon: cap, label: t("dropdown.caps") },
-                        {
-                          icon: poloShirt,
-                          label: t("dropdown.shirtAndTshirt"),
-                        },
-                        { icon: sneakers, label: t("dropdown.shoes") },
-                        { icon: shorts, label: t("dropdown.shortAndJeans") },
-                      ].map((item, i) => (
-                        <li key={i} className="flex items-center">
-                          <div className="flex items-center gap-3 flex-row-reverse">
-                            <a
-                              onClick={() =>
-                                navigate(
-                                  `/products/category/${item.label.toUpperCase()}`
-                                )
-                              }
-                              className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out dark:text-gray-300 peer"
-                            >
-                              {item.label}
-                            </a>
-                            <img
-                              src={item.icon}
-                              width={26}
-                              alt=""
-                              className="transform scale-90 translate-y-1 opacity-70 transition-all duration-300 
-                 peer-hover:scale-100 peer-hover:translate-y-0 peer-hover:opacity-100 dark:invert"
-                            />
-                          </div>
-                        </li>
-                      ))}
-                    </ul>
                   </div>
                 </div>
-              </div>
+              )}
             </li>
             {/* WOMEN */}
-            <li className="relative group">
-              <a className="hover:text-pink-500 ease-in-out duration-200 cursor-pointer">
+            <li className="relative group" ref={dropdownRef}>
+              <a
+                onClick={toggleDropdown}
+                className="hover:text-pink-500 ease-in-out duration-200 cursor-pointer"
+              >
                 {t("header.women")}
                 <span className="absolute left-0 -bottom-1 w-0 h-[3px] bg-pink-500 transition-all group-hover:w-full"></span>
               </a>
-              <div className="absolute left-1/2 transform -translate-x-1/2 min-w-[12em] max-w-[16em] min-h-[10em] p-4 bg-white dark:bg-black shadow-lg mt-2 opacity-0 pointer-events-none group-hover:pointer-events-auto group-hover:opacity-100 transition-opacity duration-300 z-50 rounded-xl border border-gray-200 dark:border-gray-700">
-                <div className="rounded-2xl">
-                  <div className="relative text-left">
-                    <ul className="space-y-3 text-gray-500 text-lg font-medium">
-                      {[
-                        { icon: necklace, label: t("dropdown.necklace") },
-                        { icon: handbag, label: t("dropdown.bags") },
-                        { icon: dress, label: t("dropdown.dressAndFrock") },
-                        { icon: bracelet, label: t("dropdown.bracelet") },
-                        { icon: heals, label: t("dropdown.heals") },
-                      ].map((item, i) => (
-                        <li key={i} className="flex items-center">
-                          <div className="flex items-center gap-3 flex-row-reverse">
-                            <a
-                              onClick={() =>
-                                navigate(
-                                  `/products/category/${item.label.toUpperCase()}`
-                                )
-                              }
-                              className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out dark:text-gray-300 peer"
-                            >
-                              {item.label}
-                            </a>
-                            <img
-                              src={item.icon}
-                              width={26}
-                              alt=""
-                              className="transform scale-90 translate-y-1 opacity-70 transition-all duration-300 
+              {(isOpen || window.innerWidth >= 1024) && (
+                <div className="absolute left-1/2 transform -translate-x-1/2 min-w-[12em] max-w-[16em] min-h-[10em] p-4 bg-white dark:bg-black shadow-lg mt-2 opacity-0 pointer-events-none group-hover:pointer-events-auto group-hover:opacity-100 transition-opacity duration-300 z-50 rounded-xl border border-gray-200 dark:border-gray-700">
+                  <div className="rounded-2xl">
+                    <div className="relative text-left">
+                      <ul className="space-y-3 text-gray-500 text-lg font-medium">
+                        {[
+                          { icon: necklace, label: t("dropdown.necklace") },
+                          { icon: handbag, label: t("dropdown.bags") },
+                          { icon: dress, label: t("dropdown.dressAndFrock") },
+                          { icon: bracelet, label: t("dropdown.bracelet") },
+                          { icon: heals, label: t("dropdown.heals") },
+                        ].map((item, i) => (
+                          <li key={i} className="flex items-center">
+                            <div className="flex items-center gap-3 flex-row-reverse">
+                              <a
+                                onClick={() =>
+                                  navigate(
+                                    `/products/category/${item.label.toUpperCase()}`
+                                  )
+                                }
+                                className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out dark:text-gray-300 peer"
+                              >
+                                {item.label}
+                              </a>
+                              <img
+                                src={item.icon}
+                                width={26}
+                                alt=""
+                                className="transform scale-90 translate-y-1 opacity-70 transition-all duration-300 
                  peer-hover:scale-100 peer-hover:translate-y-0 peer-hover:opacity-100 dark:invert"
-                            />
-                          </div>
-                        </li>
-                      ))}
-                    </ul>
+                              />
+                            </div>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
                   </div>
                 </div>
-              </div>
+              )}
             </li>
             {/* KIDS */}
-            <li className="relative group">
-              <a className="hover:text-pink-500 ease-in-out duration-200 cursor-pointer">
+            <li className="relative group" ref={dropdownRef}>
+              <a
+                onClick={toggleDropdown}
+                className="hover:text-pink-500 ease-in-out duration-200 cursor-pointer"
+              >
                 {t("header.kids")}
                 <span className="absolute left-0 -bottom-1 w-0 h-[3px] bg-pink-500 transition-all group-hover:w-full"></span>
               </a>
-              <div className="absolute left-1/2 transform -translate-x-1/2 min-w-[12em] max-w-[16em] min-h-[10em] p-4 bg-white dark:bg-black shadow-lg mt-2 opacity-0 pointer-events-none group-hover:pointer-events-auto group-hover:opacity-100 transition-opacity duration-300 z-50 rounded-xl border border-gray-200 dark:border-gray-700">
-                <div className="rounded-2xl">
-                  <div className="relative text-left">
-                    <ul className="space-y-3 text-gray-500 text-lg font-medium">
-                      {[
-                        { icon: poloShirt, label: t("dropdown.kidsTshirts") },
-                        { icon: shorts, label: t("dropdown.kidsShorts") },
-                        { icon: sneakers, label: t("dropdown.kidsShoes") },
-                        { icon: frock, label: t("dropdown.kidsFrocks") },
-                        { icon: toy, label: t("dropdown.kidsToys") },
-                      ].map((item, i) => (
-                        <li key={i} className="flex items-center">
-                          <div className="flex items-center gap-3 flex-row-reverse">
-                            <a
-                              onClick={() =>
-                                navigate(
-                                  `/products/category/${item.label.toUpperCase()}`
-                                )
-                              }
-                              className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out dark:text-gray-300 peer"
-                            >
-                              {item.label}
-                            </a>
-                            <img
-                              src={item.icon}
-                              width={26}
-                              alt=""
-                              className="transform scale-90 translate-y-1 opacity-70 transition-all duration-300 
+              {(isOpen || window.innerWidth >= 1024) && (
+                <div className="absolute left-1/2 transform -translate-x-1/2 min-w-[12em] max-w-[16em] min-h-[10em] p-4 bg-white dark:bg-black shadow-lg mt-2 opacity-0 pointer-events-none group-hover:pointer-events-auto group-hover:opacity-100 transition-opacity duration-300 z-50 rounded-xl border border-gray-200 dark:border-gray-700">
+                  <div className="rounded-2xl">
+                    <div className="relative text-left">
+                      <ul className="space-y-3 text-gray-500 text-lg font-medium">
+                        {[
+                          { icon: poloShirt, label: t("dropdown.kidsTshirts") },
+                          { icon: shorts, label: t("dropdown.kidsShorts") },
+                          { icon: sneakers, label: t("dropdown.kidsShoes") },
+                          { icon: frock, label: t("dropdown.kidsFrocks") },
+                          { icon: toy, label: t("dropdown.kidsToys") },
+                        ].map((item, i) => (
+                          <li key={i} className="flex items-center">
+                            <div className="flex items-center gap-3 flex-row-reverse">
+                              <a
+                                onClick={() =>
+                                  navigate(
+                                    `/products/category/${item.label.toUpperCase()}`
+                                  )
+                                }
+                                className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out dark:text-gray-300 peer"
+                              >
+                                {item.label}
+                              </a>
+                              <img
+                                src={item.icon}
+                                width={26}
+                                alt=""
+                                className="transform scale-90 translate-y-1 opacity-70 transition-all duration-300 
                   peer-hover:scale-100 peer-hover:translate-y-0 peer-hover:opacity-100 dark:invert"
-                            />
-                          </div>
-                        </li>
-                      ))}
-                    </ul>
+                              />
+                            </div>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
                   </div>
                 </div>
-              </div>
+              )}
             </li>
             {/* JEWELRY */}
-            <li className="relative group">
-              <a className="hover:text-pink-500 ease-in-out duration-200 cursor-pointer">
+            <li className="relative group" ref={dropdownRef}>
+              <a
+                onClick={toggleDropdown}
+                className="hover:text-pink-500 ease-in-out duration-200 cursor-pointer"
+              >
                 {t("header.jewelry")}
                 <span className="absolute left-0 -bottom-1 w-0 h-[3px] bg-pink-500 transition-all group-hover:w-full"></span>
               </a>
-              <div className="absolute left-1/2 transform -translate-x-1/2 min-w-[12em] max-w-[16em] min-h-[10em] p-4 bg-white dark:bg-black shadow-lg mt-2 opacity-0 pointer-events-none group-hover:pointer-events-auto group-hover:opacity-100 transition-opacity duration-300 z-50 rounded-xl border border-gray-200 dark:border-gray-700">
-                <div className="rounded-2xl">
-                  <div className="relative text-left">
-                    <ul className="space-y-3 text-gray-500 text-lg font-medium">
-                      {[
-                        { icon: necklace, label: t("dropdown.necklace") },
-                        { icon: earings, label: t("dropdown.earings") },
-                        { icon: bracelet, label: t("dropdown.bracelet") },
-                        { icon: ring, label: t("dropdown.rings") },
-                      ].map((item, i) => (
-                        <li key={i} className="flex items-center">
-                          <div className="flex items-center gap-3 flex-row-reverse">
-                            <a
-                              onClick={() =>
-                                navigate(
-                                  `/products/category/${item.label.toUpperCase()}`
-                                )
-                              }
-                              className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out dark:text-gray-300 peer"
-                            >
-                              {item.label}
-                            </a>
-                            <img
-                              src={item.icon}
-                              width={26}
-                              alt=""
-                              className="transform scale-90 translate-y-1 opacity-70 transition-all duration-300 
+              {(isOpen || window.innerWidth >= 1024) && (
+                <div className="absolute left-1/2 transform -translate-x-1/2 min-w-[12em] max-w-[16em] min-h-[10em] p-4 bg-white dark:bg-black shadow-lg mt-2 opacity-0 pointer-events-none group-hover:pointer-events-auto group-hover:opacity-100 transition-opacity duration-300 z-50 rounded-xl border border-gray-200 dark:border-gray-700">
+                  <div className="rounded-2xl">
+                    <div className="relative text-left">
+                      <ul className="space-y-3 text-gray-500 text-lg font-medium">
+                        {[
+                          { icon: necklace, label: t("dropdown.necklace") },
+                          { icon: earings, label: t("dropdown.earings") },
+                          { icon: bracelet, label: t("dropdown.bracelet") },
+                          { icon: ring, label: t("dropdown.rings") },
+                        ].map((item, i) => (
+                          <li key={i} className="flex items-center">
+                            <div className="flex items-center gap-3 flex-row-reverse">
+                              <a
+                                onClick={() =>
+                                  navigate(
+                                    `/products/category/${item.label.toUpperCase()}`
+                                  )
+                                }
+                                className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out dark:text-gray-300 peer"
+                              >
+                                {item.label}
+                              </a>
+                              <img
+                                src={item.icon}
+                                width={26}
+                                alt=""
+                                className="transform scale-90 translate-y-1 opacity-70 transition-all duration-300 
                  peer-hover:scale-100 peer-hover:translate-y-0 peer-hover:opacity-100 dark:invert"
-                            />
-                          </div>
-                        </li>
-                      ))}
-                    </ul>
+                              />
+                            </div>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
                   </div>
                 </div>
-              </div>
+              )}
             </li>
             {/* PERFUME */}
-            <li className="relative group">
-              <a className="hover:text-pink-500 ease-in-out duration-200 cursor-pointer">
+            <li className="relative group" ref={dropdownRef}>
+              <a
+                onClick={toggleDropdown}
+                className="hover:text-pink-500 ease-in-out duration-200 cursor-pointer"
+              >
                 {t("header.perfume")}
                 <span className="absolute left-0 -bottom-1 w-0 h-[3px] bg-pink-500 transition-all group-hover:w-full"></span>
               </a>
-              <div className="absolute sm:left-1 lg:left-1/2 transform -translate-x-1/2 min-w-[12em] max-w-[16em] min-h-[10em] p-4 bg-white dark:bg-black shadow-lg mt-2 opacity-0 pointer-events-none group-hover:pointer-events-auto group-hover:opacity-100 transition-opacity duration-300 z-50 rounded-xl border border-gray-200 dark:border-gray-700">
-                <div className="rounded-2xl">
-                  <div className="relative text-left">
-                    <ul className="space-y-3 text-gray-500 text-lg font-medium">
-                      {[
-                        { icon: deodorant, label: t("dropdown.deodorant") },
-                        { icon: airFreshner, label: t("dropdown.airFreshner") },
-                        { icon: bodyPerfume, label: t("dropdown.bodyPerfume") },
-                        { icon: spray, label: t("dropdown.clothesPerfume") },
-                      ].map((item, i) => (
-                        <li key={i} className="flex items-center">
-                          <div className="flex items-center gap-3 flex-row-reverse">
-                            <a
-                              onClick={() =>
-                                navigate(
-                                  `/products/category/${item.label.toUpperCase()}`
-                                )
-                              }
-                              className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out dark:text-gray-300 peer"
-                            >
-                              {item.label}
-                            </a>
-                            <img
-                              src={item.icon}
-                              width={26}
-                              alt=""
-                              className="transform scale-90 translate-y-1 opacity-70 transition-all duration-300 
+              {(isOpen || window.innerWidth >= 1024) && (
+                <div className="absolute sm:left-1 lg:left-1/2 transform -translate-x-1/2 min-w-[12em] max-w-[16em] min-h-[10em] p-4 bg-white dark:bg-black shadow-lg mt-2 opacity-0 pointer-events-none group-hover:pointer-events-auto group-hover:opacity-100 transition-opacity duration-300 z-50 rounded-xl border border-gray-200 dark:border-gray-700">
+                  <div className="rounded-2xl">
+                    <div className="relative text-left">
+                      <ul className="space-y-3 text-gray-500 text-lg font-medium">
+                        {[
+                          { icon: deodorant, label: t("dropdown.deodorant") },
+                          {
+                            icon: airFreshner,
+                            label: t("dropdown.airFreshner"),
+                          },
+                          {
+                            icon: bodyPerfume,
+                            label: t("dropdown.bodyPerfume"),
+                          },
+                          { icon: spray, label: t("dropdown.clothesPerfume") },
+                        ].map((item, i) => (
+                          <li key={i} className="flex items-center">
+                            <div className="flex items-center gap-3 flex-row-reverse">
+                              <a
+                                onClick={() =>
+                                  navigate(
+                                    `/products/category/${item.label.toUpperCase()}`
+                                  )
+                                }
+                                className="hover:text-pink-500 cursor-pointer duration-200 ease-in-out dark:text-gray-300 peer"
+                              >
+                                {item.label}
+                              </a>
+                              <img
+                                src={item.icon}
+                                width={26}
+                                alt=""
+                                className="transform scale-90 translate-y-1 opacity-70 transition-all duration-300 
                  peer-hover:scale-100 peer-hover:translate-y-0 peer-hover:opacity-100 dark:invert"
-                            />
-                          </div>
-                        </li>
-                      ))}
-                    </ul>
+                              />
+                            </div>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
                   </div>
                 </div>
-              </div>
+              )}
             </li>
           </ul>
         </div>

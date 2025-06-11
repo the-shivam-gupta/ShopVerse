@@ -51,7 +51,7 @@ const CompareModal = ({ products, isOpen, onClose, currency }) => {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.2 }}
-                    className="p-4 rounded-xl border border-white/30 dark:border-gray-600 backdrop-blur-lg bg-white/10 dark:bg-white/10 shadow-md flex flex-col items-center"
+                    className="p-4 rounded-xl border border-white/30 dark:border-gray-600 backdrop-blur-lg bg-white/10 dark:bg-gray-600/20 shadow-md flex flex-col items-center"
                   >
                     <img
                       src={

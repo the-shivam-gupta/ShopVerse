@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import { Button } from "./ui/Button";
 import { motion, useAnimation, AnimatePresence } from "framer-motion";
 import CategorySection from "./ui/Category";
@@ -9,8 +9,6 @@ import { useCart } from "./context/CartContext";
 import { useNavigate } from "react-router-dom";
 import CompareModal from "./ui/CompareModal";
 // Images import:
-import model_1 from "../assets/image.png";
-import model_2 from "../assets/womenGlasses.png";
 import { useCompare } from "./context/CompareContext";
 import { useSearch } from "./context/SearchContext";
 import HeroSlider from "./ui/HeroSlider";
@@ -59,6 +57,12 @@ export default function Home({ currency }) {
   const { compareList, isCompareOpen, addToCompare, clearCompare } =
     useCompare();
   const { setSearchQuery } = useSearch();
+  const { favorites, addToFavorites, removeFromFavorites } = useFavorites();
+
+  const favoriteNames = useMemo(
+    () => new Set(favorites.map((f) => f.name)),
+    [favorites]
+  );
 
   // Scroll effect on Categories
   const controls = useAnimation();
@@ -82,6 +86,27 @@ export default function Home({ currency }) {
     const randomOrder = shuffleArray(products);
     setShuffledProducts(randomOrder);
   }, [setShuffledProducts]);
+
+  const handleToggleFavorite = useCallback(
+    (product) => {
+      const isAlreadyFavorited = favorites.some(
+        (item) => item.name === product.name
+      );
+      isAlreadyFavorited
+        ? removeFromFavorites(product.name)
+        : addToFavorites(product);
+    },
+    [favorites, addToFavorites, removeFromFavorites]
+  );
+
+  const handleQuickView = useCallback((product) => {
+    setSelectedProduct(product);
+  }, []);
+
+  const handleAddToCompare = useCallback((product) => {
+    addToCompare(product);
+  }, [addToCompare]);
+  
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-black">
@@ -132,24 +157,28 @@ export default function Home({ currency }) {
 
       <div className="flex flex-col md:flex-row px-6 py-8 gap-6">
         {/* Sidebar */}
-        <CategorySection />
+        <CategorySection currency={currency} />
 
         {/* Product Grids */}
         <div className="bg-gray-100 dark:bg-gray-800 p-10">
           <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-8">
-            {shuffledProducts.map((product, index) => (
-              <ProductCard
-                key={product.name}
-                product={product}
-                currency={currency}
-                onQuickView={(p) => setSelectedProduct(p)}
-                onAddToCompare={addToCompare}
-                compareList={compareList}
-                isCompareOpen={isCompareOpen}
-                handleCloseCompare={clearCompare}
-                addToCart={addToCart}
-              />
-            ))}
+            {shuffledProducts.map((product, index) => {
+              return (
+                <ProductCard
+                  key={product.name}
+                  product={product}
+                  currency={currency}
+                  onQuickView={handleQuickView}
+                  onAddToCompare={handleAddToCompare}
+                  compareList={compareList}
+                  isCompareOpen={isCompareOpen}
+                  handleCloseCompare={clearCompare}
+                  onAddToCart={addToCart}
+                  isFavorited={favoriteNames.has(product.name)}
+                  onToggleFavorite={() => handleToggleFavorite(product)}
+                />
+              );
+            })}
           </div>
         </div>
         {/* Quick View Modal */}

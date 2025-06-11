@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback, useMemo } from "react";
 import { ProductCard, products as allProducts } from "./ProductCard";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTranslation } from "react-i18next";
@@ -8,6 +8,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useCompare } from "../context/CompareContext";
 import CompareModal from "./CompareModal";
 import { useSearch } from "../context/SearchContext";
+import { useFavorites } from "../context/FavoritesContext";
 
 const categoryStructure = {
   SHIRTS: [
@@ -39,7 +40,6 @@ const ProductListingPage = ({ currency }) => {
   const [priceRange, setPriceRange] = useState([0, 2000]);
   const [sortType, setSortType] = useState("default");
   const [expandedCategory, setExpandedCategory] = useState(null); //tracks which parent’s subcategories are visible
-  const { addToCart } = useCart();
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { categoryName } = useParams();
@@ -49,6 +49,31 @@ const ProductListingPage = ({ currency }) => {
   const { compareList, isCompareOpen, addToCompare, clearCompare } =
     useCompare();
   const { searchQuery, setSearchQuery } = useSearch();
+  const { favorites, addToFavorites, removeFromFavorites } = useFavorites();
+  const { addToCart } = useCart();
+
+  const handleToggleFavorite = useCallback(
+    (product) => {
+      const isFav = favorites.some((item) => item.name === product.name);
+      if (isFav) {
+        removeFromFavorites(product.name);
+      } else {
+        addToFavorites(product);
+      }
+    },
+    [favorites, removeFromFavorites, addToFavorites]
+  );
+
+  const handleQuickView = useCallback((product) => {
+    setSelectedProduct(product);
+  }, []);
+
+  const handleAddToCompare = useCallback(
+    (product) => {
+      addToCompare(product);
+    },
+    [addToCompare]
+  );
 
   useEffect(() => {
     if (categoryName) {
@@ -58,7 +83,7 @@ const ProductListingPage = ({ currency }) => {
     }
   }, [categoryName]);
 
-  const filterAndSortProducts = () => {
+  const displayedProducts = useMemo(() => {
     let filtered = allProducts.filter((p) => {
       const translatedCategory = t(p.category).toUpperCase();
       const productParent = Object.keys(categoryStructure).find((parent) =>
@@ -75,14 +100,12 @@ const ProductListingPage = ({ currency }) => {
       return inPriceRange && inCategory;
     });
 
-    // search query after initial filtering
     if (searchQuery.trim()) {
       filtered = filtered.filter((product) =>
         product.name.toLowerCase().includes(searchQuery.toLowerCase())
       );
     }
 
-    // Sorting logic
     if (sortType === "priceLowHigh") {
       filtered.sort((a, b) => a.price - b.price);
     } else if (sortType === "priceHighLow") {
@@ -92,9 +115,15 @@ const ProductListingPage = ({ currency }) => {
     }
 
     return filtered;
-  };
-
-  const displayedProducts = filterAndSortProducts();
+  }, [
+    allProducts,
+    t,
+    categoryStructure,
+    selectedCategory,
+    priceRange,
+    searchQuery,
+    sortType,
+  ]);
 
   const containerVariants = {
     hidden: {},
@@ -248,29 +277,34 @@ const ProductListingPage = ({ currency }) => {
         animate="visible"
       >
         <AnimatePresence>
-          {displayedProducts.map((product) => (
-            <motion.div
-              key={product.name}
-              variants={itemVariants}
-              initial="hidden"
-              animate="visible"
-              exit={{ opacity: 0, scale: 0.9 }}
-              transition={{ duration: 0.3 }}
-            >
-              <ProductCard
+          {displayedProducts.map((product) => {
+            return (
+              <motion.div
                 key={product.name}
-                product={product}
-                currency={currency}
-                addToFavorites={() => removeFromFavorites(product.name)}
-                onQuickView={(p) => setSelectedProduct(p)}
-                onAddToCompare={addToCompare}
-                compareList={compareList}
-                isCompareOpen={isCompareOpen}
-                handleCloseCompare={clearCompare}
-                addToCart={addToCart}
-              />
-            </motion.div>
-          ))}
+                variants={itemVariants}
+                initial="hidden"
+                animate="visible"
+                exit={{ opacity: 0, scale: 0.9 }}
+                transition={{ duration: 0.3 }}
+              >
+                <ProductCard
+                  key={product.name}
+                  product={product}
+                  currency={currency}
+                  onQuickView={handleQuickView}
+                  onAddToCompare={handleAddToCompare}
+                  compareList={compareList}
+                  isCompareOpen={isCompareOpen}
+                  handleCloseCompare={clearCompare}
+                  onAddToCart={addToCart}
+                  isFavorited={favorites.some(
+                    (item) => item.name === product.name
+                  )}
+                  onToggleFavorite={() => handleToggleFavorite(product)}
+                />
+              </motion.div>
+            );
+          })}
         </AnimatePresence>
         {/* Compare items */}
         <AnimatePresence>
