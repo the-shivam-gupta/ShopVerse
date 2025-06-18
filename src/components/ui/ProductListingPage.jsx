@@ -37,7 +37,7 @@ const categoryStructure = {
 
 const ProductListingPage = ({ currency }) => {
   const [selectedProduct, setSelectedProduct] = useState(null);
-  const [priceRange, setPriceRange] = useState([0, 2000]);
+  const [priceRange, setPriceRange] = useState([1, Infinity]);
   const [sortType, setSortType] = useState("default");
   const [expandedCategory, setExpandedCategory] = useState(null); //tracks which parent’s subcategories are visible
   const { t } = useTranslation();
@@ -220,7 +220,7 @@ const ProductListingPage = ({ currency }) => {
           ))}
         </div>
 
-        <div className="border p-3 rounded-xl border-pink-100 dark:border-gray-400">
+        <div className="p-3 mt-2 rounded-xl">
           <h2 className="text-xl font-semibold text-gray-700 dark:text-gray-100 mb-2">
             {t("filter.priceRange")}
           </h2>
@@ -228,11 +228,11 @@ const ProductListingPage = ({ currency }) => {
           <div className="flex items-center gap-2 mb-2">
             <input
               type="number"
-              min={0}
+              min={1}
               value={priceRange[0] || ""}
               onChange={(e) => {
-                const value = Math.max(0, Number(e.target.value));
-                setPriceRange([value, Math.max(value, priceRange[1])]);
+                const value = Math.max(1, Number(e.target.value));
+                setPriceRange([value, Math.max(value, priceRange[1] || value)]);
               }}
               placeholder={t("filter.min")}
               className="w-1/2 p-2 rounded border dark:bg-gray-700 dark:text-white"
@@ -240,11 +240,14 @@ const ProductListingPage = ({ currency }) => {
             <span className="text-gray-500 dark:text-gray-300">-</span>
             <input
               type="number"
-              min={0}
-              value={priceRange[1] !== 2000 ? priceRange[1] : ""}
+              min={1}
+              value={priceRange[1] !== Infinity ? priceRange[1] : ""}
               onChange={(e) => {
-                const value = Math.max(1, Number(e.target.value));
-                setPriceRange([Math.min(priceRange[0], value), value]);
+                const value = Number(e.target.value);
+                setPriceRange([
+                  Math.min(priceRange[0], value || Infinity),
+                  value || Infinity,
+                ]);
               }}
               placeholder={t("filter.max")}
               className="w-1/2 p-2 rounded border dark:bg-gray-700 dark:text-white"
@@ -276,9 +279,9 @@ const ProductListingPage = ({ currency }) => {
         initial="hidden"
         animate="visible"
       >
-        <AnimatePresence>
-          {displayedProducts.map((product) => {
-            return (
+        {displayedProducts.length > 0 ? (
+          <AnimatePresence>
+            {displayedProducts.map((product) => (
               <motion.div
                 key={product.name}
                 variants={itemVariants}
@@ -288,7 +291,6 @@ const ProductListingPage = ({ currency }) => {
                 transition={{ duration: 0.3 }}
               >
                 <ProductCard
-                  key={product.name}
                   product={product}
                   currency={currency}
                   onQuickView={handleQuickView}
@@ -303,9 +305,23 @@ const ProductListingPage = ({ currency }) => {
                   onToggleFavorite={() => handleToggleFavorite(product)}
                 />
               </motion.div>
-            );
-          })}
-        </AnimatePresence>
+            ))}
+          </AnimatePresence>
+        ) : (
+          <motion.div
+            key="empty"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 20 }}
+            transition={{ duration: 0.3 }}
+            className="col-span-full grid place-items-center h-[50vh] w-full"
+          >
+            <p className="col-span-full flex items-center justify-center h-64 text-gray-500 dark:text-gray-300 text-xl font-semibold">
+              {t("filter.noProductFound")}
+            </p>
+          </motion.div>
+        )}
+
         {/* Compare items */}
         <AnimatePresence>
           {compareList.length > 0 && (

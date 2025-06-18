@@ -10,6 +10,8 @@ import { useCart } from "./components/context/CartContext";
 import ProductListingPage from "./components/ui/ProductListingPage";
 import ContactUs from "./components/ui/ContactUs";
 import AboutUs from "./components/ui/AboutUs";
+import ProductDetailsPage from "./components/ui/ProductDetailsPage";
+import FAQs from "./components/ui/FAQs";
 
 const AppRouter = ({ currency, setCurrency }) => {
   const { favorites } = useFavorites();
@@ -67,6 +69,11 @@ const AppRouter = ({ currency, setCurrency }) => {
           />
           <Route path="/contact" element={<ContactUs />} />
           <Route path="/about" element={<AboutUs />} />
+          <Route
+            path="/product/:productCategory"
+            element={<ProductDetailsPage currency={currency} />}
+          />
+          <Route path="/faqs" element={<FAQs />} />
         </Routes>
       </main>
       <Footer />

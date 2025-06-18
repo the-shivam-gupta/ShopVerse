@@ -7,6 +7,7 @@ import { useCart } from "../context/CartContext";
 import { useCompare } from "../context/CompareContext";
 import { motion, AnimatePresence } from "framer-motion";
 import CompareModal from "./CompareModal";
+import { Button } from "./Button";
 
 const FavoritesPage = ({ currency }) => {
   const [selectedProduct, setSelectedProduct] = useState(null);
@@ -136,9 +137,9 @@ const FavoritesPage = ({ currency }) => {
                 {t(item.name)}
               </p>
             ))}
-            <button className="mt-4 w-full py-2.5 sm:py-3 bg-pink-400 text-white font-semibold text-sm sm:text-base rounded-xl hover:bg-pink-500 transition cursor-pointer">
+            <Button className="mt-4 w-full py-2.5 sm:py-3 bg-pink-400 text-white font-semibold text-sm sm:text-base rounded-xl hover:bg-pink-500 transition cursor-pointer">
               {t("compare.selectProduct")}
-            </button>
+            </Button>
           </motion.div>
         )}
       </AnimatePresence>

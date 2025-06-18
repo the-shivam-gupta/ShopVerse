@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
+import { Button } from "./Button";
 
 const containerVariants = {
   hidden: { opacity: 0, y: 30 },
@@ -131,13 +132,11 @@ const AboutUs = () => {
           className="text-center mt-10 sm:mt-12"
           variants={childVariants}
         >
-          <motion.button
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.95 }}
-            className="bg-pink-500 text-white px-6 py-3 w-full sm:w-auto rounded-md font-medium shadow hover:bg-pink-400 transition"
+          <Button
+            className="bg-pink-500 px-6 py-3 w-full sm:w-auto rounded-md font-medium shadow hover:bg-pink-600 transition"
           >
             Shop Now
-          </motion.button>
+          </Button>
         </motion.div>
       </motion.div>
     </div>

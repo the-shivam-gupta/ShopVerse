@@ -71,7 +71,10 @@ export default function Footer() {
             <li className="hover:text-pink-400 duration-200 ease-in-out cursor-pointer">
               {t("footer.shipping")}
             </li>
-            <li className="hover:text-pink-400 duration-200 ease-in-out cursor-pointer">
+            <li
+              onClick={() => navigate("/faqs")}
+              className="hover:text-pink-400 duration-200 ease-in-out cursor-pointer"
+            >
               {t("footer.faqs")}
             </li>
           </ul>

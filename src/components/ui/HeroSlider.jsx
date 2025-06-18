@@ -1,9 +1,8 @@
 import { useEffect, useState, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import { Trans, useTranslation } from "react-i18next";
+import { useTranslation } from "react-i18next";
 import { Button } from "./Button";
-import { ChevronLeft, ChevronRight } from "lucide-react";
 // Images
 import menGlasses from "../../assets/menGlasses.avif";
 import womenGlasses from "../../assets/womenGlasses.webp";
@@ -118,20 +117,6 @@ const HeroSlider = () => {
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
-      {/* Arrows */}
-      <button
-        onClick={handlePrev}
-        className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-pink-100 hover:bg-pink-200 dark:bg-gray-700 dark:hover:bg-gray-600 p-2 rounded-full z-30 cursor-pointer"
-      >
-        <ChevronLeft className="w-6 h-6 text-pink-500 dark:text-white" />
-      </button>
-      <button
-        onClick={handleNext}
-        className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-pink-100 hover:bg-pink-200 dark:bg-gray-700 dark:hover:bg-gray-600 p-2 rounded-full z-30 cursor-pointer"
-      >
-        <ChevronRight className="w-6 h-6 text-pink-500 dark:text-white" />
-      </button>
-
       {/* Slide Text */}
       <AnimatePresence custom={direction} mode="wait">
         <motion.div
@@ -148,11 +133,11 @@ const HeroSlider = () => {
             {slide.subtitle}
           </h2>
 
-          <h1 className="text-5xl md:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-pink-400 via-fuchsia-500 to-rose-400 leading-tight whitespace-pre-line drop-shadow-sm">
+          <h1 className="text-4xl xs:text-5xl md:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-pink-400 via-fuchsia-500 to-rose-400 leading-tight whitespace-pre-line drop-shadow-sm">
             {slide.titleLines.join("\n")}
           </h1>
 
-          <p className="text-base md:text-lg text-gray-600 dark:text-gray-200 leading-relaxed font-medium">
+          <p className="text-xs xs:text-base md:text-lg text-gray-600 dark:text-gray-200 leading-relaxed font-medium">
             {slide.description}
           </p>
 
@@ -165,7 +150,7 @@ const HeroSlider = () => {
 
           <Button
             onClick={() => navigate("/products")}
-            className="w-fit px-6 py-3 bg-pink-500 hover:bg-pink-600 text-white font-semibold rounded-full transition-all shadow-md hover:shadow-lg"
+            className="w-fit px-6 py-3 bg-pink-500 hover:bg-pink-600 font-semibold rounded-full transition-all shadow-md hover:shadow-lg"
           >
             {t(slide.ctaText)}
           </Button>
@@ -173,7 +158,7 @@ const HeroSlider = () => {
       </AnimatePresence>
 
       {/* Slide Images */}
-      <div className="relative w-[260px] sm:w-[300px] md:w-[360px] h-[220px] sm:h-[260px] md:h-[300px]">
+      <div className="relative w-[260px] h-[220px] sm:w-[300px] sm:h-[260px] md:w-[360px] md:h-[300px] ">
         <AnimatePresence custom={direction} mode="wait">
           <motion.img
             key={slide.images[0]}
@@ -184,7 +169,7 @@ const HeroSlider = () => {
             animate="center"
             exit="exit"
             transition={{ duration: 0.8, delay: 0.1 }}
-            className="absolute top-0 left-28 w-[240px] h-[240px] object-cover rounded-full border-4 border-pink-100 dark:border-gray-300 z-10"
+            className="absolute top-0 sm:left-28 left-24 w-[150px] h-[150px] sm:w-[200px] sm:h-[200px] md:w-[210px] md:h-[210px] lg:w-[240px] lg:h-[240px] object-cover rounded-full border-4 border-pink-100 dark:border-gray-300 z-10"
           />
         </AnimatePresence>
 
@@ -198,7 +183,7 @@ const HeroSlider = () => {
             animate="center"
             exit="exit"
             transition={{ duration: 0.8 }}
-            className="absolute bottom-0 -left-8 w-[240px] h-[240px] object-cover rounded-full border-4 border-pink-100 dark:border-gray-300 z-20"
+            className="absolute bottom-0 sm:-left-8 -left-0 w-[150px] h-[150px] sm:w-[200px] sm:h-[200px] md:w-[210px] md:h-[210px] lg:w-[240px] lg:h-[240px] object-cover rounded-full border-4 border-pink-100 dark:border-gray-300 z-20"
           />
         </AnimatePresence>
       </div>

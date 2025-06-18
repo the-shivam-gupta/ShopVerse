@@ -23,7 +23,15 @@
     "glassesLens": "Gafas y lentes",
     "shortsJeans": "Shorts y jeans",
     "tShirts": "Camisetas",
-    "watch": "Reloj"
+    "watch": "Reloj",
+    "bag": "Bolsos",
+    "beauty": "Belleza",
+    "laptop": "Portátiles",
+    "smartphones": "Teléfonos inteligentes",
+    "jewellery": "Joyería",
+    "hats": "Sombreros",
+    "sneakers": "Zapatillas",
+    "footwear": "Calzado"
   },
   "footer": {
     "popularCategories": "CATEGORÍAS POPULARES",
@@ -83,7 +91,7 @@
     "handbags": "Bolsos de mano",
     "backpacks": "Mochilas"
   },
-  "card_es": {
+  "card": {
     "Tshirt": "Camiseta de ajuste regular para hombre Fearless",
     "oversizeShirt": "CAMISA OVERSIZE",
     "poloShirt": "Polo teñido puro",
@@ -103,6 +111,7 @@
     "quickView": "Vista rápida",
     "compare": "Comparar",
     "addToCart": "Agregar al carrito",
+    "buyNow": "Comprar ahora",
     "headphone": "Auriculares",
     "sonyHeadphone": "Auriculares Sony inalámbricos Bluetooth con micrófono",
     "casualShirt": "Camisa casual",
@@ -250,6 +259,20 @@
     "kidsFrocks": "Vestidos",
     "kidsToys": "Juguetes"
   },
+  "filter": {
+    "category": "Categoría",
+    "priceRange": "Rango de precios",
+    "upTo": "Hasta",
+    "sortBy": "Ordenar por",
+    "default": "Predeterminado",
+    "priceLowToHigh": "Precio: de menor a mayor",
+    "priceHighToLow": "Precio: de mayor a menor",
+    "ratingHighToLow": "Calificación: de mayor a menor",
+    "min": "Mínimo",
+    "max": "Máximo",
+    "showingUpTo": "Mostrando hasta",
+    "noProductFound": "No se encontró ningún producto"
+  },
   "contact": {
     "contactUs": "Contáctanos",
     "name": "Nombre",
@@ -264,5 +287,19 @@
     "favorites": "Favoritos",
     "cart": "Carrito",
     "categories": "Categorías"
+  },
+  "productdetails": {
+    "productNotFound": "Producto no encontrado"
+  },
+  "faq": {
+    "title": "Preguntas Frecuentes",
+    "shipping": "¿Cuáles son sus opciones de envío?",
+    "shippingAnswer": "Ofrecemos envío estándar y exprés a nivel mundial.",
+    "return": "¿Puedo devolver mi producto?",
+    "returnAnswer": "Sí, se aceptan devoluciones dentro de los 10 días posteriores a la compra.",
+    "support": "¿Cómo puedo contactar al soporte?",
+    "supportAnswer": "Puedes contactarnos a través de nuestra página de contacto o por correo electrónico.",
+    "payment": "¿Qué métodos de pago aceptan?",
+    "paymentAnswer": "Aceptamos tarjetas de crédito/débito, PayPal y más."
   }
 }

@@ -24,7 +24,15 @@
     "glassesLens": "Glasses & Lens",
     "shortsJeans": "Shorts & Jeans",
     "tShirts": "T-shirts",
-    "watch": "Watch"
+    "watch": "Watch",
+    "bag": "Bag",
+    "beauty": "Beauty",
+    "laptop": "Laptop",
+    "smartphones": "Smartphones",
+    "jewellery": "Jewellery",
+    "hats": "Hats",
+    "sneakers": "Sneakers",
+    "footwear": "Footwear"
   },
   "footer": {
     "popularCategories": "POPULAR CATEGORIES",
@@ -104,6 +112,7 @@
     "quickView": "Quick View",
     "compare": "Compare",
     "addToCart": "Add to Cart",
+    "buyNow": "Buy Now",
     "headphone": "HEADPHONE",
     "sonyHeadphone": "Sony Wireless Bluetooth Headphones with mic",
     "casualShirt": "CASUAL SHIRT",
@@ -261,7 +270,8 @@
     "ratingHighToLow": "Rating: High to Low",
     "min": "Min",
     "max": "Max",
-    "showingUpTo": "Showing up to"
+    "showingUpTo": "Showing up to",
+    "noProductFound": "No Product Found"
   },
   "contact": {
     "contactUs": "Contact Us",
@@ -281,5 +291,19 @@
   "deals": {
     "bestDeal": "Best Deals",
     "HotPicks": "Hot Picks 🔥"
+  },
+  "productdetails": {
+    "productNotFound": "Product Not Found"
+  },
+  "faq": {
+    "title": "Frequently Asked Questions",
+    "shipping": "What are your shipping options?",
+    "shippingAnswer": "We offer standard and express shipping worldwide.",
+    "return": "Can I return my product?",
+    "returnAnswer": "Yes, returns are accepted within 10 days of purchase.",
+    "support": "How can I contact support?",
+    "supportAnswer": "You can reach us via our Contact Us page or Email",
+    "payment": "What payment methods are supported?",
+    "paymentAnswer": "We accept credit/debit cards, PayPal, and more."
   }
 }

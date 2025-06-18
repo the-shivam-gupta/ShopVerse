@@ -5,6 +5,8 @@ import CompareModal from "./CompareModal";
 import { motion, AnimatePresence } from "framer-motion";
 import { useFavorites } from "../context/FavoritesContext";
 import { useCart } from "../context/CartContext";
+import { useNavigate } from "react-router-dom";
+import BadgeRibbon from "./BadgeRibbon";
 
 const products = [
   // SHIRTS
@@ -24,6 +26,12 @@ const products = [
     description: "Comfortable oversized T-shirt perfect for casual wear.",
     inStock: true,
     reviewCount: 62,
+    materialType: "Cotton",
+    fitType: "Oversized",
+    sleeveType: "Half Sleeve",
+    pattern: "Solid",
+    collarType: "Crew Neck",
+    origin: "India",
   },
   {
     name: "card.poloShirt",
@@ -42,6 +50,12 @@ const products = [
       "Classic polo shirt ideal for both casual and semi-formal looks.",
     inStock: true,
     reviewCount: 40,
+    materialType: "Cotton Blend",
+    fitType: "Regular Fit",
+    sleeveType: "Half Sleeve",
+    pattern: "Solid",
+    collarType: "Polo",
+    origin: "India",
   },
   {
     name: "card.mencasualShirt",
@@ -59,6 +73,12 @@ const products = [
     description: "Easygoing casual shirt suitable for daily wear.",
     inStock: true,
     reviewCount: 53,
+    materialType: "Cotton",
+    fitType: "Regular Fit",
+    sleeveType: "Full Sleeve",
+    pattern: "Checked",
+    collarType: "Spread",
+    origin: "India",
   },
   {
     name: "card.menformalShirt",
@@ -75,6 +95,12 @@ const products = [
     description: "A crisp, formal shirt for professional occasions.",
     inStock: true,
     reviewCount: 75,
+    materialType: "Cotton Blend",
+    fitType: "Slim Fit",
+    sleeveType: "Full Sleeve",
+    pattern: "Solid",
+    collarType: "Spread",
+    origin: "India",
   },
   {
     name: "card.mendenimShirt",
@@ -93,6 +119,12 @@ const products = [
       "A lightweight denim overshirt perfect for layering year-round.",
     inStock: true,
     reviewCount: 87,
+    materialType: "Denim",
+    fitType: "Regular Fit",
+    sleeveType: "Full Sleeve",
+    pattern: "Solid",
+    collarType: "Spread",
+    origin: "India",
   },
   {
     name: "card.menprintedShirt",
@@ -109,6 +141,12 @@ const products = [
     description: "Stylish printed shirt for a bold, standout look.",
     inStock: true,
     reviewCount: 68,
+    materialType: "Rayon",
+    fitType: "Relaxed Fit",
+    sleeveType: "Half Sleeve",
+    pattern: "Printed",
+    collarType: "Camp Collar",
+    origin: "India",
   },
 
   // ELECRONICS
@@ -123,11 +161,14 @@ const products = [
     hoverImage:
       "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/f_png/v1746943248/71F07y-AdAL._SX679__fwcv6h.jpg",
     colors: ["#000000", "#f9fafb"],
-    sizes: [],
     description:
       "Elegant women's watch with modern design and premium materials.",
     inStock: true,
     reviewCount: 120,
+    brand: "Fossil",
+    type: "Analog",
+    batteryLife: "2 years",
+    connectivity: "None",
   },
   {
     name: "card.sonyHeadphone",
@@ -140,10 +181,13 @@ const products = [
     hoverImage:
       "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/f_png/v1746968463/41jR_301vvL._SL1200__vddqsr.jpg",
     colors: ["#1f2937", "#ffffff"],
-    sizes: [],
     description: "Sony over-ear headphones with deep bass and noise isolation.",
     inStock: true,
     reviewCount: 87,
+    brand: "Sony",
+    connectivity: "Wired",
+    batteryLife: "N/A",
+    type: "Over-Ear",
   },
   {
     name: "card.phone",
@@ -157,11 +201,15 @@ const products = [
     hoverImage:
       "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/f_png/v1746968553/samg7_launtp.png",
     colors: ["#111827", "#f3f4f6"],
-    sizes: [],
     description:
       "High-performance smartphone with cutting-edge features and stunning design.",
     inStock: true,
     reviewCount: 210,
+    brand: "Samsung",
+    screenSize: "6.8 inches",
+    batteryLife: "24 hours",
+    storage: "256GB",
+    camera: "108MP",
   },
   {
     name: "card.tab",
@@ -174,10 +222,14 @@ const products = [
     hoverImage:
       "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/f_png/v1746968643/shopping_hfcza3.webp",
     colors: ["#d1d5db", "#4b5563"],
-    sizes: [],
     description: "Lightweight and powerful tablet, perfect for work and play.",
     inStock: false,
     reviewCount: 134,
+    brand: "Lenovo",
+    screenSize: "10.1 inches",
+    batteryLife: "12 hours",
+    storage: "64GB",
+    connectivity: "Wi-Fi",
   },
   {
     name: "card.DellLaptop",
@@ -191,11 +243,15 @@ const products = [
     hoverImage:
       "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/f_png/v1746968705/shopping_gkauct.webp",
     colors: ["#1f2937", "#d1d5db"],
-    sizes: [],
     description:
       "Reliable Dell laptop with high performance for productivity and entertainment.",
     inStock: true,
     reviewCount: 98,
+    brand: "Dell",
+    screenSize: "15.6 inches",
+    processor: "Intel i5",
+    ram: "8GB",
+    storage: "512GB SSD",
   },
   {
     name: "card.smartwatch",
@@ -208,11 +264,14 @@ const products = [
     hoverImage:
       "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/f_png/v1746968771/shopping_pr8j5k.webp",
     colors: ["#10b981", "#1e3a8a"],
-    sizes: [],
     description:
       "Advanced smartwatch with fitness tracking, notifications, and more.",
     inStock: true,
     reviewCount: 152,
+    brand: "Amazfit",
+    batteryLife: "7 days",
+    connectivity: "Bluetooth",
+    features: ["Heart Rate", "Step Count", "Notifications"],
   },
   {
     name: "card.wiredPowerBank",
@@ -225,13 +284,17 @@ const products = [
     hoverImage:
       "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/f_png/v1746968825/shopping_yfm0tn.webp",
     colors: ["#111827", "#f3f4f6"],
-    sizes: [],
     description:
       "High-capacity wired power bank for fast and reliable charging.",
     inStock: false,
     reviewCount: 110,
+    brand: "Anker",
+    capacity: "20000mAh",
+    ports: 2,
+    output: "18W",
   },
 
+  // BOTTOMS
   {
     name: "card.midiSkirt",
     category: "card.skirt",
@@ -249,6 +312,9 @@ const products = [
       "Chic and flowy midi skirt perfect for casual and formal wear.",
     inStock: true,
     reviewCount: 102,
+    material: "Cotton Blend",
+    length: "Midi",
+    fit: "Relaxed",
   },
   {
     name: "card.menjeans",
@@ -266,6 +332,9 @@ const products = [
     description: "Classic straight-fit jeans with modern style and durability.",
     inStock: true,
     reviewCount: 89,
+    material: "Denim",
+    fit: "Straight",
+    stretch: true,
   },
   {
     name: "card.mentrousers",
@@ -283,6 +352,9 @@ const products = [
       "Versatile men's trousers designed for comfort and everyday wear.",
     inStock: false,
     reviewCount: 76,
+    material: "Cotton",
+    fit: "Slim",
+    waistRise: "Mid-rise",
   },
   {
     name: "card.menshorts",
@@ -299,6 +371,9 @@ const products = [
     description: "Breathable and stylish shorts perfect for warm weather days.",
     inStock: true,
     reviewCount: 91,
+    material: "Polyester",
+    length: "Above Knee",
+    features: ["Elastic Waistband", "Quick Dry"],
   },
 
   // ACCESSORIES
@@ -319,6 +394,10 @@ const products = [
       "Elegant men’s bracelet made from premium materials, perfect for everyday wear.",
     inStock: true,
     reviewCount: 58,
+    materialType: "Stainless Steel",
+    style: "Casual",
+    closureType: "Magnetic",
+    origin: "India",
   },
   {
     name: "card.womenNecklace",
@@ -337,6 +416,10 @@ const products = [
       "Stylish and delicate necklace designed to elevate any outfit.",
     inStock: true,
     reviewCount: 72,
+    materialType: "Alloy",
+    style: "Boho",
+    closureType: "Lobster Claw",
+    origin: "India",
   },
   {
     name: "card.womenRings",
@@ -354,6 +437,9 @@ const products = [
       "Beautiful rings crafted with attention to detail, perfect for any occasion.",
     inStock: true,
     reviewCount: 95,
+    materialType: "Gold Plated",
+    style: "Elegant",
+    origin: "India",
   },
   {
     name: "card.menSunglasses",
@@ -371,6 +457,9 @@ const products = [
     description: "Modern and sleek sunglasses offering full UV protection.",
     inStock: true,
     reviewCount: 61,
+    materialType: "Polycarbonate",
+    style: "Modern",
+    origin: "India",
   },
   {
     name: "card.menWallet",
@@ -387,6 +476,9 @@ const products = [
     description: "Compact and durable men’s wallet with multiple compartments.",
     inStock: true,
     reviewCount: 77,
+    materialType: "Leather",
+    style: "Classic",
+    origin: "India",
   },
 
   // OUTWEAR
@@ -406,6 +498,10 @@ const products = [
       "Stylish men’s jacket perfect for casual and semi-formal occasions.",
     inStock: true,
     reviewCount: 48,
+    materialType: "Cotton Blend",
+    waterResistance: "Mild",
+    closureType: "Zipper",
+    origin: "India",
   },
   {
     name: "card.menBlazer",
@@ -424,6 +520,9 @@ const products = [
       "Elegant men’s blazer ideal for formal events and office wear.",
     inStock: true,
     reviewCount: 55,
+    materialType: "Polyester",
+    closureType: "Button",
+    origin: "India",
   },
   {
     name: "card.longCoat",
@@ -441,6 +540,10 @@ const products = [
     description: "Warm and stylish long coat designed for winter weather.",
     inStock: true,
     reviewCount: 39,
+    materialType: "Wool Blend",
+    waterResistance: "Medium",
+    closureType: "Button",
+    origin: "India",
   },
   {
     name: "card.blackHoodie",
@@ -458,6 +561,9 @@ const products = [
       "Comfortable black hoodie suitable for casual wear and workouts.",
     inStock: true,
     reviewCount: 64,
+    materialType: "Fleece",
+    closureType: "Pullover",
+    origin: "India",
   },
   {
     name: "card.greyCardigan",
@@ -474,6 +580,9 @@ const products = [
     description: "Soft and cozy grey cardigan, perfect for layering.",
     inStock: true,
     reviewCount: 52,
+    materialType: "Acrylic",
+    closureType: "Open Front",
+    origin: "India",
   },
   {
     name: "card.denimVest",
@@ -490,6 +599,9 @@ const products = [
     description: "Casual denim vest with classic styling for a timeless look.",
     inStock: true,
     reviewCount: 33,
+    materialType: "Denim",
+    closureType: "Button",
+    origin: "India",
   },
 
   // SHOES
@@ -509,6 +621,11 @@ const products = [
       "Durable men's shoes suitable for both casual and formal settings.",
     inStock: true,
     reviewCount: 58,
+    material: "Synthetic Leather",
+    soleMaterial: "Rubber",
+    closureType: "Lace-Up",
+    occasion: "Casual, Formal",
+    shoeType: "Dress Shoes",
   },
   {
     name: "card.whiteSneakers",
@@ -527,6 +644,11 @@ const products = [
       "Comfortable and stylish white sneakers perfect for everyday wear.",
     inStock: true,
     reviewCount: 76,
+    material: "Mesh & Synthetic",
+    soleMaterial: "EVA",
+    closureType: "Lace-Up",
+    occasion: "Casual",
+    shoeType: "Sneakers",
   },
   {
     name: "card.leatherSandals",
@@ -544,6 +666,11 @@ const products = [
       "Casual leather sandals ideal for warm weather and beach trips.",
     inStock: true,
     reviewCount: 41,
+    material: "Genuine Leather",
+    soleMaterial: "PU",
+    closureType: "Buckle",
+    occasion: "Beach, Casual",
+    shoeType: "Sandals",
   },
   {
     name: "card.ankleBoots",
@@ -560,6 +687,11 @@ const products = [
     description: "Premium ankle boots crafted for durability and style.",
     inStock: true,
     reviewCount: 69,
+    material: "Suede Leather",
+    soleMaterial: "TPR",
+    closureType: "Zipper",
+    occasion: "Casual, Outdoor",
+    shoeType: "Boots",
   },
   {
     name: "card.beachFlipFlops",
@@ -577,6 +709,11 @@ const products = [
       "Lightweight and comfortable flip flops for beach and casual use.",
     inStock: true,
     reviewCount: 47,
+    material: "Rubber",
+    soleMaterial: "Rubber",
+    closureType: "Slip-On",
+    occasion: "Beach, Casual",
+    shoeType: "Flip-Flops",
   },
   {
     name: "card.casualLoafers",
@@ -593,6 +730,11 @@ const products = [
     description: "Comfortable casual loafers for everyday wear.",
     inStock: true,
     reviewCount: 50,
+    material: "Faux Leather",
+    soleMaterial: "TPR",
+    closureType: "Slip-On",
+    occasion: "Casual",
+    shoeType: "Loafers",
   },
 
   // BAGS
@@ -611,6 +753,13 @@ const products = [
     description: "Durable casual backpack suitable for daily use and travel.",
     inStock: true,
     reviewCount: 43,
+    materialType: "Polyester",
+    compartments: 5,
+    waterResistance: "Yes",
+    strapType: "Padded Shoulder Straps",
+    closureType: "Zipper",
+    weight: "700g",
+    careInstructions: "Wipe with damp cloth",
   },
   {
     name: "card.luxuryHandbag",
@@ -629,6 +778,13 @@ const products = [
       "Elegant luxury handbag with premium materials and craftsmanship.",
     inStock: true,
     reviewCount: 38,
+    materialType: "Vegan Leather",
+    compartments: 3,
+    waterResistance: "No",
+    strapType: "Adjustable Strap",
+    closureType: "Magnetic Flap",
+    weight: "520g",
+    careInstructions: "Avoid contact with moisture",
   },
   {
     name: "card.simpleToteBag",
@@ -645,6 +801,13 @@ const products = [
     description: "Simple and practical tote bag perfect for everyday errands.",
     inStock: true,
     reviewCount: 47,
+    materialType: "Canvas",
+    compartments: 2,
+    waterResistance: "No",
+    strapType: "Double Handles",
+    closureType: "Open Top",
+    weight: "450g",
+    careInstructions: "Hand wash with mild detergent",
   },
   {
     name: "card.menMessengerBag",
@@ -662,6 +825,13 @@ const products = [
       "Stylish messenger bag designed for convenience and everyday use.",
     inStock: true,
     reviewCount: 34,
+    materialType: "PU Leather",
+    compartments: 4,
+    waterResistance: "Water Resistant",
+    strapType: "Crossbody Strap",
+    closureType: "Buckle + Zipper",
+    weight: "680g",
+    careInstructions: "Clean with leather conditioner",
   },
   {
     name: "card.sportDuffelBag",
@@ -678,8 +848,16 @@ const products = [
     description: "Durable sport duffel bag ideal for gym and travel.",
     inStock: true,
     reviewCount: 29,
+    materialType: "Nylon",
+    compartments: 6,
+    waterResistance: "Yes",
+    strapType: "Detachable Shoulder Strap",
+    closureType: "Zipper",
+    weight: "900g",
+    careInstructions: "Machine washable",
   },
 
+  // SkinCare
   {
     name: "card.skinCareSet",
     category: "card.skincare",
@@ -696,6 +874,11 @@ const products = [
     description: "Complete skin care set for glowing, healthy skin.",
     inStock: true,
     reviewCount: 82,
+    skinType: "All Skin Types",
+    ingredients: ["Aloe Vera", "Vitamin C", "Hyaluronic Acid"],
+    applicationArea: "Face",
+    careInstructions: "Store in a cool, dry place",
+    form: "Cream & Serum",
   },
   {
     name: "card.matteMakeupKit",
@@ -712,6 +895,11 @@ const products = [
     description: "Matte makeup kit with long-lasting, high-pigment colors.",
     inStock: true,
     reviewCount: 65,
+    skinType: "Normal to Oily",
+    ingredients: ["Talc", "Mica", "Iron Oxide"],
+    applicationArea: "Face",
+    careInstructions: "Keep lid closed to prevent drying",
+    form: "Powder & Cream",
   },
   {
     name: "card.perfumeSet",
@@ -730,6 +918,11 @@ const products = [
       "Popular perfume set with lasting fragrance for all occasions.",
     inStock: true,
     reviewCount: 94,
+    scent: "Floral & Musk",
+    gender: "Unisex",
+    applicationArea: "Neck, Wrists",
+    careInstructions: "Keep away from heat or flame",
+    form: "Spray",
   },
   {
     name: "card.haircareEssentials",
@@ -746,6 +939,11 @@ const products = [
     description: "Essential hair care products for smooth, healthy hair.",
     inStock: true,
     reviewCount: 59,
+    hairType: "Dry & Frizzy",
+    ingredients: ["Argan Oil", "Keratin", "Coconut Extract"],
+    applicationArea: "Hair & Scalp",
+    careInstructions: "Use twice a week for best results",
+    form: "Liquid & Cream",
   },
   {
     name: "card.groomingKitMen",
@@ -762,6 +960,11 @@ const products = [
     description: "Complete grooming kit tailored for men's daily needs.",
     inStock: true,
     reviewCount: 71,
+    gender: "Male",
+    applicationArea: "Face & Body",
+    ingredients: ["Charcoal", "Aloe Vera", "Menthol"],
+    careInstructions: "Dry after use and store in a case",
+    form: "Multiple (cream, razor, oil)",
   },
 ];
 
@@ -777,6 +980,13 @@ const ProductCard = React.memo(
   }) => {
     const { t } = useTranslation();
     const [hovered, setHovered] = useState(false);
+    const navigate = useNavigate();
+
+    const handleCardClick = () => {
+      const trimmedCategory = product.category.replace(/^card\./, ""); // remove 'card.' prefix
+      const encodedCategory = encodeURIComponent(trimmedCategory);
+      navigate(`/product/${encodedCategory}`);
+    };
 
     const handleAddToCart = useCallback(() => {
       const cartProduct = {
@@ -807,7 +1017,8 @@ const ProductCard = React.memo(
 
     return (
       <div
-        className="overflow-hidden w-full h-full relative bg-white dark:bg-transparent rounded-xl shadow hover:shadow-xl dark:hover:shadow-md dark:shadow-gray-100 transition-all p-4 hover:-translate-y-2"
+        className="overflow-hidden w-full h-auto relative bg-white dark:bg-transparent rounded-xl shadow hover:shadow-xl dark:hover:shadow-md dark:shadow-gray-100 transition-all p-4 hover:-translate-y-2 cursor-pointer"
+        onClick={handleCardClick}
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
       >
@@ -841,7 +1052,10 @@ const ProductCard = React.memo(
             {/* Favorite */}
             <div className="relative group">
               <button
-                onClick={onToggleFavorite}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onToggleFavorite();
+                }}
                 className="bg-white p-2 rounded-full shadow hover:bg-gray-100 cursor-pointer"
               >
                 <Heart
@@ -859,7 +1073,10 @@ const ProductCard = React.memo(
             {/* Quick View */}
             <div className="relative group">
               <button
-                onClick={() => onQuickView(product)}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onQuickView(product);
+                }}
                 className="bg-white p-2 rounded-full shadow hover:bg-gray-100 cursor-pointer"
               >
                 <Eye size={20} />
@@ -873,7 +1090,10 @@ const ProductCard = React.memo(
             {/* Compare */}
             <div className="relative group">
               <button
-                onClick={() => onAddToCompare(product)}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onAddToCompare(product);
+                }}
                 className="bg-white p-2 rounded-full shadow hover:bg-gray-100 cursor-pointer"
                 strokeWidth={1.5}
               >
@@ -888,7 +1108,10 @@ const ProductCard = React.memo(
             {/* Add to Cart */}
             <div className="relative group">
               <button
-                onClick={handleAddToCart}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleAddToCart();
+                }}
                 className="bg-white p-2 rounded-full shadow hover:bg-gray-100 cursor-pointer"
               >
                 <Plus size={20} />
@@ -901,11 +1124,10 @@ const ProductCard = React.memo(
           </div>
 
           {/* Discount badge */}
-          {product.badge && (
-            <span className="absolute -top-0 -left-10 w-[110px] rotate-[-45deg] bg-green-500 text-white text-xs font-bold text-center py-1 shadow-md">
-              {product.badge}
-            </span>
-          )}
+          <BadgeRibbon
+            className="top-14 -left-9 -rotate-45 origin-top-left w-[140px]"
+            badge={product.badge}
+          />
         </div>
 
         {/* Details */}
