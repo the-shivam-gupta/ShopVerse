@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useMemo } from "react";
+import { useState, useEffect, useCallback, useMemo, useRef } from "react";
 import { Button } from "./ui/Button";
 import { motion, useAnimation, AnimatePresence } from "framer-motion";
 import CategorySection from "./ui/Category";
@@ -13,6 +13,7 @@ import { useCompare } from "./context/CompareContext";
 import { useSearch } from "./context/SearchContext";
 import HeroSlider from "./ui/HeroSlider";
 import { useFavorites } from "./context/FavoritesContext";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 // Categories
 const categories = [
@@ -46,6 +47,46 @@ const categories = [
     image:
       "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcTsay796aiXUQQRhvAJLCJvUnpWlCnQxW_by-dozwPo58EarZ_chd9s0dsaxNjHLRwYtdMha1NLyfcUUlORrErsq2PynKwWsFXOKj-i3v1L9Y2QxlGfoCsdvg",
   },
+  {
+    title: "home.footwear",
+    image:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSpMYAIp4_hZTW17-XIawvaKdtdXhRxXACaew&s",
+  },
+  {
+    title: "home.bag",
+    image:
+      "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcR5QorNna88GoN-6_W2PZXlCp-ckDfQEo8KC2pQqcmq9m66GpjzuLu4tmF294CLXFh9CNafDhV-Vd-s4pFdbpRSotwzvBeHCIVUNJe6op4g7PLuZfOAKt-lSg",
+  },
+  {
+    title: "home.beauty",
+    image:
+      "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcSWHtFsu9IE-HkrTIn-2cBgNp66--eW7JWvWHxvb0R66Ze4oBHhq4ZuUKHTqIK_HkjQc2OQ1RFjxYbEtz2368HsoORzstkB7qQIvMr7aAM3Q0_e81ZEYBjG5QE",
+  },
+  {
+    title: "home.laptop",
+    image:
+      "https://image.made-in-china.com/2f0j00gOPiJtwsiAqy/2022-New-Hot-Sale-Notebook-Laptop-Computer-F123-Global-Version-Windows10-12-3-Inch-Processor-N4125-Laptop-Notebook.webp",
+  },
+  {
+    title: "home.smartphones",
+    image:
+      "https://electronicparadise.in/cdn/shop/files/1_d221eeca-531d-43f9-b979-7895414373fa.jpg?v=1721124608",
+  },
+  {
+    title: "home.jewellery",
+    image:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTp2r7x7fRc2_wNlYybZu75vYIbe37C3nWsYQ&s",
+  },
+  {
+    title: "home.hats",
+    image:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTF5AGeW1HNDVTrluignF89jSi6SoLhnaHU_g&s",
+  },
+  {
+    title: "home.sneakers",
+    image:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR3MECkuP6PJuQ5fLfryCdXTulVfNzebx2V0Q&s",
+  },
 ];
 
 export default function Home({ currency }) {
@@ -58,6 +99,37 @@ export default function Home({ currency }) {
     useCompare();
   const { setSearchQuery } = useSearch();
   const { favorites, addToFavorites, removeFromFavorites } = useFavorites();
+
+  const scrollRef = useRef(null);
+  const scroll = (direction) => {
+    const scrollAmount = scrollRef.current.offsetWidth; // scroll by full visible width
+    if (direction === "left") {
+      scrollRef.current.scrollBy({ left: -scrollAmount, behavior: "smooth" });
+    } else {
+      scrollRef.current.scrollBy({ left: scrollAmount, behavior: "smooth" });
+    }
+  };
+
+  // Touch support states
+  const [startX, setStartX] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
+
+  const handleTouchStart = (e) => {
+    setStartX(e.touches[0].clientX);
+    setIsDragging(true);
+  };
+
+  const handleTouchMove = (e) => {
+    if (!isDragging || !scrollRef.current) return;
+    const currentX = e.touches[0].clientX;
+    const deltaX = startX - currentX;
+    scrollRef.current.scrollLeft += deltaX;
+    setStartX(currentX);
+  };
+
+  const handleTouchEnd = () => {
+    setIsDragging(false);
+  };
 
   const favoriteNames = useMemo(
     () => new Set(favorites.map((f) => f.name)),
@@ -103,56 +175,70 @@ export default function Home({ currency }) {
     setSelectedProduct(product);
   }, []);
 
-  const handleAddToCompare = useCallback((product) => {
-    addToCompare(product);
-  }, [addToCompare]);
-  
+  const handleAddToCompare = useCallback(
+    (product) => {
+      addToCompare(product);
+    },
+    [addToCompare]
+  );
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-black">
       <HeroSlider />
 
       {/* Categories */}
-      <section className="overflow-hidden p-8">
-        <motion.div
-          className="flex gap-6 flex-nowrap w-max"
-          animate={{ x: ["0%", "-50%"] }}
-          transition={{
-            repeat: Infinity,
-            repeatType: "loop",
-            duration: 35, // speed (smaller = faster)
-            ease: "linear",
-          }}
+      <section className="relative w-full p-8 bg-[#fefeff] dark:bg-black">
+        {/* Arrows */}
+        <button
+          onClick={() => scroll("left")}
+          className="hidden sm:block absolute left-6 top-1/2 -translate-y-1/2 bg-pink-100 hover:bg-pink-200 dark:bg-gray-700 dark:hover:bg-gray-600 p-2 rounded-full z-30 cursor-pointer"
         >
-          {[...categories, ...categories].map((item, id) => (
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.99 }}
-              key={id}
-              className="backdrop-blur-lg dark:bg-gray-800 border border-pink-200 dark:border-gray-700 p-5 rounded-xl shadow-xl dark:shadow-gray-500 dark:shadow-sm w-45 text-center hover:shadow-[0_5px_12px_rgb(0_0_0_/_0.25)] hover:bg-white dark:hover:bg-gray-700 cursor-pointer"
-            >
-              <div className="relative">
+          <ChevronLeft className="w-6 h-6 text-pink-500 dark:text-white" />
+        </button>
+        <button
+          onClick={() => scroll("right")}
+          className="hidden sm:block absolute right-6 top-1/2 -translate-y-1/2 bg-pink-100 hover:bg-pink-200 dark:bg-gray-700 dark:hover:bg-gray-600 p-2 rounded-full z-30 cursor-pointer"
+        >
+          <ChevronRight className="w-6 h-6 text-pink-500 dark:text-white" />
+        </button>
+
+        {/* Scrollable category container */}
+        <div className="max-w-7xl mx-auto">
+          <div
+            ref={scrollRef}
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
+            className="flex gap-6 overflow-x-auto scroll-smooth snap-x snap-mandatory py-4 scrollbar-hide"
+          >
+            {categories.map((item, idx) => (
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.99 }}
+                key={idx}
+                className="min-w-[170px] w-[170px] snap-start backdrop-blur-lg dark:bg-gray-800 border border-pink-200 dark:border-gray-700 p-5 rounded-xl shadow-xl dark:shadow-gray-800 text-center hover:shadow-[0_5px_12px_rgb(0_0_0_/_0.25)] hover:bg-white dark:hover:bg-gray-700 cursor-pointer"
+              >
                 <img
-                  className="w-16 h-16 mx-auto mb-4 rounded-full border-2 border-pink-400 p-1 object-cover bg-gradient-to-tr from-pink-100 to-pink-200"
+                  className="w-16 h-16 mx-auto mb-2 rounded-full border-2 border-pink-400 p-1 object-cover bg-gradient-to-tr from-pink-100 to-pink-200"
                   src={item.image}
                   alt="category"
                 />
-              </div>
-              <div className="text-lg font-bold text-gray-800 dark:text-gray-100 drop-shadow-sm">
-                {t(item.title)}
-              </div>
-              <button
-                onClick={() => {
-                  setSearchQuery(t(item.title)); // translated title as search
-                  navigate("/products");
-                }}
-                className="mt-3 text-pink-500 text-sm rounded-full bg-pink-100 hover:bg-pink-200 px-4 py-1 transition-all cursor-pointer"
-              >
-                {t("home.showAll")}
-              </button>
-            </motion.div>
-          ))}
-        </motion.div>
+                <h4 className="text-sm font-semibold text-gray-800 dark:text-white mb-2">
+                  {t(item.title)}
+                </h4>
+                <button
+                  onClick={() => {
+                    setSearchQuery(t(item.title));
+                    navigate("/products");
+                  }}
+                  className="mt-1 text-pink-500 text-sm rounded-sm bg-pink-100 hover:bg-pink-200 px-4 py-1 transition-all cursor-pointer"
+                >
+                  {t("home.showAll")}
+                </button>
+              </motion.div>
+            ))}
+          </div>
+        </div>
       </section>
 
       <div className="flex flex-col md:flex-row px-6 py-8 gap-6">
@@ -160,8 +246,8 @@ export default function Home({ currency }) {
         <CategorySection currency={currency} />
 
         {/* Product Grids */}
-        <div className="bg-gray-100 dark:bg-gray-800 p-10">
-          <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-8">
+        <div className="bg-gray-100 dark:bg-gray-800">
+          <div className="flex-[4] min-w-0 grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6 bg-gray-100 dark:bg-gray-800 p-4 xs:p-4 md:p-10">
             {shuffledProducts.map((product, index) => {
               return (
                 <ProductCard
@@ -212,9 +298,9 @@ export default function Home({ currency }) {
                 </p>
               ))}
 
-              <button className="mt-4 w-full py-2.5 sm:py-3 bg-pink-400 text-white font-semibold text-sm sm:text-base rounded-xl hover:bg-pink-500 transition cursor-pointer">
+              <Button className="mt-4 w-full py-2.5 sm:py-3 bg-pink-400 font-semibold text-sm sm:text-base rounded-xl hover:bg-pink-500 transition cursor-pointer">
                 {t("compare.selectProduct")}
-              </button>
+              </Button>
             </motion.div>
           )}
         </AnimatePresence>

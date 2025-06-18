@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import { db } from "../../firebase";
 import { collection, addDoc, Timestamp } from "firebase/firestore";
+import { Button } from "./Button";
 
 const containerVariants = {
   hidden: { opacity: 0, y: 30 },
@@ -175,14 +176,12 @@ const ContactUs = () => {
 
           {/* Submit Button */}
           <div className="flex justify-center">
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+            <Button
               type="submit"
-              className="bg-pink-400 text-white px-6 py-2 rounded-md font-medium shadow hover:bg-pink-500 transition-all cursor-pointer w-full sm:w-2/3 md:w-1/3"
+              className="bg-pink-500 text-white px-6 py-2 rounded-md font-medium shadow hover:bg-pink-600 transition-all cursor-pointer w-full sm:w-2/3 md:w-1/3"
             >
               {t("contact.sendMessage")}
-            </motion.button>
+            </Button>
           </div>
         </motion.form>
 

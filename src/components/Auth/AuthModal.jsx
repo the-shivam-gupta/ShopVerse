@@ -7,6 +7,7 @@ import {
   signInWithPopup,
 } from "firebase/auth";
 import { auth, googleProvider } from "/src/firebase.js";
+import { Button } from "../ui/Button";
 
 const AuthModal = ({ isOpen, onClose }) => {
   const [isLogin, setIsLogin] = useState(true); // true = login, false = sign up
@@ -95,19 +96,19 @@ const AuthModal = ({ isOpen, onClose }) => {
               required
             />
             {error && <p className="text-red-500 text-sm">{error}</p>}
-            <button
+            <Button
               type="submit"
-              className="w-full bg-pink-500 text-white p-2 rounded hover:bg-pink-600 cursor-pointer"
+              className="w-full bg-pink-500 p-2 rounded hover:bg-pink-600 cursor-pointer"
             >
               {isLogin ? "Login" : "Sign Up"}
-            </button>
-            <button
+            </Button>
+            <Button
               onClick={handleGoogleSignIn}
               type="button"
               className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600 cursor-pointer"
             >
               Continue with Google
-            </button>
+            </Button>
           </form>
         </Dialog.Panel>
       </div>

@@ -3,12 +3,21 @@ import { useCart } from "../context/CartContext";
 import { Trans, useTranslation } from "react-i18next";
 import { Trash2, Plus, Minus } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { Button } from "./Button";
+import { useNavigate } from "react-router-dom";
 
 const CartPage = ({ currency }) => {
   const { cart = [], setCart, removeFromCart, addToCartAtIndex } = useCart();
   const { t } = useTranslation();
   const [recentlyRemoved, setRecentlyRemoved] = useState(null);
   const [undoTimeout, setUndoTimeout] = useState(null);
+  const navigate = useNavigate();
+
+  const handleCardClick = (product) => {
+    const trimmedCategory = product.category.replace(/^card\./, "");
+    const encodedCategory = encodeURIComponent(trimmedCategory);
+    navigate(`/product/${encodedCategory}`);
+  };
 
   const conversionRate = 83;
 
@@ -152,7 +161,8 @@ const CartPage = ({ currency }) => {
                     transition: { duration: 0.5, ease: "easeInOut" },
                   }}
                   transition={{ duration: 0.3 }}
-                  className="bg-transparent border border-gray-300 dark:border-gray-500 p-4 rounded-xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-md dark:shadow-gray-500"
+                  className="bg-transparent border border-gray-300 dark:border-gray-500 p-4 rounded-xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-md dark:shadow-gray-500 cursor-pointer"
+                  onClick={() => handleCardClick(item)}
                 >
                   <div className="flex items-start gap-4 w-full sm:w-auto">
                     <img
@@ -175,20 +185,30 @@ const CartPage = ({ currency }) => {
                       </p>
                     </div>
                   </div>
-                  <div className="flex items-center gap-4 mt-2 sm:mt-0">
+                  <div
+                    onClick={(e) => e.stopPropagation()}
+                    className="flex items-center gap-4 mt-2 sm:mt-0 cursor-default"
+                  >
                     {/* Quantity Controls */}
                     <div className="flex gap-3 border border-gray-200 dark:border-gray-700 p-1 rounded-full">
-                      <button
-                        onClick={() =>
-                          item.quantity === 1
-                            ? handleRemove(item)
-                            : handleDecreaseQuantity(item)
-                        }
-                        className="bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-black dark:text-white rounded-full w-7 h-7 flex items-center justify-center cursor-pointer"
-                      >
-                        <Minus size={18} />
-                      </button>
-                      <span className="font-semibold text-gray-800 dark:text-gray-200">
+                      {/* Conditional: Trash if quantity === 1 */}
+                      {item.quantity === 1 ? (
+                        <button
+                          onClick={() => handleRemove(item)}
+                          className="bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-red-500 rounded-full w-7 h-7 flex items-center justify-center cursor-pointer"
+                        >
+                          <Trash2 size={16} />
+                        </button>
+                      ) : (
+                        <button
+                          onClick={() => handleDecreaseQuantity(item)}
+                          className="bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-black dark:text-white rounded-full w-7 h-7 flex items-center justify-center cursor-pointer"
+                        >
+                          <Minus size={18} />
+                        </button>
+                      )}
+
+                      <span className="font-semibold text-gray-800 dark:text-gray-200 cursor-text">
                         {item.quantity ?? 1}
                       </span>
                       <button
@@ -198,18 +218,6 @@ const CartPage = ({ currency }) => {
                         <Plus size={18} />
                       </button>
                     </div>
-
-                    {/* Trash Icon */}
-                    <motion.div
-                      whileHover={{ scale: 1.1 }}
-                      whileTap={{ scale: 0.9 }}
-                    >
-                      <Trash2
-                        size={25}
-                        className="text-red-500 hover:text-red-600 cursor-pointer"
-                        onClick={() => handleRemove(item)}
-                      />
-                    </motion.div>
                   </div>
                 </motion.div>
               ))}
@@ -239,9 +247,9 @@ const CartPage = ({ currency }) => {
               {t("cart.giftOption")}
             </label>
 
-            <button className="mt-6 bg-pink-400 hover:bg-pink-500 text-black dark:text-white font-semibold py-2 px-4 rounded w-full cursor-pointer duration-150 ease-linear">
+            <Button className="mt-6 py-2 px-4 rounded w-full bg-pink-500 hover:bg-pink-600">
               {t("cart.proceedToBuy")}
-            </button>
+            </Button>
 
             <div className="mt-4 text-sm text-gray-600 dark:text-gray-400 border-t pt-2 text-left">
               <p>

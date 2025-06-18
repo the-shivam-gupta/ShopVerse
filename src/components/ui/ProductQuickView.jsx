@@ -4,6 +4,8 @@ import { Star, X } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { motion, AnimatePresence } from "framer-motion";
 import { useCart } from "../context/CartContext";
+import { Button } from "./Button";
+import BadgeRibbon from "./BadgeRibbon";
 
 const ProductQuickView = ({ product, isOpen, onClose, currency }) => {
   const { t } = useTranslation();
@@ -67,11 +69,10 @@ const ProductQuickView = ({ product, isOpen, onClose, currency }) => {
                   />
 
                   {/* Badge */}
-                  {product.badge && (
-                    <span className="absolute -left-7 top-4 sm:-left-8 sm:top-5 md:-left-9 md:top-5 w-[120px] sm:w-[140px] md:w-[150px] rotate-[-45deg] bg-green-500 text-white text-xs sm:text-sm font-semibold text-center py-1 shadow-md z-10">
-                      {product.badge}
-                    </span>
-                  )}
+                  <BadgeRibbon
+                    className="absolute -left-7 top-4 sm:-left-8 sm:top-5 md:-left-9 md:top-5 w-[120px] sm:w-[140px] md:w-[150px] rotate-[-45deg] bg-green-500 text-white text-xs sm:text-sm font-semibold text-center py-1 shadow-md z-10"
+                    badge={product.badge}
+                  />
 
                   {/* Product Info */}
                   <div className="flex flex-col gap-2 items-center sm:items-start justify-center w-full sm:w-[45%] lg:w-[40%] text-center sm:text-left">
@@ -170,14 +171,12 @@ const ProductQuickView = ({ product, isOpen, onClose, currency }) => {
                     </div>
 
                     {/* Add to Cart */}
-                    <motion.button
+                    <Button
                       onClick={handleAddToCart}
-                      animate={isAnimating ? { scale: [1, 1.8, 1] } : {}}
-                      transition={{ duration: 0.4, ease: "easeInOut" }}
-                      className="mt-2 mb-2 bg-pink-400 text-white px-4 py-2 rounded-sm hover:bg-pink-500 cursor-pointer duration-200 ease-linear"
+                      className="mt-2 mb-2 bg-pink-400 text-white px-4 py-[10px] rounded-sm hover:bg-pink-500 cursor-pointer duration-200 ease-linear"
                     >
                       {added ? t("card.added") : t("card.addToCart")}
-                    </motion.button>
+                    </Button>
                   </div>
                 </div>
               </div>

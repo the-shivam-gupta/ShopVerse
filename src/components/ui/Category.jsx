@@ -23,7 +23,7 @@ export default function CategorySection({ currency }) {
   const handleItemClick = useCallback(
     (name) => {
       setSearchQuery(t(name));
-      navigate("/products");
+      navigate("/products/");
     },
     [setSearchQuery, navigate, t]
   );
@@ -259,7 +259,7 @@ export default function CategorySection({ currency }) {
                       count={item.count}
                       shouldAnimate={!animatedCategories[cat.id]}
                       onAnimated={() => handleAnimated}
-                      onClick={handleItemClick}
+                      onClick={() => handleItemClick(item.name)}
                     />
                   ))}
                 </motion.div>
@@ -360,7 +360,7 @@ export default function CategorySection({ currency }) {
       {/* Rotating Reviews BELOW */}
       <div className="w-full max-w-sm mx-auto mt-6 p-6 rounded-xl shadow-md border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800 text-center min-h-[450px] flex flex-col justify-start bg-gradient-to-br from-white to-pink-50 dark:bg-gradient-to-bl dark:from-gray-800 dark:to-gray-600">
         <h3 className="text-xl font-bold text-gray-800 dark:text-gray-200 mb-4 border-b border-pink-200 dark:border-gray-500 pb-2">
-          {t("testimonial.testimonial")} 💬 
+          {t("testimonial.testimonial")} 💬
         </h3>
 
         <AnimatePresence mode="wait">
