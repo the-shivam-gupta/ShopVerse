@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "./Button";
 import { useNavigate } from "react-router-dom";
 
-const CartPage = ({ currency }) => {
+const CartPage = ({ currency, product }) => {
   const { cart = [], setCart, removeFromCart, addToCartAtIndex } = useCart();
   const { t } = useTranslation();
   const [recentlyRemoved, setRecentlyRemoved] = useState(null);
@@ -15,8 +15,10 @@ const CartPage = ({ currency }) => {
 
   const handleCardClick = (product) => {
     const trimmedCategory = product.category.replace(/^card\./, "");
+    const trimmedName = product.name.replace(/^card\./, "");
     const encodedCategory = encodeURIComponent(trimmedCategory);
-    navigate(`/product/${encodedCategory}`);
+    const encodedName = encodeURIComponent(trimmedName);
+    navigate(`/product/${encodedCategory}/${encodedName}`);
   };
 
   const conversionRate = 83;
@@ -121,9 +123,16 @@ const CartPage = ({ currency }) => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 50 }}
             transition={{ duration: 0.5 }}
-            className="fixed bottom-6 left-1/2 transform -translate-x-1/2 bg-white dark:bg-gray-800 px-6 py-3 rounded shadow-lg border border-gray-300 dark:border-gray-600 z-50 flex items-center gap-4"
+            className="fixed bottom-6 left-1/2 transform -translate-x-1/2 
+                 bg-white dark:bg-gray-800 px-4 sm:px-6 py-3 rounded 
+                 shadow-lg border border-gray-300 dark:border-gray-600 
+                 z-50 flex flex-col sm:flex-row items-center gap-2 sm:gap-4 
+                 max-w-[90%] sm:max-w-fit text-center sm:text-left"
           >
-            <p className="text-sm text-gray-800 dark:text-gray-200">
+            <p className="text-sm text-gray-800 dark:text-gray-200 ">
+              <span className="font-bold text-base capitalize">
+                {t(recentlyRemoved.item.category).toLowerCase()}
+              </span>{" "}
               {t("cart.itemRemoved")}
             </p>
             <button
@@ -247,7 +256,7 @@ const CartPage = ({ currency }) => {
               {t("cart.giftOption")}
             </label>
 
-            <Button className="mt-6 py-2 px-4 rounded w-full bg-pink-500 hover:bg-pink-600">
+            <Button className="mt-6 py-2 px-4 rounded w-full bg-pink-500 hover:bg-pink-600 cursor-pointer">
               {t("cart.proceedToBuy")}
             </Button>
 

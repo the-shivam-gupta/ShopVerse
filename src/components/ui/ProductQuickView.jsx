@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useCart } from "../context/CartContext";
 import { Button } from "./Button";
 import BadgeRibbon from "./BadgeRibbon";
+import toast from "react-hot-toast";
 
 const ProductQuickView = ({ product, isOpen, onClose, currency }) => {
   const { t } = useTranslation();
@@ -172,8 +173,25 @@ const ProductQuickView = ({ product, isOpen, onClose, currency }) => {
 
                     {/* Add to Cart */}
                     <Button
-                      onClick={handleAddToCart}
-                      className="mt-2 mb-2 bg-pink-400 text-white px-4 py-[10px] rounded-sm hover:bg-pink-500 cursor-pointer duration-200 ease-linear"
+                      onClick={() => {
+                        if (!product.inStock) {
+                          toast.error(t("card.outOfStockMessage"), {
+                            icon: "🚫",
+                          });
+                          return;
+                        }
+                        handleAddToCart();
+                        toast.success(
+                          t("card.addedToCartMessage", {
+                            category: t(product.category),
+                          })
+                        );
+                      }}
+                      className={`p-2 rounded-full shadow transition-all ${
+                        product.inStock
+                          ? "mt-2 mb-2 bg-pink-400 text-white px-4 py-[10px] rounded-sm hover:bg-pink-500 cursor-pointer duration-200 ease-linear"
+                          : "mt-2 mb-2 bg-pink-400 text-white px-4 py-[10px] rounded-sm hover:bg-pink-500 duration-200 ease-linear cursor-no-drop opacity-60"
+                      }`}
                     >
                       {added ? t("card.added") : t("card.addToCart")}
                     </Button>

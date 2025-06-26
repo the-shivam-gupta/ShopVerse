@@ -185,7 +185,9 @@
     "haircareEssentials": "Cosmix Hair Essentials Bundle",
     "haircare": "HAIRCARE",
     "groomingKitMen": "Braun Professional Beard Trimmer",
-    "groomingKit": "GROOMING KIT"
+    "groomingKit": "GROOMING KIT",
+    "outOfStockMessage": "Currently out of stock.",
+    "addedToCartMessage": "{{category}} added to cart!"
   },
   "compare": {
     "compareProduct": "Compare Products",
@@ -209,7 +211,7 @@
     "proceedToBuy": "Proceed to Buy",
     "securePayment": "<strong>100% Secure Payments:</strong> <br /> All major cards  and UPI supported",
     "youSaved": "You Saved",
-    "itemRemoved": "Item removed from cart.",
+    "itemRemoved": "removed from cart.",
     "undo": "Undo"
   },
   "testimonial": {

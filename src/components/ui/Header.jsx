@@ -112,17 +112,6 @@ const Header = ({ currency, setCurrency }) => {
     return () => unsubscribe();
   }, []);
 
-  // Close on outside click
-  useEffect(() => {
-    const handleClickOutside = (e) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
-        setDropdownOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
-
   // Search
   const handleSearch = useCallback(() => {
     if (searchQuery.trim()) {
@@ -235,7 +224,7 @@ const Header = ({ currency, setCurrency }) => {
             <img
               src={logo}
               alt="Logo"
-              className="w-20 sm:w-24 h-auto rounded-full"
+              className="w-20 sm:w-28 h-auto rounded-full dark:invert scale-125"
             />
           </Link>
 
@@ -277,7 +266,7 @@ const Header = ({ currency, setCurrency }) => {
                   loading="lazy"
                   alt="Profile"
                   onClick={() => setDropdownOpen((prev) => !prev)}
-                  className="w-9 h-9 rounded-full border-2 border-pink-400 cursor-pointer hover:ring-2 hover:ring-pink-300 transition"
+                  className="w-9 h-9 rounded-full border-2 border-gray-200 cursor-pointer hover:ring-2 hover:ring-pink-300 transition"
                 />
 
                 <AnimatePresence>
@@ -365,8 +354,12 @@ const Header = ({ currency, setCurrency }) => {
                 {t("header.categories")}
                 <span className="absolute left-0 -bottom-1 w-0 h-[3px] bg-pink-500 transition-all group-hover:w-full"></span>
               </a>
+              {/* Hover Bridge to prevent flicker on hover */}
+              <div className="absolute left-0 top-full w-full h-4" />
               {(isOpen || window.innerWidth >= 1024) && (
-                <div className="absolute left-1/2 transform -translate-x-1/4 w-max p-8 bg-white dark:bg-black shadow-lg mt-2 opacity-0 pointer-events-none group-hover:pointer-events-auto group-hover:opacity-100 transition-opacity duration-300 z-50 rounded-xl border border-gray-200 dark:border-gray-700">
+                <div className="absolute left-1/2 transform -translate-x-1/4 w-max p-8 bg-white dark:bg-black shadow-lg mt-4 opacity-0 pointer-events-none group-hover:pointer-events-auto group-hover:opacity-100 transition-opacity duration-300 z-50 rounded-xl border border-gray-200 dark:border-gray-700">
+                  {/* Arrow Pointer */}
+                  <div className="absolute -top-[7.5px] left-1/4 -translate-x-1/2 w-3 h-3 bg-inherit rotate-45 border-t border-l border-gray-200 dark:border-gray-700 z-0" />
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10">
                     {/* Single Category Block */}
                     {[
@@ -457,11 +450,15 @@ const Header = ({ currency, setCurrency }) => {
                 {t("header.men")}
                 <span className="absolute left-0 -bottom-1 w-0 h-[3px] bg-pink-500 transition-all group-hover:w-full"></span>
               </a>
+              {/* Hover Bridge to prevent flicker on hover */}
+              <div className="absolute left-0 top-full w-full h-4" />
               {(isOpen || window.innerWidth >= 1024) && (
-                <div className="absolute left-1/2 transform -translate-x-1/2 min-w-[12em] max-w-[16em] min-h-[10em] p-4 bg-white dark:bg-black shadow-lg mt-2 opacity-0 pointer-events-none group-hover:pointer-events-auto group-hover:opacity-100 transition-opacity duration-300 z-50 rounded-xl border border-gray-200 dark:border-gray-700">
+                <div className="absolute left-1/2 transform -translate-x-1/2 min-w-[12em] max-w-[16em] min-h-[10em] p-4 bg-white dark:bg-black shadow-lg mt-4 opacity-0 pointer-events-none group-hover:pointer-events-auto group-hover:opacity-100 transition-opacity duration-300 z-50 rounded-xl border border-gray-200 dark:border-gray-700">
+                  {/* Arrow Pointer */}
+                  <div className="absolute -top-[7.5px] left-1/2 -translate-x-1/2 w-3 h-3 bg-inherit rotate-45 border-t border-l border-gray-200 dark:border-gray-700 z-0" />
                   <div className="rounded-2xl">
                     <div className="relative text-left">
-                      <ul className="space-y-3 text-gray-500 text-lg font-medium">
+                      <ul className="space-y-2 text-gray-500 text-lg font-medium">
                         {[
                           { icon: smartwatch, label: t("dropdown.watch") },
                           { icon: cap, label: t("dropdown.caps") },
@@ -509,11 +506,15 @@ const Header = ({ currency, setCurrency }) => {
                 {t("header.women")}
                 <span className="absolute left-0 -bottom-1 w-0 h-[3px] bg-pink-500 transition-all group-hover:w-full"></span>
               </a>
+              {/* Hover Bridge to prevent flicker on hover */}
+              <div className="absolute left-0 top-full w-full h-4" />
               {(isOpen || window.innerWidth >= 1024) && (
-                <div className="absolute left-1/2 transform -translate-x-1/2 min-w-[12em] max-w-[16em] min-h-[10em] p-4 bg-white dark:bg-black shadow-lg mt-2 opacity-0 pointer-events-none group-hover:pointer-events-auto group-hover:opacity-100 transition-opacity duration-300 z-50 rounded-xl border border-gray-200 dark:border-gray-700">
+                <div className="absolute left-1/2 transform -translate-x-1/2 min-w-[12em] max-w-[16em] min-h-[10em] p-4 bg-white dark:bg-black shadow-lg mt-4 opacity-0 pointer-events-none group-hover:pointer-events-auto group-hover:opacity-100 transition-opacity duration-300 z-50 rounded-xl border border-gray-200 dark:border-gray-700">
+                  {/* Arrow Pointer */}
+                  <div className="absolute -top-[7.5px] left-1/2 -translate-x-1/2 w-3 h-3 bg-inherit rotate-45 border-t border-l border-gray-200 dark:border-gray-700 z-0" />
                   <div className="rounded-2xl">
                     <div className="relative text-left">
-                      <ul className="space-y-3 text-gray-500 text-lg font-medium">
+                      <ul className="space-y-2 text-gray-500 text-lg font-medium">
                         {[
                           { icon: necklace, label: t("dropdown.necklace") },
                           { icon: handbag, label: t("dropdown.bags") },
@@ -558,11 +559,15 @@ const Header = ({ currency, setCurrency }) => {
                 {t("header.kids")}
                 <span className="absolute left-0 -bottom-1 w-0 h-[3px] bg-pink-500 transition-all group-hover:w-full"></span>
               </a>
+              {/* Hover Bridge to prevent flicker on hover */}
+              <div className="absolute left-0 top-full w-full h-4" />
               {(isOpen || window.innerWidth >= 1024) && (
-                <div className="absolute left-1/2 transform -translate-x-1/2 min-w-[12em] max-w-[16em] min-h-[10em] p-4 bg-white dark:bg-black shadow-lg mt-2 opacity-0 pointer-events-none group-hover:pointer-events-auto group-hover:opacity-100 transition-opacity duration-300 z-50 rounded-xl border border-gray-200 dark:border-gray-700">
+                <div className="absolute left-1/2 transform -translate-x-1/2 min-w-[12em] max-w-[16em] min-h-[10em] p-4 bg-white dark:bg-black shadow-lg mt-4 opacity-0 pointer-events-none group-hover:pointer-events-auto group-hover:opacity-100 transition-opacity duration-300 z-50 rounded-xl border border-gray-200 dark:border-gray-700">
+                  {/* Arrow Pointer */}
+                  <div className="absolute -top-[7.5px] left-1/2 -translate-x-1/2 w-3 h-3 bg-inherit rotate-45 border-t border-l border-gray-200 dark:border-gray-700 z-0" />
                   <div className="rounded-2xl">
                     <div className="relative text-left">
-                      <ul className="space-y-3 text-gray-500 text-lg font-medium">
+                      <ul className="space-y-2 text-gray-500 text-lg font-medium">
                         {[
                           { icon: poloShirt, label: t("dropdown.kidsTshirts") },
                           { icon: shorts, label: t("dropdown.kidsShorts") },
@@ -607,11 +612,15 @@ const Header = ({ currency, setCurrency }) => {
                 {t("header.jewelry")}
                 <span className="absolute left-0 -bottom-1 w-0 h-[3px] bg-pink-500 transition-all group-hover:w-full"></span>
               </a>
+              {/* Hover Bridge to prevent flicker on hover */}
+              <div className="absolute left-0 top-full w-full h-4" />
               {(isOpen || window.innerWidth >= 1024) && (
-                <div className="absolute left-1/2 transform -translate-x-1/2 min-w-[12em] max-w-[16em] min-h-[10em] p-4 bg-white dark:bg-black shadow-lg mt-2 opacity-0 pointer-events-none group-hover:pointer-events-auto group-hover:opacity-100 transition-opacity duration-300 z-50 rounded-xl border border-gray-200 dark:border-gray-700">
+                <div className="absolute left-1/2 transform -translate-x-1/2 min-w-[12em] max-w-[16em] min-h-[10em] p-4 bg-white dark:bg-black shadow-lg mt-4 opacity-0 pointer-events-none group-hover:pointer-events-auto group-hover:opacity-100 transition-opacity duration-300 z-50 rounded-xl border border-gray-200 dark:border-gray-700">
+                  {/* Arrow Pointer */}
+                  <div className="absolute -top-[7.5px] left-1/2 -translate-x-1/2 w-3 h-3 bg-inherit rotate-45 border-t border-l border-gray-200 dark:border-gray-700 z-0" />
                   <div className="rounded-2xl">
                     <div className="relative text-left">
-                      <ul className="space-y-3 text-gray-500 text-lg font-medium">
+                      <ul className="space-y-2 text-gray-500 text-lg font-medium">
                         {[
                           { icon: necklace, label: t("dropdown.necklace") },
                           { icon: earings, label: t("dropdown.earings") },
@@ -655,11 +664,15 @@ const Header = ({ currency, setCurrency }) => {
                 {t("header.perfume")}
                 <span className="absolute left-0 -bottom-1 w-0 h-[3px] bg-pink-500 transition-all group-hover:w-full"></span>
               </a>
+              {/* Hover Bridge to prevent flicker on hover */}
+              <div className="absolute left-0 top-full w-full h-4" />
               {(isOpen || window.innerWidth >= 1024) && (
-                <div className="absolute sm:left-1 lg:left-1/2 transform -translate-x-1/2 min-w-[12em] max-w-[16em] min-h-[10em] p-4 bg-white dark:bg-black shadow-lg mt-2 opacity-0 pointer-events-none group-hover:pointer-events-auto group-hover:opacity-100 transition-opacity duration-300 z-50 rounded-xl border border-gray-200 dark:border-gray-700">
+                <div className="absolute sm:-left-3 lg:left-1/2 transform -translate-x-1/2 min-w-[12em] max-w-[16em] min-h-[10em] p-4 bg-white dark:bg-black shadow-lg mt-4 opacity-0 pointer-events-none group-hover:pointer-events-auto group-hover:opacity-100 transition-opacity duration-300 z-50 rounded-xl border border-gray-200 dark:border-gray-700">
+                  {/* Arrow Pointer */}
+                  <div className="absolute -top-[7.5px] sm:right-1/4 lg:left-1/2 -translate-x-1/2 w-3 h-3 bg-inherit rotate-45 border-t border-l border-gray-200 dark:border-gray-700 z-0" />
                   <div className="rounded-2xl">
                     <div className="relative text-left">
-                      <ul className="space-y-3 text-gray-500 text-lg font-medium">
+                      <ul className="space-y-2 text-gray-500 text-lg font-medium">
                         {[
                           { icon: deodorant, label: t("dropdown.deodorant") },
                           {
@@ -721,7 +734,7 @@ const Header = ({ currency, setCurrency }) => {
               exit={{ opacity: 0 }}
               transition={{ duration: 0.25 }}
               className="fixed inset-0 z-40 bg-white/70 dark:bg-black/50 backdrop-blur-md overflow-hidden h-screen"
-              onClick={() => setMenuOpen(false)} // optional: click outside to close
+              onClick={() => setMenuOpen(false)}
             />
 
             {/* Sliding Menu Panel */}
@@ -730,7 +743,7 @@ const Header = ({ currency, setCurrency }) => {
               animate={{ x: 0 }}
               exit={{ x: "-100%" }}
               transition={{ duration: 0.3, ease: "easeInOut" }}
-              className="fixed top-0 left-0 bottom-0 w-full bg-white dark:bg-zinc-900/80 z-50 shadow-lg p-6 flex flex-col justify-center items-center"
+              className="fixed top-0 left-0 bottom-0 w-1/3 bg-white/80 dark:bg-zinc-900/80 z-50 shadow-lg p-6 flex flex-col justify-center items-center"
             >
               {/* Close Icon */}
               <button

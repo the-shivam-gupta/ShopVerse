@@ -7,6 +7,7 @@ import { useFavorites } from "../context/FavoritesContext";
 import { useCart } from "../context/CartContext";
 import { useNavigate } from "react-router-dom";
 import BadgeRibbon from "./BadgeRibbon";
+import toast from "react-hot-toast";
 
 const products = [
   // SHIRTS
@@ -983,9 +984,11 @@ const ProductCard = React.memo(
     const navigate = useNavigate();
 
     const handleCardClick = () => {
-      const trimmedCategory = product.category.replace(/^card\./, ""); // remove 'card.' prefix
+      const trimmedCategory = product.category.replace(/^card\./, "");
+      const trimmedName = product.name.replace(/^card\./, "");
       const encodedCategory = encodeURIComponent(trimmedCategory);
-      navigate(`/product/${encodedCategory}`);
+      const encodedName = encodeURIComponent(trimmedName);
+      navigate(`/product/${encodedCategory}/${encodedName}`);
     };
 
     const handleAddToCart = useCallback(() => {
@@ -1110,9 +1113,22 @@ const ProductCard = React.memo(
               <button
                 onClick={(e) => {
                   e.stopPropagation();
+                  if (!product.inStock) {
+                    toast.error(t("card.outOfStockMessage"), { icon: "🚫" });
+                    return;
+                  }
                   handleAddToCart();
+                  toast.success(
+                    t("card.addedToCartMessage", {
+                      category: t(product.category),
+                    })
+                  );
                 }}
-                className="bg-white p-2 rounded-full shadow hover:bg-gray-100 cursor-pointer"
+                className={`p-2 rounded-full shadow transition-all ${
+                  product.inStock
+                    ? "bg-white hover:bg-gray-100 cursor-pointer"
+                    : "bg-white hover:bg-gray-100 cursor-no-drop"
+                }`}
               >
                 <Plus size={20} />
               </button>
@@ -1135,7 +1151,7 @@ const ProductCard = React.memo(
           <p className="text-pink-400 font-semibold text-md text-left ml-2 cursor-pointer">
             {t(product.category)}
           </p>
-          <h3 className="text-gray-500 dark:text-gray-300 text-[1em] mt-1 text-left text-xl tracking-wider ml-2 cursor-pointer hover:text-gray-600 dark:hover:text-gray-200 duration-200">
+          <h3 className="text-gray-500 dark:text-gray-300 text-[1em] mt-1 text-left text-xl tracking-wider ml-2 cursor-pointer hover:text-gray-600 dark:hover:text-gray-200 duration-200 line-clamp-1">
             {t(product.name)}
           </h3>
           <div className="flex justify-start items-start text-yellow-400 mt-2 ml-2">

@@ -121,6 +121,7 @@ export default function Home({ currency }) {
 
   const handleTouchMove = (e) => {
     if (!isDragging || !scrollRef.current) return;
+    e.preventDefault();
     const currentX = e.touches[0].clientX;
     const deltaX = startX - currentX;
     scrollRef.current.scrollLeft += deltaX;
@@ -191,13 +192,13 @@ export default function Home({ currency }) {
         {/* Arrows */}
         <button
           onClick={() => scroll("left")}
-          className="hidden sm:block absolute left-6 top-1/2 -translate-y-1/2 bg-pink-100 hover:bg-pink-200 dark:bg-gray-700 dark:hover:bg-gray-600 p-2 rounded-full z-30 cursor-pointer"
+          className="hidden md:block absolute left-6 top-1/2 -translate-y-1/2 bg-pink-100 hover:bg-pink-200 dark:bg-gray-700 dark:hover:bg-gray-600 p-2 rounded-full z-30 cursor-pointer"
         >
           <ChevronLeft className="w-6 h-6 text-pink-500 dark:text-white" />
         </button>
         <button
           onClick={() => scroll("right")}
-          className="hidden sm:block absolute right-6 top-1/2 -translate-y-1/2 bg-pink-100 hover:bg-pink-200 dark:bg-gray-700 dark:hover:bg-gray-600 p-2 rounded-full z-30 cursor-pointer"
+          className="hidden md:block absolute right-6 top-1/2 -translate-y-1/2 bg-pink-100 hover:bg-pink-200 dark:bg-gray-700 dark:hover:bg-gray-600 p-2 rounded-full z-30 cursor-pointer"
         >
           <ChevronRight className="w-6 h-6 text-pink-500 dark:text-white" />
         </button>
@@ -216,7 +217,7 @@ export default function Home({ currency }) {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.99 }}
                 key={idx}
-                className="min-w-[170px] w-[170px] snap-start backdrop-blur-lg dark:bg-gray-800 border border-pink-200 dark:border-gray-700 p-5 rounded-xl shadow-xl dark:shadow-gray-800 text-center hover:shadow-[0_5px_12px_rgb(0_0_0_/_0.25)] hover:bg-white dark:hover:bg-gray-700 cursor-pointer"
+                className="min-w-[170px] w-[170px] snap-center backdrop-blur-lg dark:bg-gray-800 border border-pink-200 dark:border-gray-700 p-5 rounded-xl shadow-xl dark:shadow-gray-800 text-center hover:shadow-[0_5px_12px_rgb(0_0_0_/_0.25)] hover:bg-white dark:hover:bg-gray-700 cursor-pointer"
               >
                 <img
                   className="w-16 h-16 mx-auto mb-2 rounded-full border-2 border-pink-400 p-1 object-cover bg-gradient-to-tr from-pink-100 to-pink-200"

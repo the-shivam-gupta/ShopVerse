@@ -10,7 +10,7 @@
     "jewelry": "आभूषण",
     "perfume": "इत्र",
     "blog": "ब्लॉग",
-    "hotOffers": "विशेष ऑफ़र"
+    "kids": "बच्चे"
   },
   "home": {
     "trendingAccessories": "लोकप्रिय सहायक उपकरण",
@@ -184,7 +184,9 @@
     "haircareEssentials": "कॉसमिक्स हेयर एसेंशियल्स बंडल",
     "haircare": "हेयरकेयर",
     "groomingKitMen": "ब्रौन प्रोफेशनल बियर्ड ट्रिमर",
-    "groomingKit": "ग्रूमिंग किट"
+    "groomingKit": "ग्रूमिंग किट",
+    "outOfStockMessage": "फिलहाल स्टॉक में नहीं है।",
+    "addedToCartMessage": "{{category}} को कार्ट में जोड़ा गया!"
   },
   "compare": {
     "compareProduct": "उत्पादों की तुलना करें",
@@ -209,7 +211,7 @@
     "proceedToBuy": "खरीदारी जारी रखें",
     "securePayment": "<strong>100% सुरक्षित भुगतान:</strong> <br /> सभी प्रमुख कार्ड और UPI समर्थित",
     "youSaved": "आपने बचाए",
-    "itemRemoved": "आइटम को कार्ट से हटाया गया है।",
+    "itemRemoved": "को कार्ट से हटाया गया है।",
     "undo": "पूर्ववत करें"
   },
   "testimonial": {
