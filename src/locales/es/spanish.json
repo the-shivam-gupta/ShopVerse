@@ -10,7 +10,7 @@
     "jewelry": "Joyería",
     "perfume": "Perfume",
     "blog": "Blog",
-    "hotOffers": "Ofertas especiales"
+    "kids": "Niños"
   },
   "home": {
     "trendingAccessories": "Accesorios de tendencia",
@@ -184,7 +184,9 @@
     "haircareEssentials": "Paquete esencial para el cabello Cosmix",
     "haircare": "Cuidado del cabello",
     "groomingKitMen": "Recortadora de barba profesional Braun",
-    "groomingKit": "Kit de aseo"
+    "groomingKit": "Kit de aseo",
+    "outOfStockMessage": "Actualmente sin stock.",
+    "addedToCartMessage": "¡{{category}} añadido al carrito!"
   },
   "compare": {
     "compareProduct": "Comparar productos",
@@ -209,7 +211,7 @@
     "proceedToBuy": "Proceder a comprar",
     "securePayment": "<strong>100% Pagos seguros:</strong> <br /> Se aceptan todas las tarjetas principales y UPI",
     "youSaved": "Ahorraste",
-    "itemRemoved": "Artículo eliminado del carrito.",
+    "itemRemoved": "fue eliminado del carrito.",
     "undo": "Deshacer"
   },
   "testimonial": {

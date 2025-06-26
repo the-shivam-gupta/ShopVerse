@@ -102,7 +102,7 @@ const AboutUs = () => {
               item === "Bags" ? "👜" : item === "Shoes" ? "👠" : "👗";
             return (
               <motion.div
-                onClick={() => navigate("/products")}
+                onClick={() => navigate(`/products/category/${item.toUpperCase()}`)}
                 key={item}
                 whileHover={{ scale: 1.05 }}
                 className="bg-pink-50 dark:bg-gray-700 rounded-xl shadow hover:shadow-lg transition cursor-pointer flex flex-col items-center p-5"
@@ -133,7 +133,7 @@ const AboutUs = () => {
           variants={childVariants}
         >
           <Button
-            className="bg-pink-500 px-6 py-3 w-full sm:w-auto rounded-md font-medium shadow hover:bg-pink-600 transition"
+            className="bg-pink-500 px-6 py-3 w-full sm:w-auto rounded-md font-medium shadow hover:bg-pink-600 transition cursor-pointer"
           >
             Shop Now
           </Button>

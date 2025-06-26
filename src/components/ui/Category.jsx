@@ -16,6 +16,14 @@ export default function CategorySection({ currency }) {
   const navigate = useNavigate();
   const { setSearchQuery } = useSearch();
 
+  const handleCardClick = (product) => {
+    const trimmedCategory = product.category.replace(/^card\./, "");
+    const trimmedName = product.name.replace(/^card\./, "");
+    const encodedCategory = encodeURIComponent(trimmedCategory);
+    const encodedName = encodeURIComponent(trimmedName);
+    navigate(`/product/${encodedCategory}/${encodedName}`);
+  };
+
   const toggleCategory = useCallback((category) => {
     setOpenCategories((prev) => ({ [category]: !prev[category] }));
   }, []);
@@ -304,6 +312,7 @@ export default function CategorySection({ currency }) {
               key={product.name}
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.9 }}
+              onClick={() => handleCardClick(product)}
               className="flex items-center gap-3 my-2 p-3 rounded-lg hover:bg-pink-100 dark:hover:bg-gray-700 transition cursor-pointer "
             >
               <img

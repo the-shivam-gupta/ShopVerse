@@ -9,6 +9,7 @@ import AppRouter from "./Router";
 import ScrollToTop from "./components/ui/ScrollToTop";
 import { CompareProvider } from "./components/context/CompareContext";
 import { SearchProvider } from "./components/context/SearchContext";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   const [currency, setCurrency] = useState("USD");
@@ -20,8 +21,17 @@ function App() {
           <SearchProvider>
             <CompareProvider>
               <FavoritesProvider>
+                <Toaster
+                  position="top-center"
+                  reverseOrder={false}
+                  toastOptions={{
+                    style: {
+                      background: "#333",
+                      color: "#fff",
+                    },
+                  }}
+                />
                 <AppRouter currency={currency} setCurrency={setCurrency} />
-                <ScrollToTop />
               </FavoritesProvider>
             </CompareProvider>
           </SearchProvider>

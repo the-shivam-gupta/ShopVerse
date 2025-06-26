@@ -1,9 +1,26 @@
 import { useEffect, useState } from "react";
 import { ArrowUp } from "lucide-react";
 import { motion } from "framer-motion";
+import { useLocation } from "react-router-dom";
 
 export default function ScrollToTop() {
   const [isVisible, setIsVisible] = useState(false);
+  const { pathname } = useLocation();
+
+  // Scroll to top when route changes
+  useEffect(() => {
+    if (pathname === "/") return;
+
+    const header = document.querySelector("header");
+    const headerHeight = header?.offsetHeight || 260;
+
+    // Delay scroll to allow the page to load fully and prevent jumpy behavior
+    const scrollTimeout = setTimeout(() => {
+      window.scrollTo({ top: headerHeight, behavior: "smooth" });
+    }, 200);
+
+    return () => clearTimeout(scrollTimeout); // Clean up if component unmounts early
+  }, [pathname]);
 
   // Show button after scrolling down 300px
   useEffect(() => {

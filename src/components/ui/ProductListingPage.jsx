@@ -84,21 +84,27 @@ const ProductListingPage = ({ currency }) => {
   }, [categoryName]);
 
   const displayedProducts = useMemo(() => {
-    let filtered = allProducts.filter((p) => {
-      const translatedCategory = t(p.category).toUpperCase();
-      const productParent = Object.keys(categoryStructure).find((parent) =>
-        categoryStructure[parent].includes(translatedCategory)
-      );
+    let filtered = [];
 
-      const inCategory =
-        selectedCategory === "All" ||
-        translatedCategory === selectedCategory ||
-        productParent === selectedCategory;
+    if (categoryName === "new") {
+      filtered = allProducts.filter((p) => p.badge === "NEW");
+    } else {
+      filtered = allProducts.filter((p) => {
+        const translatedCategory = t(p.category).toUpperCase();
+        const productParent = Object.keys(categoryStructure).find((parent) =>
+          categoryStructure[parent].includes(translatedCategory)
+        );
+        const inCategory =
+          selectedCategory === "All" ||
+          translatedCategory === selectedCategory ||
+          productParent === selectedCategory;
 
-      const inPriceRange = p.price >= priceRange[0] && p.price <= priceRange[1];
+        const inPriceRange =
+          p.price >= priceRange[0] && p.price <= priceRange[1];
 
-      return inPriceRange && inCategory;
-    });
+        return inPriceRange && inCategory;
+      });
+    }
 
     if (searchQuery.trim()) {
       filtered = filtered.filter((product) =>
@@ -140,233 +146,244 @@ const ProductListingPage = ({ currency }) => {
   };
 
   return (
-    <div className="flex flex-col md:flex-row p-4 gap-6 dark:bg-black">
-      {/* Sidebar Filters */}
-      <motion.aside
-        initial={{ x: -50, opacity: 0 }}
-        animate={{ x: 0, opacity: 1 }}
-        transition={{ duration: 0.5 }}
-        className="w-full md:w-70 h-fit p-4 rounded-lg shadow-md border border-gray-200 dark:border-gray-500 bg-gradient-to-tr from-white to-pink-50 dark:bg-gradient-to-tr dark:from-gray-800 dark:to-gray-600"
-      >
-        <div className="border p-3 border-pink-100 dark:border-gray-400 rounded-xl">
-          <h2 className="text-xl font-semibold mb-2 text-gray-600 dark:text-gray-100">
-            {t("filter.category")}
-          </h2>
-          <button
-            onClick={() => {
-              setExpandedCategory(null);
-              setSelectedCategory("All");
-              navigate("/products");
-            }}
-            className={`block w-full text-left px-3 py-1 rounded cursor-pointer dark:text-gray-100 ${
-              selectedCategory === "All"
-                ? "bg-pink-500 font-semibold"
-                : "hover:bg-gray-100 dark:hover:bg-gray-600"
-            }`}
-          >
-            All
-          </button>
-          {Object.entries(categoryStructure).map(([parent, subcategories]) => (
-            <div key={parent}>
-              <button
-                onClick={() => {
-                  setExpandedCategory(
-                    expandedCategory === parent ? null : parent
-                  );
-                  setSelectedCategory(parent);
-                  setSearchQuery("");
-                  navigate("/products");
-                }}
-                className={`block w-full text-left px-3 py-1 rounded cursor-pointer dark:text-gray-100 ${
-                  selectedCategory === parent
-                    ? "bg-pink-500 font-semibold"
-                    : "hover:bg-gray-100 dark:hover:bg-gray-600"
-                }`}
-              >
-                {parent}
-              </button>
-
-              {/* Expand subcategories */}
-              <AnimatePresence>
-                {expandedCategory === parent && (
-                  <motion.div
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: "auto", opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.3 }}
-                    className="pl-4 overflow-hidden"
-                  >
-                    {subcategories.map((sub) => (
-                      <button
-                        key={sub}
-                        onClick={() => {
-                          setSelectedCategory(sub);
-                          setSearchQuery("");
-                          navigate(`/products/category/${sub.toUpperCase()}`);
-                        }}
-                        className={`block w-full text-left px-3 py-1 rounded cursor-pointer dark:text-gray-200 ${
-                          selectedCategory === sub
-                            ? "bg-pink-100 dark:bg-pink-400 text-pink-400 dark:text-white font-semibold"
-                            : "hover:bg-gray-50 dark:hover:bg-gray-600"
-                        }`}
-                      >
-                        ~ {sub}
-                      </button>
-                    ))}
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
-          ))}
-        </div>
-
-        <div className="p-3 mt-2 rounded-xl">
-          <h2 className="text-xl font-semibold text-gray-700 dark:text-gray-100 mb-2">
-            {t("filter.priceRange")}
-          </h2>
-
-          <div className="flex items-center gap-2 mb-2">
-            <input
-              type="number"
-              min={1}
-              value={priceRange[0] || ""}
-              onChange={(e) => {
-                const value = Math.max(1, Number(e.target.value));
-                setPriceRange([value, Math.max(value, priceRange[1] || value)]);
+    <main className="min-h-screen bg-gray-50 dark:bg-black">
+      <div className="flex flex-col md:flex-row px-6 py-8 gap-6">
+        {/* Sidebar Filters */}
+        <motion.aside
+          initial={{ x: -50, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          transition={{ duration: 0.5 }}
+          className="w-full md:w-70 h-fit p-4 rounded-lg shadow-md border border-gray-200 dark:border-gray-500 bg-gradient-to-tr from-white to-pink-50 dark:bg-gradient-to-tr dark:from-gray-800 dark:to-gray-600"
+        >
+          <div className="border p-3 border-pink-100 dark:border-gray-400 rounded-xl">
+            <h2 className="text-xl font-semibold mb-2 text-gray-600 dark:text-gray-100">
+              {t("filter.category")}
+            </h2>
+            <button
+              onClick={() => {
+                setExpandedCategory(null);
+                setSelectedCategory("All");
+                navigate("/products");
               }}
-              placeholder={t("filter.min")}
-              className="w-1/2 p-2 rounded border dark:bg-gray-700 dark:text-white"
-            />
-            <span className="text-gray-500 dark:text-gray-300">-</span>
-            <input
-              type="number"
-              min={1}
-              value={priceRange[1] !== Infinity ? priceRange[1] : ""}
-              onChange={(e) => {
-                const value = Number(e.target.value);
-                setPriceRange([
-                  Math.min(priceRange[0], value || Infinity),
-                  value || Infinity,
-                ]);
-              }}
-              placeholder={t("filter.max")}
-              className="w-1/2 p-2 rounded border dark:bg-gray-700 dark:text-white"
-            />
-          </div>
-        </div>
-
-        <div className="p-2">
-          <h2 className="text-xl font-semibold mb-2 text-gray-700 dark:text-gray-100">
-            {t("filter.sortBy")}
-          </h2>
-          <select
-            value={sortType}
-            onChange={(e) => setSortType(e.target.value)}
-            className="w-full p-2 rounded border cursor-pointer dark:text-gray-100 dark:bg-gray-700"
-          >
-            <option value="default">{t("filter.default")}</option>
-            <option value="priceLowHigh">{t("filter.priceLowToHigh")}</option>
-            <option value="priceHighLow">{t("filter.priceHighToLow")}</option>
-            <option value="ratingHighLow">{t("filter.ratingHighToLow")}</option>
-          </select>
-        </div>
-      </motion.aside>
-
-      {/* Products Section */}
-      <motion.section
-        className="flex-[4] min-w-0 grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6 bg-gray-100 dark:bg-gray-800 p-4 xs:p-6 md:p-10"
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
-      >
-        {displayedProducts.length > 0 ? (
-          <AnimatePresence>
-            {displayedProducts.map((product) => (
-              <motion.div
-                key={product.name}
-                variants={itemVariants}
-                initial="hidden"
-                animate="visible"
-                exit={{ opacity: 0, scale: 0.9 }}
-                transition={{ duration: 0.3 }}
-              >
-                <ProductCard
-                  product={product}
-                  currency={currency}
-                  onQuickView={handleQuickView}
-                  onAddToCompare={handleAddToCompare}
-                  compareList={compareList}
-                  isCompareOpen={isCompareOpen}
-                  handleCloseCompare={clearCompare}
-                  onAddToCart={addToCart}
-                  isFavorited={favorites.some(
-                    (item) => item.name === product.name
-                  )}
-                  onToggleFavorite={() => handleToggleFavorite(product)}
-                />
-              </motion.div>
-            ))}
-          </AnimatePresence>
-        ) : (
-          <motion.div
-            key="empty"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 20 }}
-            transition={{ duration: 0.3 }}
-            className="col-span-full grid place-items-center h-[50vh] w-full"
-          >
-            <p className="col-span-full flex items-center justify-center h-64 text-gray-500 dark:text-gray-300 text-xl font-semibold">
-              {t("filter.noProductFound")}
-            </p>
-          </motion.div>
-        )}
-
-        {/* Compare items */}
-        <AnimatePresence>
-          {compareList.length > 0 && (
-            <motion.div
-              initial={{ opacity: 0, y: 50, scale: 0.9 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: 50, scale: 0.9 }}
-              transition={{ duration: 0.3 }}
-              className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 bg-white/80 dark:bg-gray-100/80 backdrop-blur-md p-4 sm:p-6 shadow-xl rounded-2xl w-[90vw] max-w-xs sm:max-w-sm z-50"
+              className={`block w-full text-left px-3 py-1 rounded cursor-pointer dark:text-gray-100 ${
+                selectedCategory === "All"
+                  ? "bg-pink-500 font-semibold"
+                  : "hover:bg-gray-100 dark:hover:bg-gray-600"
+              }`}
             >
-              <h4 className="font-bold mb-2 text-sm sm:text-lg text-gray-700 dark:text-gray-800">
-                {t("compare.compareItems")}
-              </h4>
+              All
+            </button>
+            {Object.entries(categoryStructure).map(
+              ([parent, subcategories]) => (
+                <div key={parent}>
+                  <button
+                    onClick={() => {
+                      setExpandedCategory(
+                        expandedCategory === parent ? null : parent
+                      );
+                      setSelectedCategory(parent);
+                      setSearchQuery("");
+                      navigate("/products");
+                    }}
+                    className={`block w-full text-left px-3 py-1 rounded cursor-pointer dark:text-gray-100 ${
+                      selectedCategory === parent
+                        ? "bg-pink-500 font-semibold"
+                        : "hover:bg-gray-100 dark:hover:bg-gray-600"
+                    }`}
+                  >
+                    {parent}
+                  </button>
 
-              {compareList.map((item) => (
-                <p
-                  key={item.name}
-                  className="text-sm text-gray-600 dark:text-gray-700 truncate"
+                  {/* Expand subcategories */}
+                  <AnimatePresence>
+                    {expandedCategory === parent && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.3 }}
+                        className="pl-4 overflow-hidden"
+                      >
+                        {subcategories.map((sub) => (
+                          <button
+                            key={sub}
+                            onClick={() => {
+                              setSelectedCategory(sub);
+                              setSearchQuery("");
+                              navigate(
+                                `/products/category/${sub.toUpperCase()}`
+                              );
+                            }}
+                            className={`block w-full text-left px-3 py-1 rounded cursor-pointer dark:text-gray-200 ${
+                              selectedCategory === sub
+                                ? "bg-pink-100 dark:bg-pink-400 text-pink-400 dark:text-white font-semibold"
+                                : "hover:bg-gray-50 dark:hover:bg-gray-600"
+                            }`}
+                          >
+                            ~ {sub}
+                          </button>
+                        ))}
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              )
+            )}
+          </div>
+
+          <div className="p-3 mt-2 rounded-xl">
+            <h2 className="text-xl font-semibold text-gray-700 dark:text-gray-100 mb-2">
+              {t("filter.priceRange")}
+            </h2>
+
+            <div className="flex items-center gap-2 mb-2">
+              <input
+                type="number"
+                min={1}
+                value={priceRange[0] || ""}
+                onChange={(e) => {
+                  const value = Math.max(1, Number(e.target.value));
+                  setPriceRange([
+                    value,
+                    Math.max(value, priceRange[1] || value),
+                  ]);
+                }}
+                placeholder={t("filter.min")}
+                className="w-1/2 p-2 rounded border dark:bg-gray-700 dark:text-white"
+              />
+              <span className="text-gray-500 dark:text-gray-300">-</span>
+              <input
+                type="number"
+                min={1}
+                value={priceRange[1] !== Infinity ? priceRange[1] : ""}
+                onChange={(e) => {
+                  const value = Number(e.target.value);
+                  setPriceRange([
+                    Math.min(priceRange[0], value || Infinity),
+                    value || Infinity,
+                  ]);
+                }}
+                placeholder={t("filter.max")}
+                className="w-1/2 p-2 rounded border dark:bg-gray-700 dark:text-white"
+              />
+            </div>
+          </div>
+
+          <div className="p-2">
+            <h2 className="text-xl font-semibold mb-2 text-gray-700 dark:text-gray-100">
+              {t("filter.sortBy")}
+            </h2>
+            <select
+              value={sortType}
+              onChange={(e) => setSortType(e.target.value)}
+              className="w-full p-2 rounded border cursor-pointer dark:text-gray-100 dark:bg-gray-700"
+            >
+              <option value="default">{t("filter.default")}</option>
+              <option value="priceLowHigh">{t("filter.priceLowToHigh")}</option>
+              <option value="priceHighLow">{t("filter.priceHighToLow")}</option>
+              <option value="ratingHighLow">
+                {t("filter.ratingHighToLow")}
+              </option>
+            </select>
+          </div>
+        </motion.aside>
+
+        {/* Products Section */}
+        <motion.section
+          className="flex-[4] min-w-0 grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6 bg-gray-100 dark:bg-gray-800 p-4 xs:p-4 md:p-10"
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+        >
+          {displayedProducts.length > 0 ? (
+            <AnimatePresence>
+              {displayedProducts.map((product) => (
+                <motion.div
+                  key={product.name}
+                  variants={itemVariants}
+                  initial="hidden"
+                  animate="visible"
+                  exit={{ opacity: 0, scale: 0.9 }}
+                  transition={{ duration: 0.3 }}
                 >
-                  {t(item.name)}
-                </p>
+                  <ProductCard
+                    product={product}
+                    currency={currency}
+                    onQuickView={handleQuickView}
+                    onAddToCompare={handleAddToCompare}
+                    compareList={compareList}
+                    isCompareOpen={isCompareOpen}
+                    handleCloseCompare={clearCompare}
+                    onAddToCart={addToCart}
+                    isFavorited={favorites.some(
+                      (item) => item.name === product.name
+                    )}
+                    onToggleFavorite={() => handleToggleFavorite(product)}
+                  />
+                </motion.div>
               ))}
-
-              <button className="mt-4 w-full py-2.5 sm:py-3 bg-pink-400 text-white font-semibold text-sm sm:text-base rounded-xl hover:bg-pink-500 transition cursor-pointer">
-                {t("compare.selectProduct")}
-              </button>
+            </AnimatePresence>
+          ) : (
+            <motion.div
+              key="empty"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 20 }}
+              transition={{ duration: 0.3 }}
+              className="col-span-full grid place-items-center h-[50vh] w-full"
+            >
+              <p className="col-span-full flex items-center justify-center h-64 text-gray-500 dark:text-gray-300 text-xl font-semibold">
+                {t("filter.noProductFound")}
+              </p>
             </motion.div>
           )}
-        </AnimatePresence>
-        <CompareModal
-          products={compareList}
-          isOpen={isCompareOpen}
-          onClose={clearCompare}
-          currency={currency}
-        />
-      </motion.section>
 
-      {/* Quick View Modal */}
-      <ProductQuickView
-        product={selectedProduct}
-        isOpen={!!selectedProduct}
-        currency={currency}
-        onClose={() => setSelectedProduct(null)}
-      />
-    </div>
+          {/* Compare items */}
+          <AnimatePresence>
+            {compareList.length > 0 && (
+              <motion.div
+                initial={{ opacity: 0, y: 50, scale: 0.9 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: 50, scale: 0.9 }}
+                transition={{ duration: 0.3 }}
+                className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 bg-white/80 dark:bg-gray-100/80 backdrop-blur-md p-4 sm:p-6 shadow-xl rounded-2xl w-[90vw] max-w-xs sm:max-w-sm z-50"
+              >
+                <h4 className="font-bold mb-2 text-sm sm:text-lg text-gray-700 dark:text-gray-800">
+                  {t("compare.compareItems")}
+                </h4>
+
+                {compareList.map((item) => (
+                  <p
+                    key={item.name}
+                    className="text-sm text-gray-600 dark:text-gray-700 truncate"
+                  >
+                    {t(item.name)}
+                  </p>
+                ))}
+
+                <button className="mt-4 w-full py-2.5 sm:py-3 bg-pink-400 text-white font-semibold text-sm sm:text-base rounded-xl hover:bg-pink-500 transition cursor-pointer">
+                  {t("compare.selectProduct")}
+                </button>
+              </motion.div>
+            )}
+          </AnimatePresence>
+          <CompareModal
+            products={compareList}
+            isOpen={isCompareOpen}
+            onClose={clearCompare}
+            currency={currency}
+          />
+        </motion.section>
+
+        {/* Quick View Modal */}
+        <ProductQuickView
+          product={selectedProduct}
+          isOpen={!!selectedProduct}
+          currency={currency}
+          onClose={() => setSelectedProduct(null)}
+        />
+      </div>
+    </main>
   );
 };
 

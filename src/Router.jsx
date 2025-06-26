@@ -12,6 +12,8 @@ import ContactUs from "./components/ui/ContactUs";
 import AboutUs from "./components/ui/AboutUs";
 import ProductDetailsPage from "./components/ui/ProductDetailsPage";
 import FAQs from "./components/ui/FAQs";
+import ScrollToTop from "./components/ui/ScrollToTop";
+import Sitemap from "./components/ui/Sitemap";
 
 const AppRouter = ({ currency, setCurrency }) => {
   const { favorites } = useFavorites();
@@ -70,11 +72,13 @@ const AppRouter = ({ currency, setCurrency }) => {
           <Route path="/contact" element={<ContactUs />} />
           <Route path="/about" element={<AboutUs />} />
           <Route
-            path="/product/:productCategory"
+            path="/product/:productCategory/:productName"
             element={<ProductDetailsPage currency={currency} />}
           />
           <Route path="/faqs" element={<FAQs />} />
+          <Route path="sitemap" element={<Sitemap />} />
         </Routes>
+        <ScrollToTop />
       </main>
       <Footer />
     </Router>

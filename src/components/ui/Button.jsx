@@ -8,7 +8,7 @@ export function Button({
   ...props
 }) {
   const baseStyle =
-    "relative rounded-md px-8 py-2 font-semibold transition text-black dark:text-white cursor-pointer";
+    "relative rounded-md px-8 py-2 font-semibold transition text-black dark:text-white";
 
   const variants = {
     link: "text-pink-500 hover:underline bg-transparent p-0",

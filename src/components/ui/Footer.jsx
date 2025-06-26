@@ -22,7 +22,7 @@ export default function Footer() {
             <img
               src={logo}
               alt="Logo"
-              className="w-42 h-auto rounded-full cursor-pointer"
+              className="w-42 h-auto rounded-full cursor-pointer dark:invert scale-125"
             />
           </Link>
         </div>
@@ -34,19 +34,31 @@ export default function Footer() {
             <span className="block w-10 h-0.5 bg-pink-500 mt-1"></span>
           </h3>
           <ul className="space-y-2 dark:text-gray-400 text-gray-500/90 sm:text-balance text-lg font-medium">
-            <li className="hover:text-pink-400 duration-200 ease-in-out cursor-pointer">
+            <li
+              onClick={() => navigate("/products")}
+              className="hover:text-pink-400 duration-200 ease-in-out cursor-pointer"
+            >
               {t("footer.fashion")}
             </li>
-            <li className="hover:text-pink-400 duration-200 ease-in-out cursor-pointer">
+            <li
+              onClick={() => navigate("/products/category/ELECTRONICS")}
+              className="hover:text-pink-400 duration-200 ease-in-out cursor-pointer"
+            >
               {t("footer.electronic")}
             </li>
-            <li className="hover:text-pink-400 duration-200 ease-in-out cursor-pointer">
+            <li
+              onClick={() => navigate("/products/category/BEAUTY")}
+              className="hover:text-pink-400 duration-200 ease-in-out cursor-pointer"
+            >
               {t("footer.cosmetic")}
             </li>
             <li className="hover:text-pink-400 duration-200 ease-in-out cursor-pointer">
               {t("footer.health")}
             </li>
-            <li className="hover:text-pink-400 duration-200 ease-in-out cursor-pointer">
+            <li
+              onClick={() => navigate("/products/category/WATCH")}
+              className="hover:text-pink-400 duration-200 ease-in-out cursor-pointer"
+            >
               {t("footer.watches")}
             </li>
           </ul>
@@ -118,7 +130,10 @@ export default function Footer() {
             <li className="hover:text-pink-400 duration-200 ease-in-out cursor-pointer">
               {t("footer.pricesDrop")}
             </li>
-            <li className="hover:text-pink-400 duration-200 ease-in-out cursor-pointer">
+            <li
+              onClick={() => navigate("/products/category/new")}
+              className="hover:text-pink-400 duration-200 ease-in-out cursor-pointer"
+            >
               {t("footer.newProducts")}
             </li>
             <li className="hover:text-pink-400 duration-200 ease-in-out cursor-pointer">
@@ -130,7 +145,10 @@ export default function Footer() {
             >
               {t("footer.contactUs")}
             </li>
-            <li className="hover:text-pink-400 duration-200 ease-in-out cursor-pointer">
+            <li
+              onClick={() => navigate("/sitemap")}
+              className="hover:text-pink-400 duration-200 ease-in-out cursor-pointer"
+            >
               {t("footer.sitemap")}
             </li>
           </ul>

@@ -7,13 +7,16 @@ import { motion } from "framer-motion";
 import { Button } from "./Button";
 import { useCart } from "../context/CartContext";
 import BadgeRibbon from "./BadgeRibbon";
+import toast from "react-hot-toast";
 
 const ProductDetailsPage = ({ currency }) => {
-  const { productCategory } = useParams();
+  const { productCategory, productName } = useParams();
   const decodedCategory = decodeURIComponent(productCategory);
-  // match where category ends with the productName (without 'card.')
+  const decodedName = decodeURIComponent(productName);
   const product = allProducts.find(
-    (p) => p.category.replace(/^card\./, "") === decodedCategory
+    (p) =>
+      p.category.replace(/^card\./, "") === decodedCategory &&
+      p.name.replace(/^card\./, "") === decodedName
   );
   const { t } = useTranslation();
   const [selectedImage, setSelectedImage] = useState(product?.mainImage);
@@ -64,7 +67,7 @@ const ProductDetailsPage = ({ currency }) => {
   }, [product.originalPrice, currency]);
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 dark:bg-gray-900">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 dark:bg-black">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         <div className="flex flex-col lg:flex-row gap-10">
           {/* Images Section */}
@@ -169,16 +172,35 @@ const ProductDetailsPage = ({ currency }) => {
             )}
 
             {/* Action Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 items-center justify-start sm:justify-start">
+            <div className="flex flex-col sm:flex-row gap-4 w-full">
               <Button
-                onClick={handleAddToCart}
-                className="sm:w-[45%] w-full lg:w-1/2 shrink-0 px-6 py-3 bg-yellow-400 hover:bg-yellow-500 font-bold rounded-lg shadow-md transition cursor-pointer"
+                onClick={() => {
+                  if (!product.inStock) {
+                    toast.error(t("card.outOfStockMessage"), { icon: "🚫" });
+                    return;
+                  }
+                  handleAddToCart();
+                  toast.success(
+                    t("card.addedToCartMessage", {
+                      category: t(product.category),
+                    })
+                  );
+                }}
+                className={`p-2 rounded-full shadow transition-all ${
+                  product.inStock
+                    ? "overflow-hidden flex-1 px-6 py-3 bg-yellow-400 hover:bg-yellow-500 font-bold rounded-lg shadow-md transition cursor-pointer text-center whitespace-nowrap"
+                    : "overflow-hidden flex-1 px-6 py-3 bg-yellow-400 hover:bg-yellow-500 font-bold rounded-lg shadow-md transition text-center whitespace-nowrap cursor-no-drop opacity-60"
+                }`}
               >
                 {t("card.addToCart")}
               </Button>
               <Button
                 onClick={() => handleBuyNow(product)}
-                className="sm:w-[45%] w-full lg:w-1/2 shrink-0 px-6 py-3 bg-orange-500 hover:bg-orange-600 font-bold rounded-lg shadow-md transition cursor-pointer"
+                className={`p-2 rounded-full shadow transition-all ${
+                  product.inStock
+                    ? "overflow-hidden flex-1 px-6 py-3 bg-orange-500 hover:bg-orange-600 font-bold rounded-lg shadow-md transition cursor-pointer text-center whitespace-nowrap"
+                    : "overflow-hidden flex-1 px-6 py-3 bg-orange-500 hover:bg-orange-600 font-bold rounded-lg shadow-md transition text-center whitespace-nowrap cursor-no-drop opacity-60"
+                }`}
               >
                 {t("card.buyNow")}
               </Button>

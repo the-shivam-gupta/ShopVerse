@@ -113,7 +113,7 @@ const HeroSlider = () => {
 
   return (
     <section
-      className="relative flex flex-col-reverse md:flex-row bg-pink-50 dark:bg-black p-8 items-center justify-evenly gap-12 overflow-hidden"
+      className="relative flex flex-col-reverse md:flex-row bg-pink-50 dark:bg-black dark:bg-gradient-to-tl dark:from-gray-900 via-black dark:to-gray-900 p-8 items-center justify-evenly gap-12 overflow-hidden"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
@@ -150,7 +150,7 @@ const HeroSlider = () => {
 
           <Button
             onClick={() => navigate("/products")}
-            className="w-fit px-6 py-3 bg-pink-500 hover:bg-pink-600 font-semibold rounded-full transition-all shadow-md hover:shadow-lg"
+            className="w-fit px-6 py-3 bg-pink-500 hover:bg-pink-600 font-semibold rounded-full transition-all shadow-md hover:shadow-lg cursor-pointer"
           >
             {t(slide.ctaText)}
           </Button>
