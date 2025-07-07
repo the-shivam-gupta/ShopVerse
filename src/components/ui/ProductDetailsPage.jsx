@@ -1,13 +1,14 @@
 import { useParams } from "react-router-dom";
 import { products as allProducts } from "./ProductCard";
 import { useTranslation } from "react-i18next";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { Star } from "lucide-react";
 import { motion } from "framer-motion";
 import { Button } from "./Button";
 import { useCart } from "../context/CartContext";
 import BadgeRibbon from "./BadgeRibbon";
 import toast from "react-hot-toast";
+import SizeGuideModal from "./SizeGuideModal";
 
 const ProductDetailsPage = ({ currency }) => {
   const { productCategory, productName } = useParams();
@@ -21,6 +22,13 @@ const ProductDetailsPage = ({ currency }) => {
   const { t } = useTranslation();
   const [selectedImage, setSelectedImage] = useState(product?.mainImage);
   const { addToCart } = useCart();
+  const [showSizeGuide, setShowSizeGuide] = useState(false);
+
+  useEffect(() => {
+    if (product && product.mainImage) {
+      setSelectedImage(product.mainImage);
+    }
+  }, [product]);
 
   if (!product) {
     return (
@@ -71,15 +79,19 @@ const ProductDetailsPage = ({ currency }) => {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         <div className="flex flex-col lg:flex-row gap-10">
           {/* Images Section */}
-          <div className="w-full lg:w-1/2 relative overflow-hidden">
+          <div className="w-full lg:w-1/2 relative overflow-hidden rotate-2 hover:rotate-0 hover:scale-105 transition-transform">
             <div className="relative flex justify-center items-center border border-gray-200 dark:border-gray-600 rounded-xl shadow-lg dark:shadow-gray-800 h-[400px] sm:h-[500px] bg-gray-50 dark:bg-gray-800 overflow-hidden">
               {/* ✅ Badge */}
               <BadgeRibbon
                 badge={product.badge}
                 className="w-[150px] top-6 -right-8 rotate-45 "
               />
+              {/* Subtle Gradient Overlay */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/5 via-transparent to-white/5 dark:from-white/5 dark:via-transparent dark:to-black/5 pointer-events-none z-10" />
               {/* ✅ Main Product Image */}
-              <img
+              <motion.img
+                whileHover={{ scale: 1.1 }}
+                transition={{ type: "spring", stiffness: 300 }}
                 src={selectedImage}
                 alt={product.name}
                 className="w-[260px] max-h-full object-contain"
@@ -113,7 +125,7 @@ const ProductDetailsPage = ({ currency }) => {
           </div>
 
           {/* Product Details Section */}
-          <div className="w-full lg:w-1/2 flex flex-col justify-between gap-6">
+          <div className="w-full lg:w-1/2 flex flex-col justify-between gap-4">
             {/* Title and Category */}
             <div>
               <p className="text-sm font-semibold text-pink-600 dark:text-pink-400 uppercase tracking-wide mb-1">
@@ -133,6 +145,56 @@ const ProductDetailsPage = ({ currency }) => {
                 {originalPrice}
               </span>
             </div>
+
+            {/* Colors */}
+            {product.colors?.length > 0 && (
+              <div className="flex items-center gap-2 flex-wrap sm:justify-start">
+                <span className="text-sm text-gray-700 dark:text-gray-300">
+                  Color:
+                </span>
+                {product.colors.map((color, i) => (
+                  <div
+                    key={i}
+                    className="w-5 h-5 rounded-full border border-gray-300 cursor-pointer hover:scale-110"
+                    style={{ backgroundColor: color }}
+                    title={color}
+                  />
+                ))}
+              </div>
+            )}
+
+            {/* Sizes */}
+            {product.sizes?.length > 0 && (
+              <div className="flex items-center gap-2 flex-wrap sm:justify-start">
+                <span className="text-sm text-gray-700 dark:text-gray-300">
+                  Size:
+                </span>
+                {product.sizes.map((size, i) => (
+                  <span
+                    key={i}
+                    className="min-w-[2.5rem] h-10 px-2 flex items-center justify-center text-sm border border-gray-300 rounded-md dark:border-gray-600 text-gray-800 dark:text-white hover:bg-gray-200/30 dark:hover:bg-gray-700/30 cursor-pointer"
+                  >
+                    {size}
+                  </span>
+                ))}
+              </div>
+            )}
+
+            {/* Size Guide */}
+            {product?.sizes?.length > 1 && (
+              <button
+                onClick={() => setShowSizeGuide(true)}
+                className="text-sm text-pink-600 dark:text-pink-500 hover:underline cursor-pointer flex"
+              >
+                {t("card.findMySize")}
+              </button>
+            )}
+            {showSizeGuide && (
+              <SizeGuideModal
+                onClose={() => setShowSizeGuide(false)}
+                product={product}
+              />
+            )}
 
             {/* Ratings */}
             {product.rating && (
@@ -172,7 +234,7 @@ const ProductDetailsPage = ({ currency }) => {
             )}
 
             {/* Action Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 w-full">
+            <div className="flex flex-col sm:flex-row gap-4 w-full ">
               <Button
                 onClick={() => {
                   if (!product.inStock) {

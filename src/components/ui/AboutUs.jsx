@@ -34,6 +34,7 @@ const AboutUs = () => {
         >
           About Us
         </motion.h1>
+        <div className="h-px bg-gradient-to-r from-transparent via-pink-400 to-transparent my-6 sm:my-10" />
 
         {/* Intro */}
         <motion.p
@@ -52,8 +53,11 @@ const AboutUs = () => {
           occasion.
         </motion.p>
 
-        {/* Sections */}
-        <div className="space-y-8 sm:space-y-10">
+        {/* Sections Grid */}
+        <motion.div
+          className="grid gap-6 sm:grid-cols-2"
+          variants={childVariants}
+        >
           {[
             {
               title: "Our Story",
@@ -67,57 +71,73 @@ const AboutUs = () => {
             },
             {
               title: "Our Values",
-              content: (
-                <ul className="list-disc list-inside space-y-1">
-                  <li>You always come first</li>
-                  <li>Style with care for the planet</li>
-                  <li>We choose quality, not quantity</li>
-                  <li>We welcome all styles, backgrounds, and people</li>
-                </ul>
-              ),
+              content: [
+                "You always come first",
+                "Style with care for the planet",
+                "We choose quality, not quantity",
+                "We welcome all styles, backgrounds, and people",
+              ],
+            },
+            {
+              title: "Why Shop With Us?",
+              content: [
+                "Fast & free shipping",
+                "Easy 10-day returns",
+                "Secure checkout experience",
+                "24/7 customer support",
+              ],
             },
           ].map(({ title, content }, index) => (
             <motion.div
               key={index}
-              className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-5 sm:p-6 border border-gray-100 dark:border-gray-500 dark:shadow-gray-600"
+              className="rounded-xl border border-gray-200 dark:border-gray-700 p-6 sm:p-7 bg-white dark:bg-gray-800 shadow-md hover:shadow-lg transition duration-300 transform hover:-translate-y-1"
               variants={childVariants}
             >
-              <h2 className="text-xl sm:text-2xl font-semibold mb-2 text-pink-500">
-                {title}
-              </h2>
-              <div className="text-gray-500 dark:text-gray-200 text-base sm:text-lg">
-                {content}
+              <h3 className="text-xl font-bold mb-3 text-pink-500">{title}</h3>
+              <div className="text-gray-600 dark:text-gray-200 text-sm sm:text-base leading-relaxed space-y-2">
+                {Array.isArray(content) ? (
+                  <ul className="list-disc list-inside space-y-1">
+                    {content.map((point, i) => (
+                      <li key={i}>{point}</li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p>{content}</p>
+                )}
               </div>
             </motion.div>
           ))}
-        </div>
+        </motion.div>
 
         {/* Categories */}
         <motion.div
-          className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mt-10"
+          className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 mt-10"
           variants={childVariants}
         >
-          {["Bags", "Shoes", "Clothes"].map((item) => {
+          {["Bags", "Shoes", "Clothes"].map((item, index) => {
             const icon =
               item === "Bags" ? "👜" : item === "Shoes" ? "👠" : "👗";
+            const hoverRotation = index === 0 ? 1 : index === 1 ? 0 : -1;
+
             return (
               <motion.div
-                onClick={() => navigate(`/products/category/${item.toUpperCase()}`)}
                 key={item}
-                whileHover={{ scale: 1.05 }}
-                className="bg-pink-50 dark:bg-gray-700 rounded-xl shadow hover:shadow-lg transition cursor-pointer flex flex-col items-center p-5"
+                onClick={() =>
+                  navigate(`/products/category/${item.toUpperCase()}`)
+                }
+                whileHover={{ scale: 1.05, rotate: hoverRotation }} 
+                transition={{ type: "spring", stiffness: 200, damping: 12 }}
+                className="bg-white/20 dark:bg-gray-800 backdrop-blur-md border border-gray-200 dark:border-gray-700 text-center rounded-2xl shadow-xl hover:shadow-pink-500/20 dark:hover:shadow-gray-800 transition-shadow duration-300 cursor-pointer p-6 flex flex-col items-center"
               >
                 <div
-                  className="text-3xl sm:text-4xl mb-2"
+                  className="text-4xl sm:text-5xl mb-3"
                   aria-label={item}
                   title={item}
                 >
                   {icon}
                 </div>
-                <h3 className="text-lg sm:text-xl font-semibold text-pink-600">
-                  {item}
-                </h3>
-                <p className="text-gray-500 dark:text-gray-200 text-sm sm:text-base text-center mt-1">
+                <h3 className="text-xl font-semibold text-pink-500">{item}</h3>
+                <p className="text-gray-700 dark:text-gray-300 text-sm sm:text-base mt-1">
                   Explore our collection of {item.toLowerCase()} for every
                   occasion.
                 </p>
@@ -132,9 +152,7 @@ const AboutUs = () => {
           className="text-center mt-10 sm:mt-12"
           variants={childVariants}
         >
-          <Button
-            className="bg-pink-500 px-6 py-3 w-full sm:w-auto rounded-md font-medium shadow hover:bg-pink-600 transition cursor-pointer"
-          >
+          <Button className="bg-pink-500 px-6 py-3 w-full sm:w-auto rounded-md font-medium shadow hover:bg-pink-600 transition cursor-pointer">
             Shop Now
           </Button>
         </motion.div>

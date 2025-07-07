@@ -1019,16 +1019,19 @@ const ProductCard = React.memo(
     }, [product.originalPrice, currency]);
 
     return (
-      <div
-        className="overflow-hidden w-full h-auto relative bg-white dark:bg-transparent rounded-xl shadow hover:shadow-xl dark:hover:shadow-md dark:shadow-gray-100 transition-all p-4 hover:-translate-y-2 cursor-pointer"
+      <motion.div
+        whileHover={{ y: -8, scale: 1.02 }}
+        transition={{ type: "spring", stiffness: 300, damping: 20 }}
+        className="overflow-hidden w-full h-auto relative bg-white dark:bg-transparent rounded-xl shadow hover:shadow-xl dark:hover:shadow-md dark:shadow-gray-100 p-4 cursor-pointer"
         onClick={handleCardClick}
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
       >
         <div className="relative">
-          <div className="relative w-full h-64 overflow-hidden">
+          <div className="relative w-full h-64 overflow-hidden bg-gradient-to-b from-pink-50 to-white dark:from-gray-700 dark:to-gray-800 rounded-lg">
             {/* Main Image */}
             <img
+              loading="lazy"
               src={product.mainImage}
               alt={product.name}
               className={`absolute inset-0 w-full h-full object-contain transition-opacity duration-500 z-[1] ${
@@ -1038,6 +1041,7 @@ const ProductCard = React.memo(
 
             {/* Hover Image */}
             <img
+              loading="lazy"
               src={product.hoverImage}
               alt={product.name}
               className={`absolute inset-0 w-full h-full object-contain transition-opacity duration-200 z-[2] ${
@@ -1049,7 +1053,7 @@ const ProductCard = React.memo(
           {/* Icons */}
           <div
             className={`absolute top-4 right-4 flex flex-col gap-2 transition-all duration-300 ease-linear z-3 ${
-              hovered ? "opacity-100" : "opacity-0"
+              hovered ? "translate-x-0 opacity-100" : "translate-x-4 opacity-0"
             }`}
           >
             {/* Favorite */}
@@ -1151,7 +1155,7 @@ const ProductCard = React.memo(
           <p className="text-pink-400 font-semibold text-md text-left ml-2 cursor-pointer">
             {t(product.category)}
           </p>
-          <h3 className="text-gray-500 dark:text-gray-300 text-[1em] mt-1 text-left text-xl tracking-wider ml-2 cursor-pointer hover:text-gray-600 dark:hover:text-gray-200 duration-200 line-clamp-1">
+          <h3 className="text-gray-500 dark:text-gray-300 text-[1em] mt-1 text-left text-xl tracking-wider ml-2 cursor-pointer hover:text-gray-600 dark:hover:text-gray-200 duration-200 line -clamp-1">
             {t(product.name)}
           </h3>
           <div className="flex justify-start items-start text-yellow-400 mt-2 ml-2">
@@ -1173,7 +1177,7 @@ const ProductCard = React.memo(
             </span>
           </div>
         </div>
-      </div>
+      </motion.div>
     );
   }
 );

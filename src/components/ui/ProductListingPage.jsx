@@ -168,7 +168,7 @@ const ProductListingPage = ({ currency }) => {
               className={`block w-full text-left px-3 py-1 rounded cursor-pointer dark:text-gray-100 ${
                 selectedCategory === "All"
                   ? "bg-pink-500 font-semibold"
-                  : "hover:bg-gray-100 dark:hover:bg-gray-600"
+                  : "hover:bg-pink-100 dark:hover:bg-gray-600"
               }`}
             >
               All
@@ -188,7 +188,7 @@ const ProductListingPage = ({ currency }) => {
                     className={`block w-full text-left px-3 py-1 rounded cursor-pointer dark:text-gray-100 ${
                       selectedCategory === parent
                         ? "bg-pink-500 font-semibold"
-                        : "hover:bg-gray-100 dark:hover:bg-gray-600"
+                        : "hover:bg-pink-100 dark:hover:bg-gray-600"
                     }`}
                   >
                     {parent}
@@ -217,7 +217,7 @@ const ProductListingPage = ({ currency }) => {
                             className={`block w-full text-left px-3 py-1 rounded cursor-pointer dark:text-gray-200 ${
                               selectedCategory === sub
                                 ? "bg-pink-100 dark:bg-pink-400 text-pink-400 dark:text-white font-semibold"
-                                : "hover:bg-gray-50 dark:hover:bg-gray-600"
+                                : "hover:bg-pink-100 dark:hover:bg-gray-600"
                             }`}
                           >
                             ~ {sub}

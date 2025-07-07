@@ -1,4 +1,10 @@
-import React, { useState, useCallback, useMemo } from "react";
+import React, {
+  useState,
+  useCallback,
+  useMemo,
+  useRef,
+  useEffect,
+} from "react";
 import { useCart } from "../context/CartContext";
 import { Trans, useTranslation } from "react-i18next";
 import { Trash2, Plus, Minus } from "lucide-react";
@@ -6,7 +12,62 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "./Button";
 import { useNavigate } from "react-router-dom";
 
-const CartPage = ({ currency, product }) => {
+// Rolling numbers
+const RollingNumber = ({ number }) => {
+  const prevNumberRef = useRef(number);
+  const [prevDigits, setPrevDigits] = useState(String(number).split(""));
+
+  useEffect(() => {
+    const prev = String(prevNumberRef.current);
+    const curr = String(number);
+
+    if (prev !== curr) {
+      setPrevDigits(prev.split(""));
+      prevNumberRef.current = number;
+    }
+  }, [number]);
+
+  const currDigits = String(number).split("");
+  const padCount = Math.max(0, currDigits.length - prevDigits.length);
+  const prevDigitsPadded = [...Array(padCount).fill(""), ...prevDigits];
+
+  return (
+    <div className="flex">
+      {currDigits.map((digit, index) => {
+        const prevDigit = prevDigitsPadded[index];
+        const shouldAnimate = digit !== prevDigit;
+
+        return (
+          <div
+            key={`digit-${index}`}
+            className="relative h-6 w-[0.7rem] overflow-hidden flex justify-center items-center"
+          >
+            <AnimatePresence mode="wait" initial={false}>
+              {shouldAnimate ? (
+                <motion.span
+                  key={digit + "-" + index}
+                  initial={{ y: "100%" }}
+                  animate={{ y: "0%" }}
+                  exit={{ y: "-100%" }}
+                  transition={{ duration: 0.25, ease: "easeInOut" }}
+                  className="absolute dark:text-white text-gray-700 font-semibold text-lg"
+                >
+                  {digit}
+                </motion.span>
+              ) : (
+                <span className="dark:text-white text-gray-700 font-semibold text-lg">
+                  {digit}
+                </span>
+              )}
+            </AnimatePresence>
+          </div>
+        );
+      })}
+    </div>
+  );
+};
+
+const CartPage = ({ currency }) => {
   const { cart = [], setCart, removeFromCart, addToCartAtIndex } = useCart();
   const { t } = useTranslation();
   const [recentlyRemoved, setRecentlyRemoved] = useState(null);
@@ -200,7 +261,6 @@ const CartPage = ({ currency, product }) => {
                   >
                     {/* Quantity Controls */}
                     <div className="flex gap-3 border border-gray-200 dark:border-gray-700 p-1 rounded-full">
-                      {/* Conditional: Trash if quantity === 1 */}
                       {item.quantity === 1 ? (
                         <button
                           onClick={() => handleRemove(item)}
@@ -217,9 +277,8 @@ const CartPage = ({ currency, product }) => {
                         </button>
                       )}
 
-                      <span className="font-semibold text-gray-800 dark:text-gray-200 cursor-text">
-                        {item.quantity ?? 1}
-                      </span>
+                      <RollingNumber number={item.quantity ?? 1} />
+
                       <button
                         onClick={() => handleIncreaseQuantity(item)}
                         className="bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-black dark:text-white rounded-full w-7 h-7 flex items-center justify-center cursor-pointer"

@@ -149,8 +149,9 @@ const HeroSlider = () => {
           </p>
 
           <Button
+            variant="outline"
             onClick={() => navigate("/products")}
-            className="w-fit px-6 py-3 bg-pink-500 hover:bg-pink-600 font-semibold rounded-full transition-all shadow-md hover:shadow-lg cursor-pointer"
+            className="w-fit px-6 py-3 font-semibold rounded-full transition-all shadow-md hover:shadow-lg cursor-pointer"
           >
             {t(slide.ctaText)}
           </Button>
@@ -190,15 +191,27 @@ const HeroSlider = () => {
 
       {/* Dots Navigation */}
       <div className="absolute bottom-4 flex justify-center w-full space-x-2">
-        {slides.map((_, index) => (
-          <button
-            key={index}
-            onClick={() => handleDotClick(index)}
-            className={`w-2 h-2 rounded-full transition-all duration-300 cursor-pointer ${
-              index === current ? "bg-pink-500 scale-110" : "bg-pink-200"
-            }`}
-          ></button>
-        ))}
+        {slides.map((_, index) => {
+          const distance = Math.abs(current - index);
+
+          // Define background shade based on distance
+          let bgClass = "bg-pink-100";
+          if (distance === 0) {
+            bgClass = "bg-pink-500 scale-110";
+          } else if (distance === 1) {
+            bgClass = "bg-pink-300";
+          } else if (distance === 2) {
+            bgClass = "bg-pink-200";
+          }
+
+          return (
+            <button
+              key={index}
+              onClick={() => handleDotClick(index)}
+              className={`w-2.5 h-2.5 rounded-full transition-all duration-300 cursor-pointer ${bgClass}`}
+            ></button>
+          );
+        })}
       </div>
     </section>
   );
