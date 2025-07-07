@@ -5,6 +5,8 @@ import { useFavorites } from "../context/FavoritesContext";
 import { useCart } from "../context/CartContext";
 import { motion, AnimatePresence } from "framer-motion";
 import { useSearch } from "../context/SearchContext";
+import { products } from "./ProductCard";
+import { SearchIcon } from "lucide-react";
 import {
   Facebook,
   Twitter,
@@ -73,6 +75,21 @@ const Header = ({ currency, setCurrency }) => {
   const inputRef = useRef();
   const [menuOpen, setMenuOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
+  const [highlightedIndex, setHighlightedIndex] = useState(-1); // No item is highlighted initially
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const [suggestions, setSuggestions] = useState([]);
+
+  useEffect(() => {
+    if (!searchQuery.trim()) {
+      setSuggestions([]);
+      return;
+    }
+    const filtered = products.filter((product) =>
+      t(product.category).toLowerCase().includes(searchQuery.toLowerCase())
+    );
+    setSuggestions(filtered.slice(0, 5));
+  }, [searchQuery, t]);
 
   const toggleDropdown = () => setIsOpen((prev) => !prev);
   const closeDropdown = () => setIsOpen(false);
@@ -127,6 +144,18 @@ const Header = ({ currency, setCurrency }) => {
     handleFocus();
     handleSearch();
   }, [handleFocus, handleSearch]);
+
+  // cart icon total
+  const getCartTotal = () => {
+    const subtotal = cart.reduce(
+      (sum, item) => sum + item.price * item.quantity,
+      0
+    );
+
+    return currency === "USD"
+      ? `$${subtotal.toFixed(2)}`
+      : `₹${Math.round(subtotal * 83).toLocaleString()}`;
+  };
 
   return (
     <header>
@@ -198,8 +227,8 @@ const Header = ({ currency, setCurrency }) => {
               value={currency}
               onChange={(e) => setCurrency(e.target.value)}
             >
-              <option value="USD">USD $</option>
-              <option value="INR">INR ₹</option>
+              <option value="USD">🇺🇸 USD $</option>
+              <option value="INR">🇮🇳 INR ₹</option>
             </select>
 
             <select
@@ -233,13 +262,49 @@ const Header = ({ currency, setCurrency }) => {
             <input
               ref={inputRef}
               value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              onKeyDown={(e) => e.key === "Enter" && handleSearch()}
+              onFocus={() => {
+                setShowSuggestions(true);
+              }}
+              onBlur={() => {
+                // Delay hiding so onMouseDown can fire
+                setTimeout(() => setShowSuggestions(false), 150);
+              }}
+              onChange={(e) => {
+                setSearchQuery(e.target.value);
+                setHighlightedIndex(-1);
+                setShowSuggestions(true); // <-- Add this!
+              }}
+              onKeyDown={(e) => {
+                if (!suggestions.length) return;
+
+                if (e.key === "ArrowDown") {
+                  e.preventDefault();
+                  setHighlightedIndex((prev) =>
+                    prev < suggestions.length - 1 ? prev + 1 : 0
+                  );
+                } else if (e.key === "ArrowUp") {
+                  e.preventDefault();
+                  setHighlightedIndex((prev) =>
+                    prev > 0 ? prev - 1 : suggestions.length - 1
+                  );
+                } else if (e.key === "Enter" && highlightedIndex !== -1) {
+                  const product = suggestions[highlightedIndex];
+                  const encodedCategory = encodeURIComponent(
+                    product.category.replace(/^card\./, "")
+                  );
+                  const encodedName = encodeURIComponent(
+                    product.name.replace(/^card\./, "")
+                  );
+                  navigate(`/product/${encodedCategory}/${encodedName}`);
+                  setSearchQuery(t(product.category));
+                  setShowSuggestions(false);
+                }
+              }}
               type="search"
               placeholder={t("header.searchPlaceholder")}
-              className="w-full border border-gray-300 dark:border-pink-500 dark:text-gray-50 bg-transparent rounded-full px-4 pr-16 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-pink-500 caret-pink-500
-          [&::-webkit-search-cancel-button]:appearance-none"
+              className="w-full border border-gray-300 dark:border-pink-500 dark:text-gray-50 bg-transparent rounded-full px-4 pr-16 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-pink-500 caret-pink-500 [&::-webkit-search-cancel-button]:appearance-none"
             />
+
             {searchQuery && (
               <button
                 onClick={() => setSearchQuery("")}
@@ -255,6 +320,52 @@ const Header = ({ currency, setCurrency }) => {
             >
               <Search size={18} />
             </button>
+
+            {/* Suggestion Dropdown */}
+            <AnimatePresence>
+              {showSuggestions && searchQuery.trim() && (
+                <motion.div
+                  initial={{ opacity: 0, y: -8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -8 }}
+                  transition={{ duration: 0.2 }}
+                  className="absolute mt-2 w-full dark:bg-black bg-white text-black dark:text-white rounded shadow-md max-h-[220px] overflow-auto border border-gray-600 z-50"
+                >
+                  {suggestions.length > 0 ? (
+                    suggestions.map((product, index) => (
+                      <div
+                        key={product.name}
+                        onMouseDown={() => {
+                          setSearchQuery(t(product.category));
+                          const encodedCategory = encodeURIComponent(
+                            product.category.replace(/^card\./, "")
+                          );
+                          const encodedName = encodeURIComponent(
+                            product.name.replace(/^card\./, "")
+                          );
+                          navigate(
+                            `/product/${encodedCategory}/${encodedName}`
+                          );
+                          setShowSuggestions(false);
+                        }}
+                        className={`flex items-center gap-2 px-4 py-2 cursor-pointer text-sm ${
+                          index === highlightedIndex
+                            ? "bg-pink-500 text-white"
+                            : "hover:bg-pink-500 hover:text-white"
+                        }`}
+                      >
+                      <SearchIcon className="w-4 h-4" />
+                        {t(product.category)}
+                      </div>
+                    ))
+                  ) : (
+                    <div className="text-center px-4 py-2 text-gray-600 dark:text-gray-300">
+                      No matching products found
+                    </div>
+                  )}
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
 
           {/* Icons */}
@@ -308,24 +419,102 @@ const Header = ({ currency, setCurrency }) => {
               </button>
             )}
 
-            <button
-              onClick={() => navigate("/favorites")}
-              className="relative text-gray-600 dark:text-gray-300 cursor-pointer"
+            <div className="relative group w-fit">
+              <button
+                onClick={() => navigate("/favorites")}
+                className="relative text-gray-600 dark:text-gray-300 cursor-pointer"
+              >
+                <Heart size={32} />
+                <span className="absolute -top-1 -right-2 text-xs bg-pink-500 text-white rounded-full px-1 font-bold">
+                  {favorites.length}
+                </span>
+              </button>
+              {/* Tooltip */}
+              <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 whitespace-nowrap bg-black dark:bg-white text-white dark:text-black text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-all duration-200 pointer-events-none z-50">
+                View your favorites
+                <div className="absolute top-5 left-1/2 -translate-x-1/2 w-2 h-2 bg-black dark:bg-white rotate-45 mt-[-1px]"></div>
+              </div>
+            </div>
+
+            <div
+              className="relative"
+              onMouseEnter={() => setIsHovered(true)}
+              onMouseLeave={() => setIsHovered(false)}
             >
-              <Heart size={32} />
-              <span className="absolute -top-1 -right-2 text-xs bg-pink-500 text-white rounded-full px-1 font-bold">
-                {favorites.length}
-              </span>
-            </button>
-            <button
-              onClick={() => navigate("/cart")}
-              className="relative text-gray-600 dark:text-gray-300 cursor-pointer"
-            >
-              <ShoppingCart size={32} />
-              <span className="absolute -top-1 -right-2 text-xs bg-pink-500 text-white rounded-full px-1 font-bold">
-                {cart.length}
-              </span>
-            </button>
+              {/* Cart Icon Button */}
+              <button
+                onClick={() => navigate("/cart")}
+                className="relative text-gray-600 dark:text-gray-300 cursor-pointer"
+              >
+                <ShoppingCart size={32} />
+                <span className="absolute -top-1 -right-2 text-xs bg-pink-500 text-white rounded-full px-1 font-bold">
+                  {cart.length}
+                </span>
+              </button>
+
+              {/* Animate Cart Preview */}
+              <AnimatePresence>
+                {isHovered && (
+                  <motion.div
+                    key="cart-preview"
+                    initial={{ opacity: 0, y: -10, scale: 0.95 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: -10, scale: 0.95 }}
+                    transition={{ duration: 0.2 }}
+                    className="absolute right-0 sm:right-0 left-1 sm:left-auto -translate-x-1/2 sm:translate-x-0 mt-3 z-50
+                   w-[300px] max-w-[90vw] bg-white dark:bg-gray-900 p-4 rounded-lg shadow-xl 
+                   border border-gray-300 dark:border-gray-500 overflow-hidden"
+                  >
+                    <div className="flex items-center justify-between mb-2">
+                      <h4 className="text-lg font-semibold text-gray-800 dark:text-white">
+                        {t("cart.previewTitle")}
+                      </h4>
+                      <span className="text-sm font-semibold text-gray-600 dark:text-gray-300">
+                        Total: {getCartTotal()}
+                      </span>
+                    </div>
+                    <div className="h-px bg-gradient-to-r from-transparent via-gray-500 to-transparent mb-3" />
+
+                    <div className="space-y-3 max-h-[180px] overflow-y-auto pr-1">
+                      {cart.slice(0, 3).map((item) => (
+                        <div
+                          key={item.name}
+                          className="flex items-center gap-3"
+                        >
+                          <img
+                            src={item.image}
+                            alt={item.name}
+                            className="w-10 h-10 object-contain rounded"
+                          />
+                          <div className="flex-1">
+                            <p className="text-sm font-medium line-clamp-1 dark:text-gray-100">
+                              {t(item.name)}
+                            </p>
+                            <span className="text-xs text-gray-400 uppercase tracking-wide">
+                              {t(item.category)}
+                            </span>
+                          </div>
+                          <span className="font-semibold text-sm text-gray-700 dark:text-white">
+                            {currency === "USD"
+                              ? `$${item.price}`
+                              : `₹${Math.round(item.price * 83)}`}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+
+                    {cart.length > 3 && (
+                      <button
+                        onClick={() => navigate("/cart")}
+                        className="block mx-auto text-center mt-3 text-pink-500 hover:underline text-sm font-semibold cursor-pointer"
+                      >
+                        {t("cart.seeMore")}
+                      </button>
+                    )}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
           </div>
         </div>
       </div>
@@ -743,7 +932,7 @@ const Header = ({ currency, setCurrency }) => {
               animate={{ x: 0 }}
               exit={{ x: "-100%" }}
               transition={{ duration: 0.3, ease: "easeInOut" }}
-              className="fixed top-0 left-0 bottom-0 w-1/3 bg-white/80 dark:bg-zinc-900/80 z-50 shadow-lg p-6 flex flex-col justify-center items-center"
+              className="fixed top-0 left-0 bottom-0 w-full bg-white/80 dark:bg-zinc-900/80 z-50 shadow-lg p-6 flex flex-col justify-center items-center"
             >
               {/* Close Icon */}
               <button

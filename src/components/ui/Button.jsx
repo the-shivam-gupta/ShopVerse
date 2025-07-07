@@ -11,7 +11,12 @@ export function Button({
     "relative rounded-md px-8 py-2 font-semibold transition text-black dark:text-white";
 
   const variants = {
-    link: "text-pink-500 hover:underline bg-transparent p-0",
+    default: "",
+    link: "text-pink-500 hover:underline bg-transparent p-0 shadow-none",
+    outline:
+      "border border-pink-400 text-pink-500 bg-transparent hover:bg-pink-100 dark:hover:bg-pink-400",
+    glass:
+      "bg-white/10 backdrop-blur-md border border-white/20 text-white shadow-xl hover:bg-white/20",
   };
 
   return (

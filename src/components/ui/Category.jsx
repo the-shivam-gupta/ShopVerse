@@ -266,7 +266,7 @@ export default function CategorySection({ currency }) {
                       name={t(item.name)}
                       count={item.count}
                       shouldAnimate={!animatedCategories[cat.id]}
-                      onAnimated={() => handleAnimated}
+                      onAnimated={() => handleAnimated(cat.id)}
                       onClick={() => handleItemClick(item.name)}
                     />
                   ))}

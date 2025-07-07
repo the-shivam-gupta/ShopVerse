@@ -187,7 +187,8 @@
     "groomingKitMen": "Braun Professional Beard Trimmer",
     "groomingKit": "GROOMING KIT",
     "outOfStockMessage": "Currently out of stock.",
-    "addedToCartMessage": "{{category}} added to cart!"
+    "addedToCartMessage": "{{category}} added to cart!",
+    "findMySize": "Find my size"
   },
   "compare": {
     "compareProduct": "Compare Products",
@@ -212,7 +213,9 @@
     "securePayment": "<strong>100% Secure Payments:</strong> <br /> All major cards  and UPI supported",
     "youSaved": "You Saved",
     "itemRemoved": "removed from cart.",
-    "undo": "Undo"
+    "undo": "Undo",
+    "previewTitle": "Cart Preview",
+    "seeMore": "See more in cart"
   },
   "testimonial": {
     "testimonial": "Testimonials"
@@ -282,7 +285,19 @@
     "contact": "Contact",
     "message": "Message",
     "sendMessage": "Send Message",
-    "messageSentSuccessfully": "✅ Your message has been sent successfully!"
+    "messageSentSuccessfully": "✅ Your message has been sent successfully!",
+    "getInTouch": "Get in touch",
+    "description": "Have questions about your order, a product, or return? We're here to help!",
+    "subject": "Subject",
+    "generalQuery": "General Query",
+    "orderIssue": "Order Issue",
+    "returnRefund": "Return/Refund",
+    "productInquiry": "Product Inquiry",
+    "orderId": "Order ID",
+    "optional": "optional",
+    "faqLink": "View FAQs",
+    "workingHours": "Mon-Sat: 10am - 6pm",
+    "selectSubject": "Select a subject"
   },
   "hamburger": {
     "home": "Home",

@@ -186,7 +186,8 @@
     "groomingKitMen": "Recortadora de barba profesional Braun",
     "groomingKit": "Kit de aseo",
     "outOfStockMessage": "Actualmente sin stock.",
-    "addedToCartMessage": "¡{{category}} añadido al carrito!"
+    "addedToCartMessage": "¡{{category}} añadido al carrito!",
+    "findMySize": "Encuentra mi talla"
   },
   "compare": {
     "compareProduct": "Comparar productos",
@@ -282,7 +283,19 @@
     "contact": "Contacto",
     "message": "Mensaje",
     "sendMessage": "Enviar mensaje",
-    "messageSentSuccessfully": "✅ ¡Tu mensaje ha sido enviado exitosamente!"
+    "messageSentSuccessfully": "✅ ¡Tu mensaje ha sido enviado exitosamente!",
+    "getInTouch": "Ponte en contacto",
+    "description": "¿Tienes preguntas sobre tu pedido, un producto o una devolución? ¡Estamos aquí para ayudarte!",
+    "subject": "Asunto",
+    "generalQuery": "Consulta general",
+    "orderIssue": "Problema con el pedido",
+    "returnRefund": "Devolución/Reembolso",
+    "productInquiry": "Consulta sobre el producto",
+    "orderId": "ID de pedido",
+    "optional": "opcional",
+    "faqLink": "Ver preguntas frecuentes",
+    "workingHours": "Lun-Sáb: 10am - 6pm",
+    "selectSubject": "Selecciona un asunto"
   },
   "hamburger": {
     "home": "Inicio",

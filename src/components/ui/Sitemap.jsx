@@ -123,6 +123,7 @@ export default function Sitemap() {
       <h1 className="text-4xl font-bold text-center text-pink-500 mb-12">
         Sitemap
       </h1>
+      <div className="h-px bg-gradient-to-r from-transparent via-pink-400 to-transparent my-6 sm:my-10" />
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 max-w-6xl mx-auto">
         {/* General */}

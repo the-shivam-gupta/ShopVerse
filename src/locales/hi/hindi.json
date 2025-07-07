@@ -186,7 +186,8 @@
     "groomingKitMen": "ब्रौन प्रोफेशनल बियर्ड ट्रिमर",
     "groomingKit": "ग्रूमिंग किट",
     "outOfStockMessage": "फिलहाल स्टॉक में नहीं है।",
-    "addedToCartMessage": "{{category}} को कार्ट में जोड़ा गया!"
+    "addedToCartMessage": "{{category}} को कार्ट में जोड़ा गया!",
+    "findMySize": "अपना साइज जानें"
   },
   "compare": {
     "compareProduct": "उत्पादों की तुलना करें",
@@ -282,7 +283,19 @@
     "contact": "संपर्क",
     "message": "संदेश",
     "sendMessage": "संदेश भेजें",
-    "messageSentSuccessfully": "✅ आपका संदेश सफलतापूर्वक भेजा गया है!"
+    "messageSentSuccessfully": "✅ आपका संदेश सफलतापूर्वक भेज दिया गया है!",
+    "getInTouch": "संपर्क में रहें",
+    "description": "क्या आपके ऑर्डर, उत्पाद या रिटर्न को लेकर कोई सवाल है? हम आपकी मदद के लिए यहां हैं!",
+    "subject": "विषय",
+    "generalQuery": "सामान्य पूछताछ",
+    "orderIssue": "ऑर्डर से संबंधित समस्या",
+    "returnRefund": "वापसी/रिफंड",
+    "productInquiry": "उत्पाद से संबंधित पूछताछ",
+    "orderId": "ऑर्डर आईडी",
+    "optional": "वैकल्पिक",
+    "faqLink": "अक्सर पूछे जाने वाले प्रश्न देखें",
+    "workingHours": "सोम-शनिवार: सुबह 10 बजे - शाम 6 बजे",
+    "selectSubject": "विषय चुनें"
   },
   "hamburger": {
     "home": "होम",

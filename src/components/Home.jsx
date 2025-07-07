@@ -6,7 +6,7 @@ import { ProductCard, products } from "./ui/ProductCard";
 import { useTranslation, Trans } from "react-i18next";
 import ProductQuickView from "./ui/ProductQuickView";
 import { useCart } from "./context/CartContext";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import CompareModal from "./ui/CompareModal";
 // Images import:
 import { useCompare } from "./context/CompareContext";
@@ -213,30 +213,33 @@ export default function Home({ currency }) {
             className="flex gap-6 overflow-x-auto scroll-smooth snap-x snap-mandatory py-4 scrollbar-hide"
           >
             {categories.map((item, idx) => (
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.99 }}
+              <Link
                 key={idx}
-                className="min-w-[170px] w-[170px] snap-center backdrop-blur-lg dark:bg-gray-800 border border-pink-200 dark:border-gray-700 p-5 rounded-xl shadow-xl dark:shadow-gray-800 text-center hover:shadow-[0_5px_12px_rgb(0_0_0_/_0.25)] hover:bg-white dark:hover:bg-gray-700 cursor-pointer"
+                to="/products"
+                onClick={() => {
+                  setSearchQuery(t(item.title));
+                  navigate("/products");
+                }}
               >
-                <img
-                  className="w-16 h-16 mx-auto mb-2 rounded-full border-2 border-pink-400 p-1 object-cover bg-gradient-to-tr from-pink-100 to-pink-200"
-                  src={item.image}
-                  alt="category"
-                />
-                <h4 className="text-sm font-semibold text-gray-800 dark:text-white mb-2">
-                  {t(item.title)}
-                </h4>
-                <button
-                  onClick={() => {
-                    setSearchQuery(t(item.title));
-                    navigate("/products");
-                  }}
-                  className="mt-1 text-pink-500 text-sm rounded-sm bg-pink-100 hover:bg-pink-200 px-4 py-1 transition-all cursor-pointer"
+                <motion.div
+                  whileTap={{ scale: 0.9 }}
+                  key={idx}
+                  className="min-w-[170px] w-[170px] snap-center backdrop-blur-lg dark:bg-gray-800 border border-pink-200 dark:border-gray-700 p-5 rounded-xl shadow-xl hover:dark:shadow-gray-500 text-center hover:shadow-[0_5px_12px_rgb(0_0_0_/_0.25)] bg-gray-100/10 hover:bg-white dark:hover:bg-gray-800/80 cursor-pointer hover:-translate-y-1 transform transition-transform"
                 >
-                  {t("home.showAll")}
-                </button>
-              </motion.div>
+                  <img
+                    className="w-16 h-16 mx-auto mb-2 rounded-full border-2 border-pink-400 p-1 object-cover bg-gradient-to-tr from-pink-100 to-pink-200"
+                    src={item.image}
+                    alt="category"
+                  />
+                  <h4 className="text-sm font-semibold text-gray-800 dark:text-white mb-2">
+                    {t(item.title)}
+                  </h4>
+                  <button className="group inline-flex items-center gap-1 hover:text-pink-600 mt-1 text-pink-400 text-sm rounded-sm bg-pink-100 hover:bg-pink-200 px-4 py-1 transition-all cursor-pointer">
+                    {t("home.showAll")}
+                    <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  </button>
+                </motion.div>
+              </Link>
             ))}
           </div>
         </div>

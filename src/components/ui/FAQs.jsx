@@ -45,6 +45,7 @@ function FAQs() {
         <h2 className="text-3xl md:text-4xl font-bold text-center text-pink-400 mb-10">
           {t("faq.title")}
         </h2>
+        <div className="h-px bg-gradient-to-r from-transparent via-pink-400 to-transparent my-6 sm:my-10" />
 
         <div className="space-y-6">
           {faqData.map((faq, index) => {
