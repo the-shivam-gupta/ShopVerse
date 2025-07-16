@@ -11,7 +11,6 @@ import { Star } from "lucide-react";
 export default function CategorySection({ currency }) {
   const [openCategories, setOpenCategories] = useState({});
   const [animatedCategories, setAnimatedCategories] = useState({});
-  const [currentReview, setCurrentReview] = useState(0);
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { setSearchQuery } = useSearch();
@@ -91,63 +90,6 @@ export default function CategorySection({ currency }) {
       </div>
     );
   }
-
-  // Reviews
-  const reviews = useMemo(
-    () => [
-      {
-        text: "I absolutely love the collection! The designs are unique and the quality exceeded my expectations.",
-        name: "Emily",
-        title: "Fashion Blogger",
-        image: "https://randomuser.me/api/portraits/women/65.jpg",
-        stars: "⭐⭐⭐⭐",
-      },
-      {
-        text: "The delivery was incredibly fast, and the products arrived in perfect condition.",
-        name: "Michael",
-        title: "E-commerce Enthusiast",
-        image: "https://randomuser.me/api/portraits/men/32.jpg",
-        stars: "⭐⭐⭐⭐",
-      },
-      {
-        text: "Great customer service—very helpful and smooth process.",
-        name: "Sarah",
-        title: "Marketing Manager",
-        image: "https://randomuser.me/api/portraits/women/44.jpg",
-        stars: "⭐⭐⭐⭐⭐",
-      },
-      {
-        text: "Beautiful packaging, very impressed!",
-        name: "Anna",
-        title: "Creative Director",
-        image: "https://randomuser.me/api/portraits/women/52.jpg",
-        stars: "⭐⭐⭐⭐⭐",
-      },
-      {
-        text: "The quality is great, and the sizing was just right. I'm happy with my purchase overall.",
-        name: "Daniel",
-        title: "Lifestyle Reviewer",
-        image: "https://randomuser.me/api/portraits/men/51.jpg",
-        stars: "⭐⭐⭐⭐",
-      },
-      {
-        text: "Affordable and stylish!",
-        name: "Sophia",
-        title: "Student & Shopper",
-        image: "https://randomuser.me/api/portraits/women/24.jpg",
-        stars: "⭐⭐⭐⭐⭐",
-      },
-    ],
-    []
-  );
-
-  // Testimonial
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentReview((prev) => (prev + 1) % reviews.length);
-    }, 5000); // rotates every 5s
-    return () => clearInterval(interval);
-  }, [reviews.length]);
 
   const categories = useMemo(
     () => [
@@ -286,28 +228,7 @@ export default function CategorySection({ currency }) {
         {(() => {
           const filtered = products.filter((p) => p.badge);
 
-          // Get only unique badge products
-          const uniqueBadgeMap = new Map();
-          for (const product of filtered) {
-            if (!uniqueBadgeMap.has(product.badge)) {
-              uniqueBadgeMap.set(product.badge, product);
-            }
-          }
-
-          // Convert to array
-          const uniqueProducts = Array.from(uniqueBadgeMap.values());
-
-          // 🔀 Shuffle array randomly
-          for (let i = uniqueProducts.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [uniqueProducts[i], uniqueProducts[j]] = [
-              uniqueProducts[j],
-              uniqueProducts[i],
-            ];
-          }
-
-          // Get random 5
-          return uniqueProducts.slice(0, 5).map((product) => (
+          return filtered.slice(0, 5).map((product) => (
             <motion.div
               key={product.name}
               whileHover={{ scale: 1.03 }}
@@ -364,43 +285,6 @@ export default function CategorySection({ currency }) {
             </motion.div>
           ));
         })()}
-      </div>
-
-      {/* Rotating Reviews BELOW */}
-      <div className="w-full max-w-sm mx-auto mt-6 p-6 rounded-xl shadow-md border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800 text-center min-h-[450px] flex flex-col justify-start bg-gradient-to-br from-white to-pink-50 dark:bg-gradient-to-bl dark:from-gray-800 dark:to-gray-600">
-        <h3 className="text-xl font-bold text-gray-800 dark:text-gray-200 mb-4 border-b border-pink-200 dark:border-gray-500 pb-2">
-          {t("testimonial.testimonial")} 💬
-        </h3>
-
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={currentReview}
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.95 }}
-            transition={{ duration: 0.6 }}
-            className="flex flex-col items-center justify-center flex-grow"
-          >
-            <img
-              src={reviews[currentReview].image}
-              alt={reviews[currentReview].name}
-              className="w-24 h-24 rounded-full mx-auto mb-4 object-cover"
-            />
-            <p className="text-lg font-bold text-gray-700 dark:text-white uppercase">
-              {reviews[currentReview].name}
-            </p>
-            <p className="text-sm text-gray-500 dark:text-gray-400 mb-">
-              {reviews[currentReview].title}
-            </p>
-            <div className="text-pink-500 text-6xl leading-none">“</div>
-            <p className="text-gray-700 dark:text-gray-300 text-sm px-">
-              {reviews[currentReview].text}
-            </p>
-            <p className="text-sm text-yellow-500 mt-1">
-              {reviews[currentReview].stars}
-            </p>
-          </motion.div>
-        </AnimatePresence>
       </div>
     </div>
   );

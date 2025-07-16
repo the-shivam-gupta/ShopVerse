@@ -71,7 +71,7 @@ const Header = ({ currency, setCurrency }) => {
   const navigate = useNavigate();
   const { t, i18n } = useTranslation();
   const { favorites } = useFavorites();
-  const { cart } = useCart();
+  const { cart, removeFromCart } = useCart();
   const inputRef = useRef();
   const [menuOpen, setMenuOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
@@ -354,7 +354,7 @@ const Header = ({ currency, setCurrency }) => {
                             : "hover:bg-pink-500 hover:text-white"
                         }`}
                       >
-                      <SearchIcon className="w-4 h-4" />
+                        <SearchIcon className="w-4 h-4" />
                         {t(product.category)}
                       </div>
                     ))
@@ -454,7 +454,7 @@ const Header = ({ currency, setCurrency }) => {
 
               {/* Animate Cart Preview */}
               <AnimatePresence>
-                {isHovered && (
+                {isHovered && cart.length > 0 && (
                   <motion.div
                     key="cart-preview"
                     initial={{ opacity: 0, y: -10, scale: 0.95 }}
@@ -475,32 +475,50 @@ const Header = ({ currency, setCurrency }) => {
                     </div>
                     <div className="h-px bg-gradient-to-r from-transparent via-gray-500 to-transparent mb-3" />
 
-                    <div className="space-y-3 max-h-[180px] overflow-y-auto pr-1">
-                      {cart.slice(0, 3).map((item) => (
-                        <div
-                          key={item.name}
-                          className="flex items-center gap-3"
-                        >
-                          <img
-                            src={item.image}
-                            alt={item.name}
-                            className="w-10 h-10 object-contain rounded"
-                          />
-                          <div className="flex-1">
-                            <p className="text-sm font-medium line-clamp-1 dark:text-gray-100">
-                              {t(item.name)}
-                            </p>
-                            <span className="text-xs text-gray-400 uppercase tracking-wide">
-                              {t(item.category)}
+                    <div className="space-y-3 max-h-[180px] overflow-y-auto px-1 pb-1 scrollbar-hide">
+                      <AnimatePresence initial={false}>
+                        {cart.slice(0, 3).map((item) => (
+                          <motion.div
+                            key={`${item.name}-${item.selectedSize}-${item.selectedColor}`}
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -20 }}
+                            transition={{ duration: 0.3, ease: "easeInOut" }}
+                            className="flex items-center gap-3 group"
+                          >
+                            <img
+                              src={item.image}
+                              alt={item.name}
+                              className="w-12 h-12 object-contain rounded-lg bg-white p-1 shadow-md"
+                            />
+                            <div className="flex-1">
+                              <p className="text-sm font-medium line-clamp-1 dark:text-gray-100">
+                                {t(item.name)}
+                              </p>
+                              <span className="text-xs text-gray-400 uppercase tracking-wide">
+                                {t(item.category)}
+                              </span>
+                            </div>
+                            <span className="font-semibold text-sm text-gray-700 dark:text-white">
+                              {currency === "USD"
+                                ? `$${item.price}`
+                                : `₹${Math.round(item.price * 83)}`}
                             </span>
-                          </div>
-                          <span className="font-semibold text-sm text-gray-700 dark:text-white">
-                            {currency === "USD"
-                              ? `$${item.price}`
-                              : `₹${Math.round(item.price * 83)}`}
-                          </span>
-                        </div>
-                      ))}
+
+                            {/* Remove icon */}
+                            <button
+                              onClick={() => removeFromCart(item)}
+                              className="text-gray-400 hover:text-red-500 transition duration-150 cursor-pointer"
+                              aria-label="Remove from cart"
+                            >
+                              <X
+                                size={16}
+                                className="text-gray-400 hover:text-red-500"
+                              />
+                            </button>
+                          </motion.div>
+                        ))}
+                      </AnimatePresence>
                     </div>
 
                     {cart.length > 3 && (

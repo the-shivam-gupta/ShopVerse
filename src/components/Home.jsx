@@ -14,6 +14,7 @@ import { useSearch } from "./context/SearchContext";
 import HeroSlider from "./ui/HeroSlider";
 import { useFavorites } from "./context/FavoritesContext";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import TestimonialCarousel from "./ui/Testimonial";
 
 // Categories
 const categories = [
@@ -316,6 +317,7 @@ export default function Home({ currency }) {
           currency={currency}
         />
       </div>
+      <TestimonialCarousel/>
     </div>
   );
 }
