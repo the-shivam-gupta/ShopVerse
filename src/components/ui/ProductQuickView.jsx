@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { Dialog } from "@headlessui/react";
 import { Star, X } from "lucide-react";
 import { useTranslation } from "react-i18next";
@@ -7,16 +7,31 @@ import { useCart } from "../context/CartContext";
 import { Button } from "./Button";
 import BadgeRibbon from "./BadgeRibbon";
 import toast from "react-hot-toast";
+import { products } from "./ProductCard";
 
 const ProductQuickView = ({ product, isOpen, onClose, currency }) => {
   const { t } = useTranslation();
   const [isHovered, setIsHovered] = useState(false);
   const [added, setAdded] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
+  const [selectedSize, setSelectedSize] = useState(null);
+  const [selectedColor, setSelectedColor] = useState(null);
   const { addToCart } = useCart();
 
+  useEffect(() => {
+    if (product) {
+      setSelectedSize(product.sizes?.[0] || null);
+      setSelectedColor(product.colors?.[0] || null);
+    }
+  }, [product]);
+
   const handleAddToCart = useCallback(() => {
-    const cartProduct = { ...product, image: product.mainImage };
+    const cartProduct = {
+      ...product,
+      image: product.mainImage,
+      selectedSize,
+      selectedColor,
+    };
     addToCart(cartProduct);
     setAdded(true);
     setIsAnimating(true);
@@ -24,7 +39,7 @@ const ProductQuickView = ({ product, isOpen, onClose, currency }) => {
       setAdded(false);
       setIsAnimating(false);
     }, 1000);
-  }, [addToCart, product]);
+  }, [addToCart, product, selectedSize, selectedColor]);
 
   if (!product) return null;
 
@@ -46,9 +61,22 @@ const ProductQuickView = ({ product, isOpen, onClose, currency }) => {
             <Dialog.Panel
               as={motion.div}
               initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.9 }}
-              transition={{ duration: 0.4 }}
+              animate={{
+                opacity: 1,
+                scale: 1,
+                transition: {
+                  duration: 0.35,
+                  ease: "easeOut",
+                },
+              }}
+              exit={{
+                opacity: 0,
+                scale: 0.9,
+                transition: {
+                  duration: 0.25,
+                  ease: "easeIn",
+                },
+              }}
               className="border border-white dark:border-gray-400 w-[90%] max-w-3xl rounded-xl shadow-2xl dark:shadow-md dark:shadow-gray-400 p-6 relative dark:bg-transparent bg-white/20 backdrop-blur"
             >
               <button
@@ -61,13 +89,24 @@ const ProductQuickView = ({ product, isOpen, onClose, currency }) => {
               <div className="max-h-[90vh] overflow-y-auto scrollbar-hide p-4 sm:p-6 w-full md::w-[750px]">
                 <div className="relative flex flex-col sm:flex-row gap-4 sm:gap-12 items-center overflow-hidden w-full">
                   {/* Product Image */}
-                  <img
-                    src={isHovered ? product.hoverImage : product.mainImage}
-                    alt={t(product.name)}
-                    className="w-1/2 sm:w-[40%] md:w-[60%] lg:w-1/2 max-h-56 object-contain rounded-lg transition-all duration-300 ease-linear"
+                  <div
+                    className="relative w-1/2 sm:w-[40%] md:w-[60%] lg:w-1/2 max-h-56 min-h-[14rem]"
                     onMouseEnter={() => setIsHovered(true)}
                     onMouseLeave={() => setIsHovered(false)}
-                  />
+                  >
+                    <AnimatePresence mode="wait">
+                      <motion.img
+                        key={isHovered ? "hoverImage" : "mainImage"}
+                        src={isHovered ? product.hoverImage : product.mainImage}
+                        alt={t(product.name)}
+                        initial={{ opacity: 0, scale: 0.85 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.95 }}
+                        transition={{ duration: 0.3, ease: "easeOut" }}
+                        className="absolute inset-0 w-full h-full object-contain rounded-lg"
+                      />
+                    </AnimatePresence>
+                  </div>
 
                   {/* Badge */}
                   <BadgeRibbon
@@ -97,13 +136,33 @@ const ProductQuickView = ({ product, isOpen, onClose, currency }) => {
                         <span className="text-sm text-gray-700 dark:text-gray-300">
                           Color:
                         </span>
-                        {product.colors.map((color, i) => (
+                        {product.colors?.map((color, idx) => (
                           <div
-                            key={i}
-                            className="w-5 h-5 rounded-full border border-gray-300 cursor-pointer hover:scale-110"
+                            key={idx}
+                            onClick={() => setSelectedColor(color)}
+                            className={`relative w-5 h-5 rounded-full border cursor-pointer transition-all
+                                        ${
+                                          selectedColor === color
+                                            ? "ring-1 ring-offset-2 ring-gray-800 dark:ring-gray-900"
+                                            : "border-gray-300 dark:border-gray-600"
+                                        }`}
                             style={{ backgroundColor: color }}
-                            title={color}
-                          />
+                          >
+                            {/* Animate circle */}
+                            <AnimatePresence>
+                              {selectedColor === color && (
+                                <motion.div
+                                  layoutId="selectedColor"
+                                  className="absolute inset-0 rounded-full"
+                                  initial={{ opacity: 0 }}
+                                  animate={{ opacity: 0.1 }}
+                                  exit={{ opacity: 0 }}
+                                  style={{ backgroundColor: color }}
+                                  transition={{ duration: 0.3 }}
+                                />
+                              )}
+                            </AnimatePresence>
+                          </div>
                         ))}
                       </div>
                     )}
@@ -115,12 +174,40 @@ const ProductQuickView = ({ product, isOpen, onClose, currency }) => {
                           Size:
                         </span>
                         {product.sizes.map((size, i) => (
-                          <span
+                          <motion.span
                             key={i}
-                            className="min-w-[2.5rem] h-10 px-2 flex items-center justify-center text-sm border border-gray-300 rounded-md dark:border-gray-600 text-gray-800 dark:text-white hover:bg-gray-200/30 dark:hover:bg-gray-700/30 cursor-pointer"
+                            onClick={() => setSelectedSize(size)}
+                            initial={false}
+                            animate={{
+                              scale: selectedSize === size ? 1.1 : 1,
+                            }}
+                            transition={{
+                              type: "spring",
+                              stiffness: 300,
+                              damping: 20,
+                            }}
+                            className={`relative min-w-[2.5rem] h-10 px-2 flex items-center justify-center text-sm border rounded-md cursor-pointer
+                                        ${
+                                          selectedSize === size
+                                            ? "bg-gray-800 text-white dark:bg-white dark:text-black border-gray-800 dark:border-white"
+                                            : "border-gray-300 dark:border-gray-600 text-gray-800 dark:text-white hover:bg-gray-200/30 dark:hover:bg-gray-700/30"
+                                        }`}
                           >
                             {size}
-                          </span>
+                            {/* Highlight animation */}
+                            <AnimatePresence>
+                              {selectedSize === size && (
+                                <motion.div
+                                  layoutId="selectedSize"
+                                  className="absolute inset-0 -z-10 rounded-md bg-gray-800 dark:bg-white"
+                                  initial={{ opacity: 0 }}
+                                  animate={{ opacity: 0.1 }}
+                                  exit={{ opacity: 0 }}
+                                  transition={{ duration: 0.3 }}
+                                />
+                              )}
+                            </AnimatePresence>
+                          </motion.span>
                         ))}
                       </div>
                     )}

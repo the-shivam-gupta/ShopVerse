@@ -384,7 +384,7 @@ const products = [
     price: 35.0,
     rating: 5,
     originalPrice: 42.0,
-    badge: "PERMIUM",
+    badge: "PREMIUM",
     mainImage:
       "https://res.cloudinary.com/djgykvahm/image/upload/e_background_removal/f_png/v1746969252/qs55z9vln2zkthusyjp3_kkvxjv.webp",
     hoverImage:
@@ -995,6 +995,8 @@ const ProductCard = React.memo(
       const cartProduct = {
         ...product,
         image: product.mainImage,
+        selectedSize: product.selectedSize ?? product.sizes?.[0] ?? null,
+        selectedColor: product.selectedColor ?? product.colors?.[0] ?? null,
       };
       onAddToCart(cartProduct);
     }, [product, onAddToCart]);

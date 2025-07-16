@@ -1,12 +1,33 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Dialog } from "@headlessui/react";
 import { Star, X } from "lucide-react";
 import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
+import { Button } from "./Button";
+import { useCart } from "../context/CartContext";
+import toast from "react-hot-toast";
 
 const CompareModal = ({ products, isOpen, onClose, currency }) => {
   const { t } = useTranslation();
   const [hoveredProduct, setHoveredProduct] = useState(null);
+  const [selectedSizes, setSelectedSizes] = useState({});
+  const [selectedColors, setSelectedColors] = useState({});
+
+  const { addToCart } = useCart();
+
+  const handleAddToCart = (product) => {
+    const size = selectedSizes[product.name] || product.sizes?.[0];
+    const color = selectedColors[product.name] || product.colors?.[0];
+
+    const cartProduct = {
+      ...product,
+      image: product.mainImage,
+      selectedSize: size,
+      selectedColor: color,
+      quantity: 1,
+    };
+    addToCart(cartProduct);
+  };
 
   if (products.length < 2) return null;
 
@@ -21,10 +42,23 @@ const CompareModal = ({ products, isOpen, onClose, currency }) => {
           <div className="relative z-50 flex min-h-screen items-center justify-center sm: p-4 overflow-y-auto">
             <Dialog.Panel
               as={motion.div}
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.95 }}
-              transition={{ duration: 0.3, ease: "easeOut" }}
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{
+                opacity: 1,
+                scale: 1,
+                transition: {
+                  duration: 0.35,
+                  ease: "easeOut",
+                },
+              }}
+              exit={{
+                opacity: 0,
+                scale: 0.9,
+                transition: {
+                  duration: 0.25,
+                  ease: "easeIn",
+                },
+              }}
               className="relative w-full bg-white/30 dark:bg-black/30 border border-white/20 dark:border-gray-700 backdrop-blur-xl rounded-2xl p-6 shadow-xl"
             >
               {/* Close Button */}
@@ -45,6 +79,10 @@ const CompareModal = ({ products, isOpen, onClose, currency }) => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {products.map((product) => (
                   <motion.div
+                    whileHover={{
+                      scale: 1.03,
+                      boxShadow: "0 12px 30px rgba(0,0,0,0.15)",
+                    }}
                     key={product.name}
                     onMouseEnter={() => setHoveredProduct(product.name)}
                     onMouseLeave={() => setHoveredProduct(null)}
@@ -66,7 +104,7 @@ const CompareModal = ({ products, isOpen, onClose, currency }) => {
                     <h3 className="text-lg font-semibold text-center text-gray-800 dark:text-gray-200">
                       {t(product.name)}
                     </h3>
-                    <p className="text-sm text-gray-600 dark:text-gray-300">
+                    <p className="text-sm text-gray-600 tracking-wider dark:text-gray-300">
                       {t(product.category)}
                     </p>
 
@@ -111,6 +149,30 @@ const CompareModal = ({ products, isOpen, onClose, currency }) => {
                           : `₹${Math.round(product.originalPrice * 83)}`}
                       </p>
                     </div>
+                    <Button
+                      onClick={() => {
+                        if (!product.inStock) {
+                          toast.error(t("card.outOfStockMessage"), {
+                            icon: "🚫",
+                          });
+                          return;
+                        }
+                        handleAddToCart(product);
+                        toast.success(
+                          t("card.addedToCartMessage", {
+                            category: t(product.category),
+                          })
+                        );
+                      }}
+                      variant="link"
+                      className={` ${
+                        product.inStock
+                          ? "mt-2 border text-sm cursor-pointer text-center whitespace-nowrap"
+                          : "mt-2 border text-sm text-center whitespace-nowrap cursor-no-drop opacity-60"
+                      }`}
+                    >
+                      Add to Cart
+                    </Button>
                   </motion.div>
                 ))}
               </div>

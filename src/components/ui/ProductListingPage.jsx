@@ -9,6 +9,8 @@ import { useCompare } from "../context/CompareContext";
 import CompareModal from "./CompareModal";
 import { useSearch } from "../context/SearchContext";
 import { useFavorites } from "../context/FavoritesContext";
+import Slider from "rc-slider";
+import "rc-slider/assets/index.css";
 
 const categoryStructure = {
   SHIRTS: [
@@ -37,7 +39,7 @@ const categoryStructure = {
 
 const ProductListingPage = ({ currency }) => {
   const [selectedProduct, setSelectedProduct] = useState(null);
-  const [priceRange, setPriceRange] = useState([1, Infinity]);
+  const [priceRange, setPriceRange] = useState([10, 2000]);
   const [sortType, setSortType] = useState("default");
   const [expandedCategory, setExpandedCategory] = useState(null); //tracks which parent’s subcategories are visible
   const { t } = useTranslation();
@@ -51,6 +53,22 @@ const ProductListingPage = ({ currency }) => {
   const { searchQuery, setSearchQuery } = useSearch();
   const { favorites, addToFavorites, removeFromFavorites } = useFavorites();
   const { addToCart } = useCart();
+  const CONVERSION_RATE = 83;
+  const isINR = currency === "INR";
+  const currencySymbol = isINR ? "₹" : "$";
+
+  // Convert USD to current currency for display
+  const convertedRange = priceRange.map((val) =>
+    isINR ? Math.round(val * CONVERSION_RATE) : val
+  );
+
+  const handleSliderChange = (range) => {
+    // Convert back to USD before storing
+    const newRange = isINR
+      ? range.map((val) => Math.round(val / CONVERSION_RATE))
+      : range;
+    setPriceRange(newRange);
+  };
 
   const handleToggleFavorite = useCallback(
     (product) => {
@@ -231,42 +249,53 @@ const ProductListingPage = ({ currency }) => {
             )}
           </div>
 
-          <div className="p-3 mt-2 rounded-xl">
-            <h2 className="text-xl font-semibold text-gray-700 dark:text-gray-100 mb-2">
-              {t("filter.priceRange")}
+          <div className="p-4 mt-2 rounded-xl bg-transparent">
+            <h2 className="text-xl font-semibold text-gray-700 dark:text-gray-100 mb-4">
+              Price:
             </h2>
 
-            <div className="flex items-center gap-2 mb-2">
-              <input
-                type="number"
-                min={1}
-                value={priceRange[0] || ""}
-                onChange={(e) => {
-                  const value = Math.max(1, Number(e.target.value));
-                  setPriceRange([
-                    value,
-                    Math.max(value, priceRange[1] || value),
-                  ]);
-                }}
-                placeholder={t("filter.min")}
-                className="w-1/2 p-2 rounded border dark:bg-gray-700 dark:text-white"
-              />
-              <span className="text-gray-500 dark:text-gray-300">-</span>
-              <input
-                type="number"
-                min={1}
-                value={priceRange[1] !== Infinity ? priceRange[1] : ""}
-                onChange={(e) => {
-                  const value = Number(e.target.value);
-                  setPriceRange([
-                    Math.min(priceRange[0], value || Infinity),
-                    value || Infinity,
-                  ]);
-                }}
-                placeholder={t("filter.max")}
-                className="w-1/2 p-2 rounded border dark:bg-gray-700 dark:text-white"
-              />
+            {/* Price display */}
+            <div className="flex items-center justify-between bg-inherit p-4 rounded-lg border border-pink-500 dark:border-gray-500 mb-4">
+              <div className="w-1/2 text-center font-semibold text-gray-800 dark:text-white">
+                {currencySymbol}
+                {convertedRange[0].toLocaleString()}
+              </div>
+              <span className="text-gray-500 dark:text-gray-300 px-2">—</span>
+              <div className="w-1/2 text-center font-semibold text-gray-800 dark:text-white">
+                {currencySymbol}
+                {convertedRange[1].toLocaleString()}
+              </div>
             </div>
+
+            {/* Slider in converted currency */}
+            <Slider
+              range
+              min={isINR ? 10 : 10}
+              max={isINR ? 2000 * CONVERSION_RATE : 2000}
+              value={convertedRange}
+              onChange={handleSliderChange}
+              trackStyle={[{ backgroundColor: "#f472b6", height: 6 }]}
+              handleStyle={[
+                {
+                  borderColor: "#ec4899",
+                  backgroundColor: "#f9a8d4",
+                  boxShadow: "0 0 0 2px rgba(236, 72, 153, 0.2)",
+                  width: 15,
+                  height: 15,
+                },
+                {
+                  borderColor: "#ec4899",
+                  backgroundColor: "#f9a8d4",
+                  boxShadow: "0 0 0 2px rgba(236, 72, 153, 0.2)",
+                  width: 15,
+                  height: 15,
+                },
+              ]}
+              railStyle={{
+                backgroundColor: "#f3f4f6",
+                height: 6,
+              }}
+            />
           </div>
 
           <div className="p-2">

@@ -132,10 +132,14 @@ const CartPage = ({ currency }) => {
 
   const handleRemove = useCallback(
     (item) => {
-      const index = cart.findIndex((cartItem) => cartItem.name === item.name);
+      const index = cart.findIndex(
+        (cartItem) =>
+          cartItem.name === item.name &&
+          cartItem.selectedSize === item.selectedSize &&
+          cartItem.selectedColor === item.selectedColor
+      );
       setRecentlyRemoved({ item, index });
-      removeFromCart(item.name);
-
+      removeFromCart(item); // Pass full item now
       const timeout = setTimeout(() => setRecentlyRemoved(null), 5000);
       setUndoTimeout(timeout);
     },
@@ -221,7 +225,7 @@ const CartPage = ({ currency }) => {
             <AnimatePresence>
               {cart.map((item) => (
                 <motion.div
-                  key={item.name}
+                  key={`${item.name}-${item.selectedSize}-${item.selectedColor}`}
                   whileHover={{ scale: 1.01 }}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -253,6 +257,28 @@ const CartPage = ({ currency }) => {
                           {getPrice(item.originalPrice)}
                         </span>
                       </p>
+                      {/* Selected size & color (if available) */}
+                      {(item.selectedSize || item.selectedColor) && (
+                        <div className="flex items-center gap-3 mt-2">
+                          {item.selectedSize && (
+                            <p className="text-sm text-gray-600 dark:text-gray-300">
+                              <span className="font-bold">Size:</span>{" "}
+                              {item.selectedSize}
+                            </p>
+                          )}
+                          {item.selectedColor && (
+                            <div className="flex items-center gap-1">
+                              <span className="text-sm text-gray-600 dark:text-gray-300 font-bold">
+                                Color:
+                              </span>
+                              <div
+                                className="w-4 h-4 rounded-full border border-gray-300 dark:border-gray-600"
+                                style={{ backgroundColor: item.selectedColor }}
+                              ></div>
+                            </div>
+                          )}
+                        </div>
+                      )}
                     </div>
                   </div>
                   <div
