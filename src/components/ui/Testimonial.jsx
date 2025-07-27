@@ -113,7 +113,7 @@ export default function TestimonialCarousel() {
             <div className="group relative max-w-lg text-center">
               <p
                 className={
-                  "text-sm sm:text-base text-gray-700 dark:text-gray-300 mb-2 transition-all duration-300 ease-in-out line-clamp-1 group-hover:line-clamp-none"
+                  "text-sm sm:text-base text-gray-700 dark:text-gray-300 mb-2 transition-all duration-300 ease-in-out"
                 }
               >
                 {reviews[center].text}

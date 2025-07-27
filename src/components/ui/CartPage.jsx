@@ -1,16 +1,79 @@
-import React, {
-  useState,
-  useCallback,
-  useMemo,
-  useRef,
-  useEffect,
-} from "react";
+import { useState, useCallback, useMemo, useRef, useEffect } from "react";
 import { useCart } from "../context/CartContext";
 import { Trans, useTranslation } from "react-i18next";
 import { Trash2, Plus, Minus } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "./Button";
 import { useNavigate } from "react-router-dom";
+import CheckoutStepIndicator from "./CheckoutStepIndicator";
+import { auth } from "../../firebase";
+import AuthModal from "../Auth/AuthModal";
+
+// Color code
+const getColorName = (hex) => {
+  const colorMap = {
+    "#6b7280": "Cool Gray",
+    "#000000": "Black",
+    "#ffffff": "White",
+    "#1e3a8a": "Navy Blue",
+    "#9ca3af": "Light Gray",
+    "#4b5563": "Charcoal Gray",
+    "#f3f4f6": "Soft Gray",
+    "#111827": "Almost Black",
+    "#1f2937": "Gunmetal",
+    "#3b82f6": "Sky Blue",
+    "#e5e7eb": "Pearl Gray",
+    "#6d28d9": "Royal Purple",
+    "#f9fafb": "White Smoke",
+    "#d1d5db": "Ash Gray",
+    "#10b981": "Emerald Green",
+    "#654321": "Dark Brown",
+    "#b5651d": "Brown Sugar",
+    "#d4af37": "Gold",
+    "#c0c0c0": "Silver",
+    "#ffd700": "Bright Gold",
+    "#4b4b4b": "Dark Charcoal",
+    "#3b2f2f": "Coffee",
+    "#5a4a42": "Mocha",
+    "#1c1c1c": "Very Dark Gray",
+    "#2e2e2e": "Slate",
+    "#555555": "Steel Gray",
+    "#444444": "Graphite",
+    "#222222": "Jet Black",
+    "#777777": "Stone",
+    "#964B00": "Deep Brown",
+    "#808080": "Gray",
+    "#a9a9a9": "Dark Gray",
+    "#1e3d59": "Ocean Blue",
+    "#2e5a88": "Deep Blue",
+    "#7f7f7f": "Middle Gray",
+    "#a0522d": "Sienna",
+    "#deb887": "Burlywood",
+    "#5c3a21": "Chocolate",
+    "#3e2f1c": "Dark Cocoa",
+    "#ffcc00": "Amber",
+    "#ffdd33": "Light Amber",
+    "#8b4513": "Saddle Brown",
+    "#333333": "Onyx",
+    "#666666": "Dim Gray",
+    "#d2b48c": "Tan",
+    "#4d3a3a": "Rust",
+    "#2f4f4f": "Dark Slate Gray",
+    "#f5e1da": "Rose Beige",
+    "#f1c1b6": "Blush Pink",
+    "#f8d6cc": "Light Blush",
+    "#c48b8b": "Dusty Rose",
+    "#a3676d": "Vintage Pink",
+    "#814b52": "Muted Plum",
+    "#f3d2d2": "Baby Pink",
+    "#f5c6c6": "Pale Pink",
+    "#f9e6d2": "Peach Fizz",
+    "#f4c9a9": "Peach",
+    "#323232": "Coal",
+  };
+
+  return colorMap[hex.toLowerCase()] || "Custom Color";
+};
 
 // Rolling numbers
 const RollingNumber = ({ number }) => {
@@ -73,6 +136,7 @@ const CartPage = ({ currency }) => {
   const [recentlyRemoved, setRecentlyRemoved] = useState(null);
   const [undoTimeout, setUndoTimeout] = useState(null);
   const navigate = useNavigate();
+  const [isAuthOpen, setAuthOpen] = useState(false);
 
   const handleCardClick = (product) => {
     const trimmedCategory = product.category.replace(/^card\./, "");
@@ -157,7 +221,9 @@ const CartPage = ({ currency }) => {
   const handleIncreaseQuantity = useCallback(
     (item) => {
       const updated = cart.map((product) =>
-        product.name === item.name
+        product.name === item.name &&
+        product.selectedSize === item.selectedSize &&
+        product.selectedColor === item.selectedColor
           ? { ...product, quantity: product.quantity + 1 }
           : product
       );
@@ -169,7 +235,9 @@ const CartPage = ({ currency }) => {
   const handleDecreaseQuantity = useCallback(
     (item) => {
       const updated = cart.map((product) =>
-        product.name === item.name
+        product.name === item.name &&
+        product.selectedSize === item.selectedSize &&
+        product.selectedColor === item.selectedColor
           ? { ...product, quantity: Math.max(1, product.quantity - 1) }
           : product
       );
@@ -178,8 +246,18 @@ const CartPage = ({ currency }) => {
     [cart, setCart]
   );
 
+  // check whether the user is login or not before going to checkout page
+  const handleCheckout = () => {
+    if (auth.currentUser) {
+      navigate("/checkout");
+    } else {
+      setAuthOpen(true); // open login/signup modal
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gray-100 dark:bg-black p-4 sm:p-6">
+      <CheckoutStepIndicator currentStep={1} />
       {/* Undo Toast */}
       <AnimatePresence>
         {recentlyRemoved && (
@@ -213,10 +291,6 @@ const CartPage = ({ currency }) => {
       <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Cart Items */}
         <div className="lg:col-span-2 space-y-4">
-          <h1 className="text-2xl font-bold mb-4 dark:text-gray-100">
-            {t("cart.cart")}
-          </h1>
-
           {cart.length === 0 ? (
             <p className="text-gray-700 dark:text-gray-300">
               {t("cart.noCartItem")}
@@ -261,20 +335,22 @@ const CartPage = ({ currency }) => {
                       {(item.selectedSize || item.selectedColor) && (
                         <div className="flex items-center gap-3 mt-2">
                           {item.selectedSize && (
-                            <p className="text-sm text-gray-600 dark:text-gray-300">
-                              <span className="font-bold">Size:</span>{" "}
-                              {item.selectedSize}
-                            </p>
+                            <div className="flex items-center gap-1">
+                              <span className="text-sm text-gray-600 dark:text-gray-300 font-black">Size:</span>{" "}
+                              <span className="text-sm text-gray-600 font-medium dark:text-gray-400">
+                                {item.selectedSize}
+                              </span>
+                            </div>
                           )}
+
                           {item.selectedColor && (
                             <div className="flex items-center gap-1">
-                              <span className="text-sm text-gray-600 dark:text-gray-300 font-bold">
+                              <span className="text-sm text-gray-600 dark:text-gray-300 font-black">
                                 Color:
                               </span>
-                              <div
-                                className="w-4 h-4 rounded-full border border-gray-300 dark:border-gray-600"
-                                style={{ backgroundColor: item.selectedColor }}
-                              ></div>
+                              <span className="text-sm text-gray-600 font-medium dark:text-gray-400">
+                                {getColorName(item.selectedColor)}
+                              </span>
                             </div>
                           )}
                         </div>
@@ -341,9 +417,14 @@ const CartPage = ({ currency }) => {
               {t("cart.giftOption")}
             </label>
 
-            <Button className="mt-6 py-2 px-4 rounded w-full bg-pink-500 hover:bg-pink-600 cursor-pointer">
-              {t("cart.proceedToBuy")}
+            <Button
+              onClick={handleCheckout}
+              className="mt-6 py-2 px-4 rounded w-full bg-pink-500 hover:bg-pink-600 cursor-pointer"
+            >
+              Continue to Checkout
             </Button>
+
+            <AuthModal isOpen={isAuthOpen} onClose={() => setAuthOpen(false)} />
 
             <div className="mt-4 text-sm text-gray-600 dark:text-gray-400 border-t pt-2 text-left">
               <p>

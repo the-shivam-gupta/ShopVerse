@@ -129,7 +129,7 @@ const ProductDetailsPage = ({ currency }) => {
                 onClick={() => setSelectedImage(img)}
                 className={`w-14 h-14 border-2 rounded-xl p-1 cursor-pointer ${
                   selectedImage === img
-                    ? "border-pink-500 dark:border-gray-300"
+                    ? "border-pink-500 dark:border-gray-300 dark:bg-white"
                     : "border-gray-300 dark:border-gray-600 hover:border-pink-200 dark:hover:border-gray-500"
                 }`}
               >
