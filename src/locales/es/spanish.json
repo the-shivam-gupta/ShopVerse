@@ -252,7 +252,7 @@
     "heals": "Tacones",
     "earings": "Pendientes",
     "rings": "Anillos",
-    "deodrant": "Desodorante",
+    "deodorant": "Desodorante",
     "airFreshner": "Ambientador",
     "bodyPerfume": "Perfume Corporal",
     "clothesPerfume": "Perfume para Ropa",
@@ -311,10 +311,15 @@
     "shipping": "¿Cuáles son sus opciones de envío?",
     "shippingAnswer": "Ofrecemos envío estándar y exprés a nivel mundial.",
     "return": "¿Puedo devolver mi producto?",
-    "returnAnswer": "Sí, se aceptan devoluciones dentro de los 10 días posteriores a la compra.",
-    "support": "¿Cómo puedo contactar al soporte?",
-    "supportAnswer": "Puedes contactarnos a través de nuestra página de contacto o por correo electrónico.",
+    "returnAnswer": "Sí, aceptamos devoluciones dentro de los 10 días posteriores a la compra.",
+    "support": "¿Cómo puedo contactar con soporte?",
+    "supportAnswer": "Puedes comunicarte con nosotros a través de la página de Contacto o por correo electrónico.",
     "payment": "¿Qué métodos de pago aceptan?",
-    "paymentAnswer": "Aceptamos tarjetas de crédito/débito, PayPal y más."
+    "paymentAnswer": "Aceptamos tarjetas de crédito/débito, PayPal y otros métodos seguros.",
+    "subtitle": "Encuentra respuestas a preguntas comunes sobre pedidos, envíos, devoluciones, pagos y más. Estamos aquí para ayudarte a comprar de forma más inteligente en moda, electrónica, calzado y accesorios.",
+    "needHelp": "¿Necesitas ayuda?",
+    "haveQuestions": "¿Tienes preguntas?",
+    "helpText": "Ya sea sobre tu pedido reciente, tiempos de envío, detalles del producto o devoluciones, nuestro equipo de soporte está aquí para ayudarte.",
+    "contactBtn": "Contáctanos"
   }
 }

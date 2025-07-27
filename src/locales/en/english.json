@@ -315,12 +315,17 @@
   "faq": {
     "title": "Frequently Asked Questions",
     "shipping": "What are your shipping options?",
-    "shippingAnswer": "We offer standard and express shipping worldwide.",
+    "shippingAnswer": "We offer both standard and express shipping worldwide.",
     "return": "Can I return my product?",
     "returnAnswer": "Yes, returns are accepted within 10 days of purchase.",
     "support": "How can I contact support?",
-    "supportAnswer": "You can reach us via our Contact Us page or Email",
-    "payment": "What payment methods are supported?",
-    "paymentAnswer": "We accept credit/debit cards, PayPal, and more."
+    "supportAnswer": "You can reach us via our Contact Us page or by email.",
+    "payment": "What payment methods do you accept?",
+    "paymentAnswer": "We accept credit/debit cards, PayPal, and other secure methods.",
+    "subtitle": "Find answers to common questions about orders, shipping, returns, payments, and more. We're here to help you shop smarter across fashion, electronics, shoes, and accessories.",
+    "needHelp": "Need help?",
+    "haveQuestions": "Have questions?",
+    "helpText": "Whether it's about your recent order, shipping times, product details, or returns — our support team is here for you.",
+    "contactBtn": "Contact Us"
   }
 }

@@ -84,6 +84,7 @@ export default function CategorySection({ currency }) {
           onUpdate={(latest) => {
             setDisplayCount(Math.round(latest.countValue));
           }}
+          className="bg-pink-100 dark:bg-gray-700 text-pink-600 dark:text-pink-300 text-xs font-semibold px-2 py-1 rounded-full"
         >
           {displayCount}
         </motion.span>

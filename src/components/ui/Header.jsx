@@ -61,9 +61,9 @@ import sunglasses from "../../icons/sunglasses.png";
 import tablet from "../../icons/tablet.png";
 import frock from "../../icons/baby-frock.png";
 import toy from "../../icons/toys.png";
+import AccountMenu from "./AccountMenu";
 
 const Header = ({ currency, setCurrency }) => {
-  const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
   const [isAuthOpen, setAuthOpen] = useState(false);
   const [user, setUser] = useState(null);
@@ -369,47 +369,10 @@ const Header = ({ currency, setCurrency }) => {
           </div>
 
           {/* Icons */}
+          {/* Login & Logout */}
           <div className="flex items-center space-x-4">
             {user ? (
-              <div ref={dropdownRef} className="relative user-dropdown">
-                <img
-                  src={user.photoURL || "/src/assets/default-avatar.jpeg"}
-                  loading="lazy"
-                  alt="Profile"
-                  onClick={() => setDropdownOpen((prev) => !prev)}
-                  className="w-9 h-9 rounded-full border-2 border-gray-200 cursor-pointer hover:ring-2 hover:ring-pink-300 transition"
-                />
-
-                <AnimatePresence>
-                  {dropdownOpen && (
-                    <motion.div
-                      initial={{ opacity: 0, y: -10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -10 }}
-                      transition={{ duration: 0.2 }}
-                      className="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-56 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-center p-4 z-50"
-                    >
-                      {/* Arrow */}
-                      <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-4 h-4 bg-white dark:bg-gray-900 transform rotate-45 border-l border-t border-gray-200 dark:border-gray-700 z-0" />
-
-                      {/* Content */}
-                      <p className="font-semibold text-gray-800 dark:text-gray-100 break-words text-sm">
-                        {user.displayName || user.email}
-                      </p>
-
-                      <button
-                        onClick={() => {
-                          signOut(auth);
-                          setDropdownOpen(false);
-                        }}
-                        className="mt-3 w-full py-2 rounded-md bg-red-500 text-white text-sm font-semibold hover:bg-red-600 transition-colors cursor-pointer"
-                      >
-                        Logout
-                      </button>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
+              <AccountMenu user={user} onClose={closeDropdown} />
             ) : (
               <button
                 onClick={() => setAuthOpen(true)}
@@ -475,7 +438,7 @@ const Header = ({ currency, setCurrency }) => {
                     </div>
                     <div className="h-px bg-gradient-to-r from-transparent via-gray-500 to-transparent mb-3" />
 
-                    <div className="space-y-3 max-h-[180px] overflow-y-auto px-1 pb-1 scrollbar-hide">
+                    <div className="space-y-3 max-h-[180px] px-1 pb-1 scrollbar-hide">
                       <AnimatePresence initial={false}>
                         {cart.slice(0, 3).map((item) => (
                           <motion.div
@@ -486,11 +449,19 @@ const Header = ({ currency, setCurrency }) => {
                             transition={{ duration: 0.3, ease: "easeInOut" }}
                             className="flex items-center gap-3 group"
                           >
-                            <img
-                              src={item.image}
-                              alt={item.name}
-                              className="w-12 h-12 object-contain rounded-lg bg-white p-1 shadow-md"
-                            />
+                            <div className="relative">
+                              <img
+                                src={item.image}
+                                alt={item.name}
+                                className="w-12 h-12 object-contain rounded-lg bg-white p-1 shadow-md"
+                              />
+                              {item.quantity > 1 && (
+                                <span className="absolute -top-1 -right-1 bg-pink-500 text-white text-[10px] min-w-[16px] h-[16px] px-1 flex items-center justify-center rounded-full shadow-md">
+                                  {item.quantity}
+                                </span>
+                              )}
+                            </div>
+
                             <div className="flex-1">
                               <p className="text-sm font-medium line-clamp-1 dark:text-gray-100">
                                 {t(item.name)}

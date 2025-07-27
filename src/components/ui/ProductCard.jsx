@@ -1030,7 +1030,7 @@ const ProductCard = React.memo(
         onMouseLeave={() => setHovered(false)}
       >
         <div className="relative">
-          <div className="relative w-full h-64 overflow-hidden bg-gradient-to-b from-pink-50 to-white dark:from-gray-700 dark:to-gray-800 rounded-lg">
+          <div className="relative w-full h-64 overflow-hidden rounded-lg">
             {/* Main Image */}
             <img
               loading="lazy"
@@ -1157,7 +1157,7 @@ const ProductCard = React.memo(
           <p className="text-pink-400 font-semibold text-md text-left ml-2 cursor-pointer">
             {t(product.category)}
           </p>
-          <h3 className="text-gray-500 dark:text-gray-300 text-[1em] mt-1 text-left text-xl tracking-wider ml-2 cursor-pointer hover:text-gray-600 dark:hover:text-gray-200 duration-200 line -clamp-1">
+          <h3 className="text-gray-500 dark:text-gray-300 text-[1em] mt-1 text-left text-xl tracking-wider ml-2 cursor-pointer hover:text-gray-600 dark:hover:text-gray-200 duration-200 line-clamp-1">
             {t(product.name)}
           </h3>
           <div className="flex justify-start items-start text-yellow-400 mt-2 ml-2">
